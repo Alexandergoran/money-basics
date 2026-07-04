@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Money Basics — a free, private money tool</title>
+<meta name="description" content="A free, private budgeting and fee-checking tool. Nothing you type leaves your phone.">
+<style>
+/* ============ TOKENS (single source of truth) ============ */
+:root{
+  --paper:#F2F1EC;
+  --card:#FFFFFF;
+  --ink:#1D1B16;
+  --muted:#57534A;
+  --red:#A03C2F;      /* Hoboken Shelter brick — actions, deficits */
+  --red-press:#8A3227;
+  --green:#1F6B45;    /* surplus, savings */
+  --rule:#CFCBC0;
+  --rule-strong:#B7B2A4;
+  --space-1:6px; --space-2:12px; --space-3:18px; --space-4:28px; --space-5:44px;
+  --radius:4px;
+  --font-ui:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-money:ui-monospace, "SF Mono", "Cascadia Mono", "Roboto Mono", Menlo, Consolas, monospace;
+}
+
+/* ============ BASE ============ */
+*{box-sizing:border-box; margin:0; padding:0;}
+html{-webkit-text-size-adjust:100%;}
+body{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:var(--font-ui);
+  font-size:17px;
+  line-height:1.5;
+}
+.wrap{max-width:640px; margin:0 auto; padding:var(--space-3);}
+
+/* ============ HEADER ============ */
+header{padding-top:var(--space-4);}
+.eyebrow{
+  font-family:var(--font-money);
+  font-size:12px;
+  letter-spacing:0.18em;
+  color:var(--muted);
+  text-transform:uppercase;
+}
+h1{font-size:34px; line-height:1.15; margin-top:var(--space-1); font-weight:700;}
+.promise{
+  margin-top:var(--space-2);
+  color:var(--muted);
+  font-size:16px;
+}
+.promise strong{color:var(--ink);}
+
+/* ============ TABS ============ */
+.tabs{margin-top:var(--space-4); border-bottom:2px solid var(--ink); overflow:hidden;}
+.tab{
+  float:left;
+  width:50%;
+  min-height:52px;
+  font-family:var(--font-money);
+  font-size:14px;
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+  background:var(--paper);
+  color:var(--ink);
+  border:2px solid var(--ink);
+  border-bottom:none;
+  border-radius:var(--radius) var(--radius) 0 0;
+  cursor:pointer;
+}
+.tab + .tab{border-left:none;}
+.tab[aria-selected="true"]{background:var(--ink); color:var(--card);}
+.tab:hover{background:var(--rule);}
+.tab[aria-selected="true"]:hover{background:var(--ink);}
+.tab:focus-visible, button:focus-visible, input:focus-visible{
+  outline:3px solid var(--red);
+  outline-offset:2px;
+}
+
+/* ============ SECTIONS / CARDS ============ */
+section{padding-top:var(--space-4);}
+h2{font-size:22px; margin-bottom:var(--space-1);}
+.lede{color:var(--muted); margin-bottom:var(--space-3); font-size:16px;}
+.card{
+  background:var(--card);
+  border:1.5px solid var(--rule-strong);
+  border-radius:var(--radius);
+  padding:var(--space-3);
+  margin-bottom:var(--space-3);
+}
+
+/* ============ FORM ROWS ============ */
+.q{font-weight:700; margin-bottom:var(--space-2);}
+.choice{overflow:hidden; margin-bottom:var(--space-2);}
+.choice button{
+  display:block;
+  width:100%;
+  min-height:52px;
+  margin-bottom:var(--space-2);
+  font-family:var(--font-ui);
+  font-size:16px;
+  background:var(--card);
+  color:var(--ink);
+  border:2px solid var(--ink);
+  border-radius:var(--radius);
+  cursor:pointer;
+  text-align:left;
+  padding:0 var(--space-3);
+}
+.choice button:hover{background:var(--paper);}
+.choice button[aria-pressed="true"]{background:var(--ink); color:var(--card);}
+.row{margin-bottom:var(--space-3);}
+label{display:block; font-size:15px; font-weight:600; margin-bottom:var(--space-1);}
+.hint{display:block; font-weight:400; color:var(--muted); font-size:14px;}
+input[type="text"]{
+  width:100%;
+  min-height:52px;
+  font-family:var(--font-money);
+  font-size:18px;
+  color:var(--ink);
+  background:var(--card);
+  border:1.5px solid var(--rule-strong);
+  border-radius:var(--radius);
+  padding:0 var(--space-2);
+}
+input[type="text"]:focus{border-color:var(--ink);}
+.note{
+  border-left:4px solid var(--red);
+  background:var(--card);
+  padding:var(--space-2) var(--space-3);
+  font-size:15px;
+  color:var(--ink);
+  margin-bottom:var(--space-3);
+}
+.note .fig{font-family:var(--font-money); font-weight:700;}
+
+/* ============ THE RECEIPT (signature element) ============ */
+.receipt{
+  background:var(--card);
+  border:1.5px solid var(--ink);
+  border-radius:var(--radius);
+  padding:var(--space-3);
+  font-family:var(--font-money);
+  font-size:15px;
+}
+.receipt h3{
+  font-family:var(--font-money);
+  font-size:13px;
+  letter-spacing:0.16em;
+  text-transform:uppercase;
+  text-align:center;
+  padding-bottom:var(--space-2);
+  border-bottom:1.5px dashed var(--rule-strong);
+  margin-bottom:var(--space-2);
+  font-weight:700;
+}
+.line{overflow:hidden; padding:3px 0;}
+.line .lbl{float:left; max-width:60%;}
+.line .amt{float:right; font-weight:400;}
+.line.total{
+  border-top:1.5px dashed var(--rule-strong);
+  margin-top:var(--space-2);
+  padding-top:var(--space-2);
+  font-weight:700;
+}
+.verdict{
+  display:inline-block;
+  margin-top:var(--space-3);
+  padding:var(--space-1) var(--space-3);
+  border:2.5px solid var(--green);
+  color:var(--green);
+  border-radius:var(--radius);
+  font-weight:700;
+  font-size:18px;
+  letter-spacing:0.04em;
+  transform:rotate(-1.5deg);
+}
+.verdict.short{border-color:var(--red); color:var(--red);}
+.after{margin-top:var(--space-2); font-family:var(--font-ui); font-size:15px; color:var(--muted);}
+
+/* ============ FEES ============ */
+.fee-cost{
+  font-family:var(--font-money);
+  font-weight:700;
+  font-size:17px;
+  margin-top:var(--space-2);
+}
+.fee-cost .yr{color:var(--red);}
+.free-move{
+  margin-top:var(--space-2);
+  padding-top:var(--space-2);
+  border-top:1.5px solid var(--rule);
+  font-size:15px;
+}
+.free-move b{color:var(--green);}
+.half{overflow:hidden;}
+.half .row{float:left; width:48%;}
+.half .row + .row{float:right;}
+
+/* ============ BUTTONS ============ */
+.btns{overflow:hidden; margin-bottom:var(--space-2);}
+.btns-main{margin-top:var(--space-3);}
+.btn{
+  display:block;
+  width:100%;
+  min-height:52px;
+  margin-bottom:var(--space-2);
+  font-size:16px;
+  font-weight:700;
+  font-family:var(--font-ui);
+  border-radius:var(--radius);
+  cursor:pointer;
+  border:2px solid var(--ink);
+  background:var(--card);
+  color:var(--ink);
+}
+.btn:hover{background:var(--paper);}
+.btn:active{background:var(--rule);}
+.btn.primary{background:var(--red); border-color:var(--red); color:var(--card);}
+.btn.primary:hover{background:var(--red-press);}
+.saved{
+  font-size:14px;
+  color:var(--green);
+  font-weight:700;
+  visibility:hidden;
+}
+.saved.show{visibility:visible;}
+
+/* ============ HELP + FOOTER ============ */
+.help p{margin-bottom:var(--space-2); font-size:15px;}
+.help b{font-weight:700;}
+.help .where{font-family:var(--font-money); font-size:14px;}
+footer{
+  margin-top:var(--space-4);
+  padding:var(--space-3) 0 var(--space-5);
+  border-top:1.5px solid var(--rule-strong);
+  color:var(--muted);
+  font-size:14px;
+}
+footer p{margin-bottom:var(--space-1);}
+
+/* ============ PRINT ============ */
+@media print{
+  .tabs, .btns, .choice, noscript{display:none;}
+  section[hidden]{display:block !important;}
+  body{background:#fff;}
+  .card, .receipt{border-color:#000;}
+}
+@media (prefers-reduced-motion: reduce){
+  *{transition:none !important;}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <p class="eyebrow" data-str="eyebrow">Hoboken &middot; Free &middot; Private</p>
+  <h1 data-str="title">Money Basics</h1>
+  <p class="promise"><span data-str="promise1">A plain-language money tool from a Hoboken Shelter volunteer.</span> <strong data-str="promise2">Nothing you type leaves this phone.</strong></p>
+</header>
+
+<noscript><p class="note">This tool needs JavaScript turned on. Once the page has loaded, it works without internet.</p></noscript>
+
+<nav class="tabs" role="tablist" aria-label="Tool sections">
+  <button type="button" class="tab" id="tab-budget" role="tab" aria-selected="true" aria-controls="panel-budget" data-str="tabBudget">My Budget</button>
+  <button type="button" class="tab" id="tab-fees" role="tab" aria-selected="false" aria-controls="panel-fees" data-str="tabFees">Fee Check</button>
+</nav>
+
+<main>
+
+<!-- ================= BUDGET ================= -->
+<section id="panel-budget" role="tabpanel" aria-labelledby="tab-budget">
+  <h2 data-str="budgetH">Plan the week ahead</h2>
+  <p class="lede" data-str="budgetLede">Put in what comes in and what has to be paid. The receipt at the bottom does the math.</p>
+
+  <div class="card">
+    <p class="q" data-str="qPay">How does your pay come in?</p>
+    <div class="choice">
+      <button type="button" id="mode-steady" aria-pressed="true" data-str="modeSteady">About the same each week</button>
+      <button type="button" id="mode-varies" aria-pressed="false" data-str="modeVaries">It changes week to week</button>
+    </div>
+
+    <div id="steady-box">
+      <div class="row">
+        <label for="inc-steady"><span data-str="incSteadyL">Money in, a typical week ($)</span>
+          <span class="hint" data-str="incSteadyHint">Paid monthly? Divide by 4.</span></label>
+        <input type="text" inputmode="decimal" id="inc-steady" value="">
+      </div>
+    </div>
+
+    <div id="varies-box" hidden>
+      <div class="half">
+        <div class="row">
+          <label for="w1" data-str="w1L">Last week ($)</label>
+          <input type="text" inputmode="decimal" id="w1" value="">
+        </div>
+        <div class="row">
+          <label for="w2" data-str="w2L">2 weeks ago ($)</label>
+          <input type="text" inputmode="decimal" id="w2" value="">
+        </div>
+      </div>
+      <div class="half">
+        <div class="row">
+          <label for="w3" data-str="w3L">3 weeks ago ($)</label>
+          <input type="text" inputmode="decimal" id="w3" value="">
+        </div>
+        <div class="row">
+          <label for="w4" data-str="w4L">4 weeks ago ($)</label>
+          <input type="text" inputmode="decimal" id="w4" value="">
+        </div>
+      </div>
+      <p class="note"><span data-str="lowNote1">When pay jumps around, plan on your lowest week:</span> <span class="fig" id="low-fig">$0</span><span data-str="lowNote2">. Anything above that is cushion, not spending money.</span></p>
+    </div>
+  </div>
+
+  <div class="card">
+    <p class="q" data-str="qEss">What has to be paid — most important first</p>
+    <div class="row">
+      <label for="ess-housing" data-str="essHousing">Housing — rent, program fees ($/week)</label>
+      <input type="text" inputmode="decimal" id="ess-housing" value="">
+    </div>
+    <div class="row">
+      <label for="ess-food" data-str="essFood">Food ($/week)</label>
+      <input type="text" inputmode="decimal" id="ess-food" value="">
+    </div>
+    <div class="row">
+      <label for="ess-transport" data-str="essTransport">Getting to work — bus, PATH, gas ($/week)</label>
+      <input type="text" inputmode="decimal" id="ess-transport" value="">
+    </div>
+    <div class="row">
+      <label for="ess-phone" data-str="essPhone">Phone ($/week)</label>
+      <input type="text" inputmode="decimal" id="ess-phone" value="">
+    </div>
+    <div class="row">
+      <label for="ess-health" data-str="essHealth">Medicine &amp; health ($/week)</label>
+      <input type="text" inputmode="decimal" id="ess-health" value="">
+    </div>
+    <div class="row">
+      <label for="ess-other" data-str="essOther">Everything else — laundry, clothes, all of it ($/week)</label>
+      <input type="text" inputmode="decimal" id="ess-other" value="">
+    </div>
+  </div>
+
+  <div class="receipt" aria-live="polite">
+    <h3 data-str="receiptH">Your week</h3>
+    <div class="line"><span class="lbl" data-str="rIncome">MONEY IN (planned)</span><span class="amt" id="r-income">$0</span></div>
+    <div id="r-items"></div>
+    <div class="line total"><span class="lbl" data-str="rTotal">BILLS TOTAL</span><span class="amt" id="r-total">$0</span></div>
+    <span class="verdict" id="verdict">LEFT OVER $0</span>
+    <p class="after" id="after-note"></p>
+  </div>
+
+  <div class="btns btns-main">
+    <button type="button" class="btn primary" id="btn-save" data-str="btnSave">Save on this phone</button>
+    <button type="button" class="btn" id="btn-print" data-str="btnPrint">Print this page</button>
+    <button type="button" class="btn" id="btn-clear" data-str="btnClear">Start over</button>
+    <span class="saved" id="saved-note" data-str="savedNote">Saved on this phone.</span>
+  </div>
+</section>
+
+<!-- ================= FEES ================= -->
+<section id="panel-fees" role="tabpanel" aria-labelledby="tab-fees" hidden>
+  <h2 data-str="feesH">Little fees, real money</h2>
+  <p class="lede" data-str="feesLede">These prices are typical. Tap any number to match yours. The free way around each fee is listed under it.</p>
+
+  <div class="card">
+    <p class="q" data-str="qCheck">Cash your paycheck at a store or check casher?</p>
+    <div class="row">
+      <label for="chk-amt" data-str="chkAmtL">Paycheck amount ($)</label>
+      <input type="text" inputmode="decimal" id="chk-amt" value="">
+    </div>
+    <div class="half">
+      <div class="row">
+        <label for="chk-times" data-str="chkTimesL">Times per month</label>
+        <input type="text" inputmode="decimal" id="chk-times" value="">
+      </div>
+      <div class="row">
+        <label for="chk-pct"><span data-str="chkPctL">Their cut (%)</span>
+          <span class="hint" data-str="chkPctHint">Stores charge about 1&ndash;6%.</span></label>
+        <input type="text" inputmode="decimal" id="chk-pct" value="2">
+      </div>
+    </div>
+    <p class="fee-cost"><span data-str="costYear">Cost per year:</span> <span class="yr" id="chk-yr">$0</span></p>
+    <p class="free-move"><b data-str="freeMove">The free move:</b> <span data-str="chkFree">a BankOn-approved account cashes your pay free with direct deposit — no minimum balance, no overdraft. Find one at bankon.org.</span></p>
+  </div>
+
+  <div class="card">
+    <p class="q" data-str="qMO">Buy money orders to pay bills?</p>
+    <div class="half">
+      <div class="row">
+        <label for="mo-times" data-str="moTimesL">Money orders per month</label>
+        <input type="text" inputmode="decimal" id="mo-times" value="">
+      </div>
+      <div class="row">
+        <label for="mo-fee" data-str="moFeeL">Cost each ($)</label>
+        <input type="text" inputmode="decimal" id="mo-fee" value="1.75">
+      </div>
+    </div>
+    <p class="fee-cost"><span data-str="costYear2">Cost per year:</span> <span class="yr" id="mo-yr">$0</span></p>
+    <p class="free-move"><b data-str="freeMove2">The free move:</b> <span data-str="moFree">a basic checking account pays the same bills free, online or by check.</span></p>
+  </div>
+
+  <div class="card">
+    <p class="q" data-str="qOD">Get hit with overdraft charges?</p>
+    <div class="half">
+      <div class="row">
+        <label for="od-times" data-str="odTimesL">Times per month</label>
+        <input type="text" inputmode="decimal" id="od-times" value="">
+      </div>
+      <div class="row">
+        <label for="od-fee" data-str="odFeeL">Charge each ($)</label>
+        <input type="text" inputmode="decimal" id="od-fee" value="27">
+      </div>
+    </div>
+    <p class="fee-cost"><span data-str="costYear3">Cost per year:</span> <span class="yr" id="od-yr">$0</span></p>
+    <p class="free-move"><b data-str="freeMove3">The free move:</b> <span data-str="odFree">ask the bank to turn overdraft OFF. Then the card just declines — which costs nothing.</span></p>
+  </div>
+
+  <div class="card">
+    <p class="q" data-str="qPP">Use a prepaid card?</p>
+    <div class="half">
+      <div class="row">
+        <label for="pp-fee" data-str="ppFeeL">Monthly card fee ($)</label>
+        <input type="text" inputmode="decimal" id="pp-fee" value="">
+      </div>
+      <div class="row">
+        <label for="atm-times" data-str="atmTimesL">Out-of-network ATM visits / month</label>
+        <input type="text" inputmode="decimal" id="atm-times" value="">
+      </div>
+    </div>
+    <div class="row">
+      <label for="atm-fee" data-str="atmFeeL">ATM fee each ($)</label>
+      <input type="text" inputmode="decimal" id="atm-fee" value="3">
+    </div>
+    <p class="fee-cost"><span data-str="costYear4">Cost per year:</span> <span class="yr" id="pp-yr">$0</span></p>
+    <p class="free-move"><b data-str="freeMove4">The free move:</b> <span data-str="ppFree">BankOn accounts come with free ATM networks and no monthly fee. bankon.org.</span></p>
+  </div>
+
+  <div class="receipt" aria-live="polite">
+    <h3 data-str="feeReceiptH">Fees, one year</h3>
+    <div class="line"><span class="lbl" data-str="fChk">Check cashing</span><span class="amt" id="f-chk">$0</span></div>
+    <div class="line"><span class="lbl" data-str="fMO">Money orders</span><span class="amt" id="f-mo">$0</span></div>
+    <div class="line"><span class="lbl" data-str="fOD">Overdraft</span><span class="amt" id="f-od">$0</span></div>
+    <div class="line"><span class="lbl" data-str="fPP">Prepaid card + ATM</span><span class="amt" id="f-pp">$0</span></div>
+    <div class="line total"><span class="lbl" data-str="fTotal">TOTAL, ONE YEAR</span><span class="amt" id="f-total">$0</span></div>
+    <span class="verdict short" id="fee-verdict">&asymp; $0 A YEAR</span>
+    <p class="after" id="fee-after"></p>
+  </div>
+</section>
+
+<!-- ================= FREE HELP ================= -->
+<section class="help">
+  <h2 data-str="helpH">Free help that&rsquo;s actually free</h2>
+  <div class="card">
+    <p><b data-str="help211a">Any kind of help, one call:</b> <span data-str="help211b">dial</span> <span class="where">211</span> <span data-str="help211c">— free, 24/7, they point you to food, housing, and bill help near you. Online:</span> <span class="where">findhelp.org</span></p>
+    <p><b data-str="helpTaxA">Free tax filing (VITA):</b> <span data-str="helpTaxB">IRS-sponsored, human help, no charge. Many workers miss refunds worth thousands (the EITC). Search &ldquo;VITA&rdquo; at</span> <span class="where">irs.gov</span></p>
+    <p><b data-str="helpCreditA">Your real credit report, free:</b> <span class="where">annualcreditreport.com</span> <span data-str="helpCreditB">— the official one. Ignore lookalike sites that charge.</span></p>
+    <p><b data-str="helpBankA">A bank account that can&rsquo;t surprise you:</b> <span class="where">bankon.org</span> <span data-str="helpBankB">— accounts with no overdraft and no minimum, even with past banking problems.</span></p>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <p data-str="foot1">Built by Alexander G., a student volunteer, for guests of the Hoboken Shelter. v0 — July 2026.</p>
+  <p data-str="foot2">This is general money education, not financial advice. For personal decisions, the free help above is the real thing.</p>
+  <p data-str="foot3">Private by design: this page makes no internet connections and keeps nothing except what you choose to save on your own device.</p>
+</footer>
+
+</div>
+
+<script>
+(function(){
+"use strict";
+
+/* ---------- strings (Spanish toggle lands in v1: add STR.es) ---------- */
+var STR = { en: {} }; /* English lives in the HTML; keys exist for the v1 translation pass via data-str attributes. */
+
+/* ---------- helpers ---------- */
+function $(id){ return document.getElementById(id); }
+function num(id){
+  var v = parseFloat(String($(id).value).replace(/[^0-9.]/g,""));
+  return isNaN(v) || v < 0 ? 0 : v;
+}
+var fmt = function(n){
+  try { return new Intl.NumberFormat("en-US",{style:"currency",currency:"USD",maximumFractionDigits:0}).format(n); }
+  catch(e){ return "$" + Math.round(n); }
+};
+
+/* ---------- tabs ---------- */
+function showTab(which){
+  var budget = which === "budget";
+  $("tab-budget").setAttribute("aria-selected", budget ? "true" : "false");
+  $("tab-fees").setAttribute("aria-selected", budget ? "false" : "true");
+  if (budget) { $("panel-budget").removeAttribute("hidden"); $("panel-fees").setAttribute("hidden",""); }
+  else { $("panel-fees").removeAttribute("hidden"); $("panel-budget").setAttribute("hidden",""); }
+}
+$("tab-budget").onclick = function(){ showTab("budget"); };
+$("tab-fees").onclick = function(){ showTab("fees"); };
+
+/* ---------- income mode ---------- */
+var payMode = "steady";
+function setMode(m){
+  payMode = m;
+  $("mode-steady").setAttribute("aria-pressed", m === "steady" ? "true" : "false");
+  $("mode-varies").setAttribute("aria-pressed", m === "varies" ? "true" : "false");
+  if (m === "steady") { $("steady-box").removeAttribute("hidden"); $("varies-box").setAttribute("hidden",""); }
+  else { $("varies-box").removeAttribute("hidden"); $("steady-box").setAttribute("hidden",""); }
+  calcBudget();
+}
+$("mode-steady").onclick = function(){ setMode("steady"); };
+$("mode-varies").onclick = function(){ setMode("varies"); };
+
+/* ---------- budget ---------- */
+var ESS = [
+  { id:"ess-housing",   label:"Housing" },
+  { id:"ess-food",      label:"Food" },
+  { id:"ess-transport", label:"Getting to work" },
+  { id:"ess-phone",     label:"Phone" },
+  { id:"ess-health",    label:"Medicine & health" },
+  { id:"ess-other",     label:"Everything else" }
+];
+
+function planIncome(){
+  if (payMode === "steady") return num("inc-steady");
+  var weeks = [num("w1"), num("w2"), num("w3"), num("w4")].filter(function(w){ return w > 0; });
+  if (weeks.length === 0) return 0;
+  return Math.min.apply(null, weeks);
+}
+
+function calcBudget(){
+  var income = planIncome();
+  if (payMode === "varies") $("low-fig").textContent = fmt(income);
+  $("r-income").textContent = fmt(income);
+
+  var itemsHTML = "", total = 0;
+  for (var i = 0; i < ESS.length; i++){
+    var v = num(ESS[i].id);
+    total += v;
+    if (v > 0){
+      itemsHTML += '<div class="line"><span class="lbl">' + ESS[i].label +
+                   '</span><span class="amt">&minus;' + fmt(v) + '</span></div>';
+    }
+  }
+  $("r-items").innerHTML = itemsHTML;
+  $("r-total").textContent = fmt(total);
+
+  var left = income - total;
+  var verdict = $("verdict"), after = $("after-note");
+  if (left >= 0){
+    verdict.className = "verdict";
+    verdict.textContent = "LEFT OVER " + fmt(left);
+    after.textContent = (left > 0)
+      ? "If you can, tuck part of this away for a low week."
+      : "Exactly even. A single surprise bill tips this — the Fee Check tab finds slack.";
+  } else {
+    verdict.className = "verdict short";
+    verdict.textContent = "SHORT " + fmt(-left);
+    var covered = [], missing = [], running = income;
+    for (var j = 0; j < ESS.length; j++){
+      var w = num(ESS[j].id);
+      if (w <= 0) continue;
+      if (running >= w){ covered.push(ESS[j].label); running -= w; }
+      else { missing.push(ESS[j].label); }
+    }
+    var msg = "";
+    if (covered.length) msg += "Your plan covers: " + covered.join(", ") + ". ";
+    if (missing.length) msg += "Not yet covered: " + missing.join(", ") + ". ";
+    msg += "The Fee Check tab often finds this money.";
+    after.textContent = msg;
+  }
+}
+
+/* ---------- fees ---------- */
+function calcFees(){
+  var chk = num("chk-amt") * num("chk-times") * 12 * (num("chk-pct") / 100);
+  var mo  = num("mo-times") * num("mo-fee") * 12;
+  var od  = num("od-times") * num("od-fee") * 12;
+  var pp  = num("pp-fee") * 12 + num("atm-times") * num("atm-fee") * 12;
+  $("chk-yr").textContent = fmt(chk);
+  $("mo-yr").textContent  = fmt(mo);
+  $("od-yr").textContent  = fmt(od);
+  $("pp-yr").textContent  = fmt(pp);
+  $("f-chk").textContent = "\u2212" + fmt(chk);
+  $("f-mo").textContent  = "\u2212" + fmt(mo);
+  $("f-od").textContent  = "\u2212" + fmt(od);
+  $("f-pp").textContent  = "\u2212" + fmt(pp);
+  var total = chk + mo + od + pp;
+  $("f-total").textContent = fmt(total);
+  $("fee-verdict").textContent = "\u2248 " + fmt(total) + " A YEAR";
+  $("fee-after").textContent = total > 0
+    ? "That is about " + fmt(total / 12) + " a month back in your pocket."
+    : "Fill in what applies to you above.";
+}
+
+/* ---------- save / restore (on this device only) ---------- */
+var FIELDS = ["inc-steady","w1","w2","w3","w4","ess-housing","ess-food","ess-transport",
+  "ess-phone","ess-health","ess-other","chk-amt","chk-times","chk-pct","mo-times","mo-fee",
+  "od-times","od-fee","pp-fee","atm-times","atm-fee"];
+var KEY = "moneyBasics.v0";
+
+function save(){
+  var data = { mode: payMode };
+  for (var i = 0; i < FIELDS.length; i++) data[FIELDS[i]] = $(FIELDS[i]).value;
+  try {
+    localStorage.setItem(KEY, JSON.stringify(data));
+    var n = $("saved-note");
+    n.className = "saved show";
+    setTimeout(function(){ n.className = "saved"; }, 2500);
+  } catch(e) {
+    $("saved-note").textContent = "Saving is blocked on this browser — your numbers stay until you close the page.";
+    $("saved-note").className = "saved show";
+  }
+}
+function restore(){
+  try {
+    var raw = localStorage.getItem(KEY);
+    if (!raw) return;
+    var data = JSON.parse(raw);
+    for (var i = 0; i < FIELDS.length; i++){
+      if (data[FIELDS[i]] !== undefined) $(FIELDS[i]).value = data[FIELDS[i]];
+    }
+    if (data.mode) setMode(data.mode);
+  } catch(e) { /* private mode or blocked storage: start fresh */ }
+}
+function clearAll(){
+  for (var i = 0; i < FIELDS.length; i++) $(FIELDS[i]).value = "";
+  $("chk-pct").value = "2"; $("mo-fee").value = "1.75"; $("od-fee").value = "27"; $("atm-fee").value = "3";
+  try { localStorage.removeItem(KEY); } catch(e) {}
+  setMode("steady");
+  calcBudget(); calcFees();
+}
+
+$("btn-save").onclick = save;
+$("btn-clear").onclick = clearAll;
+$("btn-print").onclick = function(){ window.print(); };
+
+/* ---------- wire inputs ---------- */
+for (var i = 0; i < FIELDS.length; i++){
+  $(FIELDS[i]).addEventListener("input", function(){ calcBudget(); calcFees(); });
+}
+
+restore();
+calcBudget();
+calcFees();
+})();
+</script>
+</body>
+</html>
