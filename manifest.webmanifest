@@ -1,0 +1,16 @@
+{
+  "name": "Money Basics",
+  "short_name": "Money Basics",
+  "description": "A free, private money app. Plan your week, sort your bills, save toward a goal. Nothing you type leaves your phone.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#F4F4F2",
+  "theme_color": "#9E3226",
+  "lang": "en",
+  "icons": [
+    { "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

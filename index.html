@@ -2,14 +2,16 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Money Basics: a free, private money tool</title>
-<meta name="description" content="A free, private budgeting tool. Plan your week, check fees, set a goal, know which bills come first. Nothing you type leaves your phone.">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Money Basics</title>
+<meta name="description" content="A free, private money app. Plan your week, sort your bills, save toward a goal. Nothing you type leaves your phone.">
 <meta name="theme-color" media="(prefers-color-scheme: light)" content="#F4F4F2">
-<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#171210">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#121316">
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="apple-touch-icon" href="./icon-512.png">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M6 2h20v24l-2.5 3-2.5-3-2.5 3-2.5-3-2.5 3-2.5-3-2.5 3L6 26z' fill='%23FCFBF7' stroke='%239E3226' stroke-width='2'/%3E%3Cpath d='M10 9h12M10 14h12M10 19h7' stroke='%239E3226' stroke-width='2.5' stroke-linecap='round'/%3E%3C/svg%3E">
 <style>
-/* ============ FONTS (embedded: this page makes zero network calls) ============ */
+/* ============ FONTS (embedded: zero network calls) ============ */
 @font-face{
   font-family:"Plex Serif";
   src:url(data:font/woff2;base64,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) format("woff2");
@@ -25,142 +27,160 @@
 :root{
   --bg:#F4F4F2;
   --surface:#FFFFFF;
+  --surface2:#ECECEA;
   --ink:#1B1713;
   --muted:#55504A;
   --line:#DCD9D3;
   --line-strong:#B9B4AC;
   --brick:#9E3226;
   --brick-press:#7F281E;
-  --brick-ink:#9E3226;      /* brick used as text on bg/surface */
+  --brick-ink:#9E3226;
   --green:#1E6B45;
   --track:#E8E5E0;
+  --caution:#9E3226;
   --tape-bg:#FCFBF7;
   --tape-ink:#1B1713;
   --tape-muted:#57524B;
   --tape-rule:#C9C4BA;
   --focus:#9E3226;
+  --scrim:rgba(20,18,16,0.45);
   --sp-1:4px; --sp-2:8px; --sp-3:12px; --sp-4:16px; --sp-5:24px; --sp-6:36px; --sp-7:56px;
-  --r-card:10px; --r-ctl:8px;
+  --r-card:12px; --r-ctl:8px;
   --font-display:"Plex Serif", Georgia, "Times New Roman", serif;
   --font-ui:"Plex Sans", -apple-system, "Segoe UI", sans-serif;
   --font-money:ui-monospace, "SF Mono", "Roboto Mono", Menlo, Consolas, monospace;
-  --z-rail:10; --z-tape:20;
+  --z-rail:10; --z-tabbar:20; --z-scrim:25; --z-tape:30; --z-toast:40;
+  --tabbar-h:60px;
 }
+/* charcoal dark: manual override */
+html[data-theme="dark"]{
+  --bg:#121316; --surface:#1B1D21; --surface2:#22252A;
+  --ink:#E9EBEE; --muted:#A2A9B0;
+  --line:#2E3238; --line-strong:#484E56;
+  --brick:#C24732; --brick-press:#A93D2B; --brick-ink:#F0876E;
+  --green:#66C695; --track:#22252A; --caution:#F0876E;
+  --focus:#F0876E; --scrim:rgba(0,0,0,0.55);
+}
+/* charcoal dark: system auto (same values; keep in sync with block above) */
 @media (prefers-color-scheme: dark){
-  :root{
-    --bg:#171210;
-    --surface:#221B17;
-    --ink:#ECE6DE;
-    --muted:#AFA79C;
-    --line:#3B332C;
-    --line-strong:#574C42;
-    --brick:#B8402F;          /* control fills: white text sits on this */
-    --brick-press:#9E3226;
-    --brick-ink:#F08A6F;      /* brick as text on dark surfaces */
-    --green:#7ECCA4;
-    --track:#312923;
-    --focus:#F08A6F;
+  html:not([data-theme="light"]):not([data-theme="dark"]){
+    --bg:#121316; --surface:#1B1D21; --surface2:#22252A;
+    --ink:#E9EBEE; --muted:#A2A9B0;
+    --line:#2E3238; --line-strong:#484E56;
+    --brick:#C24732; --brick-press:#A93D2B; --brick-ink:#F0876E;
+    --green:#66C695; --track:#22252A; --caution:#F0876E;
+    --focus:#F0876E; --scrim:rgba(0,0,0,0.55);
   }
 }
 
 /* ============ BASE ============ */
 *{box-sizing:border-box; margin:0; padding:0;}
-html{-webkit-text-size-adjust:100%;}
+html{-webkit-text-size-adjust:100%; font-size:17px;}
+html[data-ts="lg"]{font-size:19px;}
+html[data-ts="xl"]{font-size:21px;}
 body{
   background:var(--bg);
   color:var(--ink);
   font-family:var(--font-ui);
-  font-size:17px;
+  font-size:1rem;
   line-height:1.55;
-  padding-bottom:96px; /* room for the tape */
+  padding-bottom:calc(var(--tabbar-h) + 48px + env(safe-area-inset-bottom, 0px) + 12px);
+}
+html.no-motion *, html.no-motion *::before, html.no-motion *::after{
+  transition:none !important; animation:none !important;
 }
 .wrap{max-width:660px; margin:0 auto; padding:0 var(--sp-4);}
-h1,h2{font-family:var(--font-display); font-weight:700; text-wrap:balance;}
-button{font-family:var(--font-ui); color:inherit;}
+h1,h2,h3{font-family:var(--font-display); font-weight:700; text-wrap:balance;}
+button{font-family:var(--font-ui); color:inherit; font-size:1rem;}
 :focus-visible{outline:3px solid var(--focus); outline-offset:2px; border-radius:2px;}
 ::placeholder{color:var(--muted); opacity:1;}
+.icon{width:22px; height:22px; stroke:currentColor; fill:none; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; flex:none;}
+[hidden]{display:none !important;}
 
 /* ============ HEADER ============ */
-header{padding:var(--sp-6) 0 var(--sp-5);}
-.masthead{display:flex; align-items:flex-start; justify-content:space-between; gap:var(--sp-3);}
-h1{font-size:32px; line-height:1.1; letter-spacing:-0.01em;}
-.promise{margin-top:var(--sp-3); font-size:16px; color:var(--muted); max-width:46ch;}
-.promise strong{color:var(--ink); font-weight:600;}
-.lang-btn{
-  flex:none; min-width:56px; min-height:48px;
-  font-size:15px; font-weight:600; letter-spacing:0.02em;
-  background:var(--surface); border:1.5px solid var(--line-strong);
-  border-radius:var(--r-ctl); cursor:pointer;
+header.app{padding:var(--sp-4) 0 var(--sp-2); display:flex; align-items:center; justify-content:space-between;}
+.wordmark{font-family:var(--font-display); font-weight:700; font-size:1.25rem; line-height:1.3;}
+.saved-flash{
+  font-size:0.82rem; color:var(--green); font-weight:600;
+  opacity:0; transition:opacity 200ms ease-out;
 }
-.lang-btn:hover{border-color:var(--ink);}
+.saved-flash.show{opacity:1;}
 
-/* ============ TAB RAIL ============ */
-.rail-wrap{
-  position:sticky; top:0; z-index:var(--z-rail);
-  background:var(--bg);
-  border-bottom:1px solid var(--line);
-  margin:0 calc(-1 * var(--sp-4));
-  padding:0 var(--sp-4);
+/* ============ TAB BAR (bottom on mobile, top rail on wide) ============ */
+.tabbar{
+  position:fixed; left:0; right:0; bottom:0; z-index:var(--z-tabbar);
+  display:flex; justify-content:space-around;
+  background:var(--surface);
+  border-top:1px solid var(--line);
+  padding-bottom:env(safe-area-inset-bottom, 0px);
 }
-.rail{
-  display:flex; gap:var(--sp-2);
-  overflow-x:auto; -webkit-overflow-scrolling:touch;
-  scrollbar-width:none;
+.tabbar button{
+  flex:1; max-width:120px;
+  display:flex; flex-direction:column; align-items:center; gap:2px;
+  min-height:var(--tabbar-h); padding-top:8px;
+  background:none; border:none; cursor:pointer;
+  font-size:0.68rem; font-weight:600; color:var(--muted);
+  position:relative;
 }
-.rail::-webkit-scrollbar{display:none;}
-.tab{
-  flex:none; min-height:52px; padding:0 var(--sp-3);
-  font-size:15px; font-weight:600; white-space:nowrap;
-  background:none; border:none; border-bottom:3px solid transparent;
-  color:var(--muted); cursor:pointer;
+.tabbar button[aria-selected="true"]{color:var(--brick-ink);}
+.tabbar .badge{
+  position:absolute; top:6px; right:calc(50% - 16px);
+  width:9px; height:9px; border-radius:50%;
+  background:var(--brick); display:none;
 }
-.tab:hover{color:var(--ink);}
-.tab[aria-selected="true"]{color:var(--ink); border-bottom-color:var(--brick);}
+.tabbar .badge.on{display:block;}
 
-/* ============ SECTIONS ============ */
-section[role="tabpanel"]{padding-top:var(--sp-6);}
-.静{display:none;}
-h2{font-size:24px; line-height:1.2; margin-bottom:var(--sp-2);}
-.lede{color:var(--muted); font-size:16px; margin-bottom:var(--sp-5); max-width:52ch;}
+/* ============ PANELS ============ */
+main{min-height:60vh;}
+section[role="tabpanel"]{padding-top:var(--sp-4);}
+h2{font-size:1.4rem; line-height:1.2; margin-bottom:var(--sp-2);}
+h3{font-size:1.05rem; margin:var(--sp-5) 0 var(--sp-3);}
+.lede{color:var(--muted); font-size:0.94rem; margin-bottom:var(--sp-4); max-width:52ch;}
 .card{
   background:var(--surface);
   border:1px solid var(--line);
   border-radius:var(--r-card);
-  padding:var(--sp-5) var(--sp-4);
-  margin-bottom:var(--sp-4);
+  padding:var(--sp-4);
+  margin-bottom:var(--sp-3);
 }
-.card > .q{font-weight:600; font-size:17px; margin-bottom:var(--sp-4);}
+.card > .q{font-weight:600; font-size:1rem; margin-bottom:var(--sp-3);}
+.q .hint{margin-top:2px;}
 
 /* ============ FORMS ============ */
 .row{margin-bottom:var(--sp-4);}
 .row:last-child{margin-bottom:0;}
-label{display:block; font-size:15px; font-weight:600; margin-bottom:var(--sp-2);}
-.hint{display:block; font-weight:400; color:var(--muted); font-size:14px; margin-top:2px;}
+label{display:block; font-size:0.88rem; font-weight:600; margin-bottom:var(--sp-2);}
+.hint{display:block; font-weight:400; color:var(--muted); font-size:0.82rem;}
 .field{position:relative;}
 .field .cur{
   position:absolute; left:14px; top:50%; transform:translateY(-50%);
-  font-family:var(--font-money); font-size:17px; color:var(--muted);
+  font-family:var(--font-money); font-size:1rem; color:var(--muted);
 }
 input[type="text"]{
   width:100%; min-height:52px;
-  font-family:var(--font-money); font-size:18px;
+  font-family:var(--font-money); font-size:1.06rem;
   color:var(--ink); background:var(--surface);
   border:1.5px solid var(--line-strong); border-radius:var(--r-ctl);
   padding:0 var(--sp-3);
 }
 .field input[type="text"]{padding-left:32px;}
 input[type="text"]:focus{border-color:var(--ink); outline-offset:0;}
+select{
+  min-height:48px; font-family:var(--font-ui); font-size:0.94rem;
+  color:var(--ink); background:var(--surface);
+  border:1.5px solid var(--line-strong); border-radius:var(--r-ctl);
+  padding:0 var(--sp-2);
+}
 .grid2{display:flex; gap:var(--sp-3); flex-wrap:wrap;}
 .grid2 .row{flex:1 1 150px;}
 
-/* segmented control */
 .seg{
   display:flex; background:var(--track);
   border-radius:var(--r-ctl); padding:3px; gap:3px;
   margin-bottom:var(--sp-4);
 }
 .seg button{
-  flex:1; min-height:48px; font-size:15px; font-weight:600;
+  flex:1; min-height:48px; font-size:0.88rem; font-weight:600;
   border:none; border-radius:6px; background:none; color:var(--muted);
   cursor:pointer;
 }
@@ -169,85 +189,158 @@ input[type="text"]:focus{border-color:var(--ink); outline-offset:0;}
   box-shadow:0 1px 2px rgba(0,0,0,0.12);
 }
 
-/* callout note (full border, no side-stripes) */
 .note{
   border:1px solid var(--line-strong);
   background:var(--surface);
   border-radius:var(--r-ctl);
   padding:var(--sp-3) var(--sp-4);
-  font-size:15px; margin:var(--sp-4) 0 0;
+  font-size:0.88rem; margin:var(--sp-4) 0 0;
 }
 .note .fig{font-family:var(--font-money); font-weight:700;}
 
-/* buttons */
 .btn{
-  display:block; width:100%; min-height:52px; margin-bottom:var(--sp-3);
-  font-size:16px; font-weight:600;
+  display:flex; align-items:center; justify-content:center; gap:var(--sp-2);
+  width:100%; min-height:52px; margin-bottom:var(--sp-3);
+  font-size:0.94rem; font-weight:600;
   border-radius:var(--r-ctl); cursor:pointer;
   border:1.5px solid var(--line-strong); background:var(--surface); color:var(--ink);
 }
 .btn:hover{border-color:var(--ink);}
 .btn.primary{background:var(--brick); border-color:var(--brick); color:#fff;}
 .btn.primary:hover{background:var(--brick-press);}
-.chips{display:flex; gap:var(--sp-2); flex-wrap:wrap; margin-top:var(--sp-2);}
+.btn.small{width:auto; min-height:48px; padding:0 var(--sp-4); display:inline-flex; margin-bottom:0;}
+.btn .icon{width:18px; height:18px;}
+.chips{display:flex; gap:var(--sp-2); flex-wrap:wrap; margin-top:var(--sp-3);}
 .chip{
-  min-height:48px; min-width:72px; padding:0 var(--sp-3);
-  font-family:var(--font-money); font-size:16px; font-weight:600;
+  display:inline-flex; align-items:center; gap:6px;
+  min-height:48px; padding:0 var(--sp-4);
+  font-family:var(--font-money); font-size:0.94rem; font-weight:600;
   background:var(--surface); color:var(--ink);
   border:1.5px solid var(--line-strong); border-radius:999px; cursor:pointer;
 }
 .chip:hover{border-color:var(--ink);}
+.chip .icon{width:16px; height:16px;}
 
-/* ============ FEES ============ */
-.fee-cost{font-family:var(--font-money); font-size:17px; font-weight:700; margin-top:var(--sp-3);}
-.fee-cost .yr{color:var(--brick-ink);}
-.free-move{margin-top:var(--sp-3); padding-top:var(--sp-3); border-top:1px solid var(--line); font-size:15px;}
-.free-move b{color:var(--green);}
-
-/* ============ GOAL ============ */
-.goal-bar{
-  height:14px; background:var(--track); border-radius:999px;
-  overflow:hidden; margin:var(--sp-3) 0 var(--sp-2);
+/* toggle switch */
+.switch{
+  position:relative; width:52px; height:32px; flex:none;
+  background:var(--track); border:1.5px solid var(--line-strong); border-radius:999px;
+  cursor:pointer; transition:background 150ms ease-out;
 }
+.switch[aria-checked="true"]{background:var(--green); border-color:var(--green);}
+.switch::after{
+  content:""; position:absolute; top:2px; left:2px;
+  width:24px; height:24px; border-radius:50%;
+  background:#fff; box-shadow:0 1px 2px rgba(0,0,0,0.25);
+  transition:transform 150ms ease-out;
+}
+.switch[aria-checked="true"]::after{transform:translateX(20px);}
+
+/* ============ LIST ROWS (You / Settings) ============ */
+.rows{background:var(--surface); border:1px solid var(--line); border-radius:var(--r-card); overflow:hidden; margin-bottom:var(--sp-4);}
+.rowitem{
+  display:flex; align-items:center; gap:var(--sp-3);
+  width:100%; min-height:56px; padding:var(--sp-2) var(--sp-4);
+  background:none; border:none; border-bottom:1px solid var(--line);
+  font-size:0.94rem; font-weight:600; text-align:left; cursor:pointer;
+}
+.rowitem:last-child{border-bottom:none;}
+.rowitem:hover{background:var(--surface2);}
+.rowitem .grow{flex:1; min-width:0;}
+.rowitem .val{color:var(--muted); font-weight:400; font-size:0.88rem; white-space:nowrap;}
+.rowitem .icon.lead{color:var(--muted);}
+.rowitem .icon.chev{width:18px; height:18px; color:var(--muted);}
+.rowitem.caution{color:var(--caution);}
+.rowitem.caution .icon.lead{color:var(--caution);}
+.rowitem.static{cursor:default;}
+.rowitem.static:hover{background:none;}
+.group-h{
+  font-size:0.72rem; font-weight:700; letter-spacing:0.1em; text-transform:uppercase;
+  color:var(--muted); margin:var(--sp-5) 0 var(--sp-2); padding:0 var(--sp-1);
+}
+.you-head{display:flex; align-items:center; gap:var(--sp-4); padding:var(--sp-4) 0 var(--sp-2);}
+.avatar{
+  width:56px; height:56px; border-radius:50%; flex:none;
+  background:var(--brick); color:#fff;
+  display:flex; align-items:center; justify-content:center;
+  font-family:var(--font-display); font-size:1.4rem; font-weight:700;
+}
+.you-head .name{font-family:var(--font-display); font-size:1.25rem; font-weight:700;}
+.you-head .since{color:var(--muted); font-size:0.82rem;}
+.you-stats{color:var(--muted); font-size:0.88rem; margin-bottom:var(--sp-4);}
+.subhead{display:flex; align-items:center; gap:var(--sp-2); margin-bottom:var(--sp-3);}
+.subhead .back{
+  display:flex; align-items:center; justify-content:center;
+  width:48px; height:48px; margin-left:-12px;
+  background:none; border:none; cursor:pointer; color:var(--ink);
+}
+.subhead h2{margin:0;}
+.settings-foot{color:var(--muted); font-size:0.82rem; padding:var(--sp-4) var(--sp-1) 0;}
+.settings-foot p{margin-bottom:var(--sp-1);}
+
+/* ============ GOALS ============ */
+.goal-card .goal-top{display:flex; align-items:center; gap:var(--sp-2); margin-bottom:var(--sp-3);}
+.goal-card .goal-top b{flex:1; font-size:1rem; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+.iconbtn{
+  display:flex; align-items:center; justify-content:center;
+  width:48px; height:48px; flex:none;
+  background:none; border:none; border-radius:var(--r-ctl);
+  color:var(--muted); cursor:pointer;
+}
+.iconbtn:hover{background:var(--surface2); color:var(--ink);}
+.goal-bar{height:12px; background:var(--track); border-radius:999px; overflow:hidden; margin:var(--sp-3) 0 var(--sp-2);}
 .goal-fill{
-  height:100%; width:100%;
-  background:var(--green); border-radius:999px;
+  height:100%; width:100%; background:var(--green); border-radius:999px;
   transform:scaleX(0); transform-origin:left;
 }
 @media (prefers-reduced-motion: no-preference){
   .goal-fill{transition:transform 300ms cubic-bezier(0.22,1,0.36,1);}
 }
-.goal-read{display:flex; justify-content:space-between; font-family:var(--font-money); font-size:15px;}
+.goal-read{display:flex; justify-content:space-between; font-family:var(--font-money); font-size:0.88rem;}
 .goal-read .pct{font-weight:700; color:var(--green);}
-.goal-cheer{margin-top:var(--sp-3); font-size:15px;}
-.goal-weeks{margin-top:var(--sp-2); font-size:14px; color:var(--muted);}
+.goal-weeks{margin-top:var(--sp-2); font-size:0.82rem; color:var(--muted);}
+.plan-line{display:flex; align-items:center; gap:var(--sp-3); margin-top:var(--sp-3); padding-top:var(--sp-3); border-top:1px solid var(--line); font-size:0.88rem;}
+.plan-line .grow{flex:1;}
+.empty{
+  text-align:center; padding:var(--sp-6) var(--sp-4);
+}
+.empty p{color:var(--muted); margin-bottom:var(--sp-4);}
+.due-card{border-color:var(--brick);}
+.due-card .q{margin-bottom:var(--sp-2);}
+.due-actions{display:flex; gap:var(--sp-2);}
+.due-actions .btn{margin-bottom:0;}
 
-/* ============ BILLS FIRST ============ */
+/* ============ BILLS ALLOCATOR ============ */
 .bill{
-  display:flex; gap:var(--sp-3); align-items:flex-start;
   padding:var(--sp-3) 0;
   border-bottom:1px solid var(--line);
 }
 .bill:last-of-type{border-bottom:none;}
+.bill .toprow{display:flex; align-items:flex-start; gap:var(--sp-3);}
 .bill input[type="checkbox"]{
-  flex:none; width:26px; height:26px; margin:11px 0 0 0;
+  flex:none; width:26px; height:26px; margin:11px 0 0;
   accent-color:var(--brick); cursor:pointer;
 }
-.bill .ord{
-  flex:none; width:32px; min-height:48px;
-  font-family:var(--font-money); font-size:18px; font-weight:700;
-  color:var(--brick-ink); text-align:center; padding-top:10px;
-  visibility:hidden;
+.bill label.tap{display:flex; flex:1; cursor:pointer; margin:0; gap:var(--sp-3); font-weight:400; min-width:0;}
+.bill .what{flex:1; padding-top:6px; min-width:0;}
+.bill .what b{display:block; font-size:0.94rem;}
+.bill .why{font-size:0.82rem; color:var(--muted); margin-top:1px;}
+.bill .verdict-chip{
+  flex:none; align-self:flex-start; margin-top:9px;
+  font-family:var(--font-money); font-size:0.76rem; font-weight:700; letter-spacing:0.04em;
+  padding:4px 10px; border-radius:999px; white-space:nowrap;
 }
-.bill.owed .ord{visibility:visible;}
-.bill .what{flex:1; padding-top:9px;}
-.bill .what b{display:block; font-size:16px;}
-.bill .why{font-size:14px; color:var(--muted); margin-top:2px;}
-.bill label.tap{
-  display:flex; flex:1; cursor:pointer; margin:0; gap:var(--sp-3); font-weight:400;
+.bill .verdict-chip.paid{background:var(--green); color:#fff;}
+.bill .verdict-chip.part{border:1.5px solid var(--green); color:var(--green);}
+.bill .verdict-chip.waits{border:1.5px solid var(--line-strong); color:var(--muted);}
+.bill .owed-row{margin:var(--sp-2) 0 0 38px; max-width:220px;}
+.bill .script{
+  margin:var(--sp-2) 0 0 38px; font-size:0.82rem; color:var(--muted);
+  border-left:none; padding:var(--sp-2) var(--sp-3);
+  background:var(--surface2); border-radius:var(--r-ctl);
 }
 
-/* ============ CREDIT ============ */
+/* ============ LEARN ============ */
 details{
   background:var(--surface);
   border:1px solid var(--line); border-radius:var(--r-card);
@@ -256,29 +349,47 @@ details{
 summary{
   list-style:none; cursor:pointer;
   min-height:56px; padding:var(--sp-4);
-  font-weight:600; font-size:16px;
+  font-weight:600; font-size:0.94rem;
   display:flex; align-items:center; justify-content:space-between; gap:var(--sp-3);
 }
 summary::-webkit-details-marker{display:none;}
 summary::after{
-  content:"+"; font-family:var(--font-money); font-size:20px; font-weight:400;
+  content:"+"; font-family:var(--font-money); font-size:1.2rem; font-weight:400;
   color:var(--muted); flex:none;
 }
 details[open] summary::after{content:"−";}
-details .body{padding:0 var(--sp-4) var(--sp-4); font-size:15px;}
-details .body p{margin-bottom:var(--sp-3);}
+details .body{padding:0 var(--sp-4) var(--sp-4); font-size:0.88rem;}
+details .body p{margin-bottom:var(--sp-3); max-width:60ch;}
 details .body p:last-child{margin-bottom:0;}
-details .where{font-family:var(--font-money); font-size:14px; font-weight:600;}
+details .body ol, details .body ul{margin:0 0 var(--sp-3) 1.2em;}
+details .body li{margin-bottom:var(--sp-2); max-width:55ch;}
+.where{font-family:var(--font-money); font-size:0.85rem; font-weight:600;}
+.fee-cost{font-family:var(--font-money); font-size:1rem; font-weight:700; margin-top:var(--sp-3);}
+.fee-cost .yr{color:var(--brick-ink);}
+.free-move{margin-top:var(--sp-3); padding-top:var(--sp-3); border-top:1px solid var(--line); font-size:0.88rem;}
+.free-move b{color:var(--green);}
+.weightbar{display:flex; align-items:center; gap:var(--sp-2); margin-bottom:var(--sp-2); font-size:0.85rem;}
+.weightbar .wb-label{flex:1;}
+.weightbar .wb-track{flex:1.4; height:10px; background:var(--track); border-radius:999px; overflow:hidden;}
+.weightbar .wb-fill{height:100%; background:var(--brick); border-radius:999px;}
+.weightbar .wb-pct{font-family:var(--font-money); font-weight:700; width:44px; text-align:right;}
+.staff-confirm{
+  display:inline-block; font-size:0.72rem; font-weight:700; letter-spacing:0.04em;
+  padding:1px 8px; border-radius:999px;
+  border:1.5px dashed var(--line-strong); color:var(--muted);
+}
 
-/* ============ HELP ============ */
-.help-item{padding:var(--sp-3) 0; border-bottom:1px solid var(--line); font-size:15px;}
-.help-item:last-child{border-bottom:none;}
-.help-item b{font-weight:600;}
-.help-item .where{font-family:var(--font-money); font-size:14px; font-weight:600;}
-
-/* ============ THE TAPE (signature) ============ */
+/* ============ THE TAPE ============ */
+.scrim{
+  position:fixed; inset:0; z-index:var(--z-scrim);
+  background:var(--scrim); opacity:0; pointer-events:none;
+  transition:opacity 200ms ease-out;
+}
+.scrim.on{opacity:1; pointer-events:auto;}
 .tape{
-  position:fixed; left:0; right:0; bottom:0; z-index:var(--z-tape);
+  position:fixed; left:0; right:0;
+  bottom:calc(var(--tabbar-h) + env(safe-area-inset-bottom, 0px));
+  z-index:var(--z-tape);
   max-width:660px; margin:0 auto;
   filter:drop-shadow(0 -2px 10px rgba(0,0,0,0.18));
 }
@@ -290,40 +401,32 @@ details .where{font-family:var(--font-money); font-size:14px; font-weight:600;}
 }
 .tape-bar{
   display:flex; align-items:center; justify-content:space-between; gap:var(--sp-3);
-  width:100%; min-height:56px;
+  width:100%; min-height:48px;
   padding:var(--sp-2) var(--sp-4);
-  padding-bottom:calc(var(--sp-2) + env(safe-area-inset-bottom, 0px));
   background:var(--tape-bg); color:var(--tape-ink);
   border:none; cursor:pointer;
-  font-family:var(--font-money); font-size:16px; letter-spacing:0.04em;
+  font-family:var(--font-money); font-size:0.9rem; letter-spacing:0.04em;
 }
 .tape-bar .verdict-line{white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
 .tape-bar .amt{font-weight:700;}
-.tape-bar .amt.pos{color:var(--green);}
-.tape-bar .amt.neg{color:var(--brick-ink);}
-.tape-bar .car{flex:none; font-size:14px; color:var(--tape-muted);}
-@media (prefers-color-scheme: dark){
-  /* the tape stays paper: a lit receipt in a dark room */
-  .tape-bar .amt.pos{color:#1E6B45;}
-  .tape-bar .amt.neg{color:#9E3226;}
-}
+.tape-bar .amt.pos{color:#1E6B45;}
+.tape-bar .amt.neg{color:#9E3226;}
+.tape-bar .car{flex:none; font-size:0.78rem; color:var(--tape-muted);}
 .tape-sheet{
   background:var(--tape-bg); color:var(--tape-ink);
   display:grid; grid-template-rows:0fr;
 }
 .tape-inner{overflow:hidden; min-height:0;}
 .tape.open .tape-sheet{grid-template-rows:1fr;}
-.tape.open .tape-inner{max-height:min(64vh, 560px); overflow-y:auto;}
+.tape.open .tape-inner{max-height:min(62vh, 560px); overflow-y:auto;}
 @media (prefers-reduced-motion: no-preference){
   .tape-sheet{transition:grid-template-rows 260ms cubic-bezier(0.22,1,0.36,1);}
 }
-.receipt{
-  font-family:var(--font-money); font-size:14px;
-  padding:var(--sp-4) var(--sp-5) var(--sp-5);
-}
+.receipt{font-family:var(--font-money); font-size:0.82rem; padding:var(--sp-4) var(--sp-5) var(--sp-5);}
 .receipt h3{
-  font-size:12px; font-weight:700; letter-spacing:0.16em; text-align:center;
-  padding-bottom:var(--sp-3); margin-bottom:var(--sp-3);
+  font-family:var(--font-money);
+  font-size:0.72rem; font-weight:700; letter-spacing:0.16em; text-align:center;
+  padding-bottom:var(--sp-3); margin:0 0 var(--sp-3);
   border-bottom:1.5px dashed var(--tape-rule);
 }
 .receipt .line{display:flex; justify-content:space-between; gap:var(--sp-3); padding:2px 0;}
@@ -335,96 +438,162 @@ details .where{font-family:var(--font-money); font-size:14px; font-weight:600;}
 .receipt .sect{
   margin-top:var(--sp-4); padding-top:var(--sp-3);
   border-top:1.5px dashed var(--tape-rule);
-  color:var(--tape-muted); font-size:12px; letter-spacing:0.14em;
+  color:var(--tape-muted); font-size:0.7rem; letter-spacing:0.14em;
 }
 .stamp{
   display:inline-block; margin-top:var(--sp-4);
   padding:var(--sp-2) var(--sp-4);
   border:2.5px solid #1E6B45; color:#1E6B45; border-radius:4px;
-  font-weight:700; font-size:17px; letter-spacing:0.04em;
+  font-weight:700; font-size:1rem; letter-spacing:0.04em;
   transform:rotate(-1.2deg);
 }
 .stamp.neg{border-color:#9E3226; color:#9E3226;}
-.after{margin-top:var(--sp-3); font-family:var(--font-ui); font-size:14px; color:var(--tape-muted);}
+.after{margin-top:var(--sp-3); font-family:var(--font-ui); font-size:0.82rem; color:var(--tape-muted);}
 .tape-actions{padding:0 var(--sp-5) var(--sp-4);}
 .tape-actions .btn{border-color:var(--tape-rule); background:none; color:var(--tape-ink); margin-bottom:var(--sp-2);}
 .tape-actions .btn:hover{border-color:var(--tape-ink);}
-.saved-note{
-  font-family:var(--font-money); font-size:12px; letter-spacing:0.08em;
-  color:var(--tape-muted); text-align:center; padding-bottom:var(--sp-3);
-}
 .tape-foot{
-  font-family:var(--font-money); font-size:11px; letter-spacing:0.18em;
+  font-family:var(--font-money); font-size:0.66rem; letter-spacing:0.18em;
   color:var(--tape-muted); text-align:center;
-  padding:0 var(--sp-4) calc(var(--sp-4) + env(safe-area-inset-bottom, 0px));
-}
-@media (min-width: 900px){
-  .tape{left:auto; right:24px; bottom:0; width:380px; margin:0;}
+  padding:0 var(--sp-4) var(--sp-4);
 }
 
-/* ============ FOOTER ============ */
-footer{
-  margin-top:var(--sp-7); padding:var(--sp-5) 0 var(--sp-6);
-  border-top:1px solid var(--line-strong);
-  color:var(--muted); font-size:14px;
+/* ============ TOAST ============ */
+.toast{
+  position:fixed; left:50%; transform:translateX(-50%) translateY(8px);
+  bottom:calc(var(--tabbar-h) + 64px + env(safe-area-inset-bottom, 0px));
+  z-index:var(--z-toast);
+  background:var(--ink); color:var(--bg);
+  font-size:0.88rem; font-weight:600;
+  padding:10px 18px; border-radius:999px;
+  opacity:0; pointer-events:none;
+  transition:opacity 180ms ease-out, transform 180ms ease-out;
 }
-footer p{margin-bottom:var(--sp-2); max-width:60ch;}
+.toast.show{opacity:1; transform:translateX(-50%) translateY(0);}
+
+/* ============ WIDE LAYOUT ============ */
+@media (min-width: 900px){
+  body{padding-bottom:120px; padding-top:60px;}
+  .tabbar{
+    position:fixed; top:0; bottom:auto; z-index:var(--z-rail);
+    justify-content:flex-start; gap:var(--sp-2);
+    background:var(--bg); border-top:none; border-bottom:1px solid var(--line);
+    padding:0 calc((100% - 660px) / 2);
+  }
+  .tabbar button{
+    flex:none; max-width:none; flex-direction:row; gap:8px;
+    min-height:52px; padding:0 var(--sp-3);
+    font-size:0.88rem;
+    border-bottom:3px solid transparent;
+  }
+  .tabbar button[aria-selected="true"]{border-bottom-color:var(--brick);}
+  .tabbar .badge{top:10px; right:2px;}
+  .tape{bottom:0;}
+}
+@media (min-width: 1160px){
+  body{padding-right:440px; padding-bottom:48px;}
+  .tabbar{padding:0 calc((100% - 440px - 660px) / 2);}
+  .tape{left:auto; right:24px; bottom:0; width:392px; margin:0;}
+}
 
 /* ============ PRINT ============ */
 @media print{
-  body{background:#fff; color:#000; padding-bottom:0;}
-  .rail-wrap, .lang-btn, .tape-bar .car, .tape-actions, .chips, .seg{display:none;}
+  body{background:#fff; color:#000; padding:0;}
+  .tabbar, .tape-bar .car, .tape-actions, .chips, .seg, .scrim, .toast{display:none;}
   section[role="tabpanel"][hidden]{display:block !important;}
-  .tape{position:static; filter:none; max-width:none;}
-  .tape-sheet{max-height:none !important; overflow:visible;}
+  .tape{position:static; filter:none; max-width:none; width:auto;}
+  .tape-sheet{grid-template-rows:1fr !important;}
+  .tape-inner{max-height:none !important; overflow:visible;}
   .card, details{border-color:#000;}
 }
 </style>
 </head>
 <body>
+<svg hidden aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><symbol id="i-accessibility" viewBox="0 0 24 24"><circle cx="16" cy="4" r="1" />
+  <path d="m18 19 1-7-6 1" />
+  <path d="m5 8 3-3 5.5 3-2.36 3.5" />
+  <path d="M4.24 14.5a5 5 0 0 0 6.88 6" />
+  <path d="M13.76 17.5a5 5 0 0 0-6.88-6" /></symbol><symbol id="i-bell" viewBox="0 0 24 24"><path d="M10.268 21a2 2 0 0 0 3.464 0" />
+  <path d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326" /></symbol><symbol id="i-book-open" viewBox="0 0 24 24"><path d="M12 7v14" />
+  <path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z" /></symbol><symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5" /></symbol><symbol id="i-chevron-left" viewBox="0 0 24 24"><path d="m15 18-6-6 6-6" /></symbol><symbol id="i-chevron-right" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6" /></symbol><symbol id="i-circle-user" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" />
+  <circle cx="12" cy="10" r="3" />
+  <path d="M7 20.662V19a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v1.662" /></symbol><symbol id="i-download" viewBox="0 0 24 24"><path d="M12 15V3" />
+  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+  <path d="m7 10 5 5 5-5" /></symbol><symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" />
+  <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" />
+  <path d="M2 12h20" /></symbol><symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" /></symbol><symbol id="i-life-buoy" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" />
+  <path d="m4.93 4.93 4.24 4.24" />
+  <path d="m14.83 9.17 4.24-4.24" />
+  <path d="m14.83 14.83 4.24 4.24" />
+  <path d="m9.17 14.83-4.24 4.24" />
+  <circle cx="12" cy="12" r="4" /></symbol><symbol id="i-list-ordered" viewBox="0 0 24 24"><path d="M11 5h10" />
+  <path d="M11 12h10" />
+  <path d="M11 19h10" />
+  <path d="M4 4h1v5" />
+  <path d="M4 9h2" />
+  <path d="M6.5 20H3.4c0-1 2.6-1.925 2.6-3.5a1.5 1.5 0 0 0-2.6-1.02" /></symbol><symbol id="i-pencil" viewBox="0 0 24 24"><path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z" />
+  <path d="m15 5 4 4" /></symbol><symbol id="i-phone" viewBox="0 0 24 24"><path d="M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233 14 14 0 0 0 6.392 6.384" /></symbol><symbol id="i-plus" viewBox="0 0 24 24"><path d="M5 12h14" />
+  <path d="M12 5v14" /></symbol><symbol id="i-printer" viewBox="0 0 24 24"><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2" />
+  <path d="M6 9V3a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v6" />
+  <rect x="6" y="14" width="12" height="8" rx="1" /></symbol><symbol id="i-settings" viewBox="0 0 24 24"><path d="M9.671 4.136a2.34 2.34 0 0 1 4.659 0 2.34 2.34 0 0 0 3.319 1.915 2.34 2.34 0 0 1 2.33 4.033 2.34 2.34 0 0 0 0 3.831 2.34 2.34 0 0 1-2.33 4.033 2.34 2.34 0 0 0-3.319 1.915 2.34 2.34 0 0 1-4.659 0 2.34 2.34 0 0 0-3.32-1.915 2.34 2.34 0 0 1-2.33-4.033 2.34 2.34 0 0 0 0-3.831A2.34 2.34 0 0 1 6.35 6.051a2.34 2.34 0 0 0 3.319-1.915" />
+  <circle cx="12" cy="12" r="3" /></symbol><symbol id="i-shield" viewBox="0 0 24 24"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z" /></symbol><symbol id="i-sun-moon" viewBox="0 0 24 24"><path d="M12 2v2" />
+  <path d="M14.837 16.385a6 6 0 1 1-7.223-7.222c.624-.147.97.66.715 1.248a4 4 0 0 0 5.26 5.259c.589-.255 1.396.09 1.248.715" />
+  <path d="M16 12a4 4 0 0 0-4-4" />
+  <path d="m19 5-1.256 1.256" />
+  <path d="M20 12h2" /></symbol><symbol id="i-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" />
+  <circle cx="12" cy="12" r="6" />
+  <circle cx="12" cy="12" r="2" /></symbol><symbol id="i-trash-2" viewBox="0 0 24 24"><path d="M10 11v6" />
+  <path d="M14 11v6" />
+  <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6" />
+  <path d="M3 6h18" />
+  <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" /></symbol><symbol id="i-type" viewBox="0 0 24 24"><path d="M12 4v16" />
+  <path d="M4 7V5a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v2" />
+  <path d="M9 20h6" /></symbol><symbol id="i-users" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+  <path d="M16 3.128a4 4 0 0 1 0 7.744" />
+  <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
+  <circle cx="9" cy="7" r="4" /></symbol><symbol id="i-wallet" viewBox="0 0 24 24"><path d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1" />
+  <path d="M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4" /></symbol><symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18" />
+  <path d="m6 6 12 12" /></symbol></svg>
 <div class="wrap">
 
-<header>
-  <div class="masthead">
-    <h1 id="app-title">Money Basics</h1>
-    <button type="button" class="lang-btn" id="lang-btn" aria-label="Cambiar a español">ES</button>
-  </div>
-  <p class="promise"><span data-i18n="promise1">Plain-language money tools from a Hoboken Shelter volunteer.</span> <strong data-i18n="promise2">Nothing you type leaves this phone.</strong></p>
+<header class="app">
+  <h1 class="wordmark">Money Basics</h1>
+  <span class="saved-flash" id="saved-flash" aria-live="polite"></span>
 </header>
 
-<noscript><p class="note" style="margin-bottom:24px">This tool needs JavaScript turned on. Once the page has loaded, it works without internet.</p></noscript>
+<noscript><p class="note" style="margin-bottom:24px">Turn on JavaScript to use this tool. After the page loads once, it works without internet.</p></noscript>
 
-<nav class="rail-wrap"><div class="rail" role="tablist" aria-label="Sections">
-  <button type="button" class="tab" id="tab-budget" role="tab" aria-selected="true"  aria-controls="panel-budget" data-i18n="tabBudget">Budget</button>
-  <button type="button" class="tab" id="tab-fees"   role="tab" aria-selected="false" aria-controls="panel-fees"   data-i18n="tabFees">Fee check</button>
-  <button type="button" class="tab" id="tab-goal"   role="tab" aria-selected="false" aria-controls="panel-goal"   data-i18n="tabGoal">Goal</button>
-  <button type="button" class="tab" id="tab-bills"  role="tab" aria-selected="false" aria-controls="panel-bills"  data-i18n="tabBills">Bills first</button>
-  <button type="button" class="tab" id="tab-credit" role="tab" aria-selected="false" aria-controls="panel-credit" data-i18n="tabCredit">Credit</button>
-  <button type="button" class="tab" id="tab-help"   role="tab" aria-selected="false" aria-controls="panel-help"   data-i18n="tabHelp">Free help</button>
-</div></nav>
+<div class="card due-card" id="reminder-banner" hidden>
+  <p class="q" id="reminder-text"></p>
+  <div class="due-actions">
+    <button type="button" class="btn small" id="reminder-dismiss" data-i18n="remGot">Got it</button>
+  </div>
+</div>
 
 <main>
 
 <!-- ================= BUDGET ================= -->
 <section id="panel-budget" role="tabpanel" aria-labelledby="tab-budget" tabindex="-1">
-  <h2 data-i18n="budgetH">Plan the week ahead</h2>
-  <p class="lede" data-i18n="budgetLede">Put in what comes in and what has to go out. The tape at the bottom keeps the math. Tap it any time.</p>
+  <h2 id="greet" data-i18n="budgetH">Plan your week</h2>
+  <p class="lede" data-i18n="budgetLede">Enter what comes in and what you pay. The tape at the bottom shows what's left.</p>
+
+  <div class="chips" id="preset-chips" style="margin:0 0 var(--sp-3)"></div>
 
   <div class="card">
-    <p class="q" data-i18n="qPay">How does your pay come in?</p>
+    <p class="q" data-i18n="qPay">How do you get paid?</p>
     <div class="seg" role="group" aria-label="Pay type">
-      <button type="button" id="mode-steady" aria-pressed="true" data-i18n="modeSteady">About the same each week</button>
+      <button type="button" id="mode-steady" aria-pressed="true" data-i18n="modeSteady">Same most weeks</button>
       <button type="button" id="mode-varies" aria-pressed="false" data-i18n="modeVaries">It changes</button>
     </div>
-
     <div id="steady-box">
       <div class="row">
-        <label for="inc-steady"><span data-i18n="incSteadyL">Money in, a typical week</span>
+        <label for="inc-steady"><span data-i18n="incSteadyL">Money in for one week</span>
           <span class="hint" data-i18n="incSteadyHint">Paid monthly? Divide by 4.</span></label>
         <div class="field"><span class="cur" aria-hidden="true">$</span><input type="text" inputmode="decimal" id="inc-steady" placeholder="0"></div>
       </div>
     </div>
-
     <div id="varies-box" hidden>
       <div class="grid2">
         <div class="row"><label for="w1" data-i18n="w1L">Last week</label>
@@ -438,205 +607,437 @@ footer p{margin-bottom:var(--sp-2); max-width:60ch;}
         <div class="row"><label for="w4" data-i18n="w4L">4 weeks ago</label>
           <div class="field"><span class="cur" aria-hidden="true">$</span><input type="text" inputmode="decimal" id="w4" placeholder="0"></div></div>
       </div>
-      <p class="note"><span data-i18n="lowNote1">When pay jumps around, plan on your lowest week:</span> <span class="fig" id="low-fig">$0</span><span data-i18n="lowNote2">. Anything above that is cushion, not spending money.</span></p>
+      <p class="note"><span data-i18n="lowNote1">Plan with your lowest week:</span> <span class="fig" id="low-fig">$0</span><span data-i18n="lowNote2">. Money above that is backup, not spending.</span></p>
     </div>
   </div>
 
   <div class="card">
-    <p class="q" data-i18n="qEss">What has to be paid, most important first</p>
-    <div class="row"><label for="ess-housing" data-i18n="essHousing">Housing: rent, program fees (per week)</label>
+    <p class="q" data-i18n="qEss">What you pay each week</p>
+    <div class="row"><label for="ess-housing" data-i18n="essHousing">Housing: rent or program fee</label>
       <div class="field"><span class="cur" aria-hidden="true">$</span><input type="text" inputmode="decimal" id="ess-housing" placeholder="0"></div></div>
-    <div class="row"><label for="ess-food" data-i18n="essFood">Food (per week)</label>
+    <div class="row"><label for="ess-food" data-i18n="essFood">Food</label>
       <div class="field"><span class="cur" aria-hidden="true">$</span><input type="text" inputmode="decimal" id="ess-food" placeholder="0"></div></div>
-    <div class="row"><label for="ess-transport" data-i18n="essTransport">Getting to work: bus, PATH, gas (per week)</label>
+    <div class="row"><label for="ess-transport" data-i18n="essTransport">Getting to work: bus, PATH, gas</label>
       <div class="field"><span class="cur" aria-hidden="true">$</span><input type="text" inputmode="decimal" id="ess-transport" placeholder="0"></div></div>
-    <div class="row"><label for="ess-phone" data-i18n="essPhone">Phone (per week)</label>
+    <div class="row"><label for="ess-phone" data-i18n="essPhone">Phone</label>
       <div class="field"><span class="cur" aria-hidden="true">$</span><input type="text" inputmode="decimal" id="ess-phone" placeholder="0"></div></div>
-    <div class="row"><label for="ess-health" data-i18n="essHealth">Medicine &amp; health (per week)</label>
+    <div class="row"><label for="ess-health" data-i18n="essHealth">Medicine and health</label>
       <div class="field"><span class="cur" aria-hidden="true">$</span><input type="text" inputmode="decimal" id="ess-health" placeholder="0"></div></div>
-    <div class="row"><label for="ess-other" data-i18n="essOther">Everything else: laundry, clothes, all of it (per week)</label>
+    <div class="row"><label for="ess-other" data-i18n="essOther">Everything else: laundry, clothes, the rest</label>
       <div class="field"><span class="cur" aria-hidden="true">$</span><input type="text" inputmode="decimal" id="ess-other" placeholder="0"></div></div>
   </div>
+
+  <button type="button" class="btn" id="btn-save-preset">
+    <svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg>
+    <span data-i18n="savePreset">Save this budget</span>
+  </button>
 </section>
 
-<!-- ================= FEES ================= -->
-<section id="panel-fees" role="tabpanel" aria-labelledby="tab-fees" tabindex="-1" hidden>
-  <h2 data-i18n="feesH">Little fees, real money</h2>
-  <p class="lede" data-i18n="feesLede">These prices are typical. Change any number to match yours. The free way around each fee is under it.</p>
-
-  <div class="card">
-    <p class="q" data-i18n="qChk">Cash your paycheck at a store or check casher?</p>
-    <div class="row"><label for="chk-amt" data-i18n="chkAmtL">Paycheck amount</label>
-      <div class="field"><span class="cur" aria-hidden="true">$</span><input type="text" inputmode="decimal" id="chk-amt" placeholder="0"></div></div>
-    <div class="grid2">
-      <div class="row"><label for="chk-times" data-i18n="chkTimesL">Times per month</label>
-        <input type="text" inputmode="decimal" id="chk-times" placeholder="0"></div>
-      <div class="row"><label for="chk-pct"><span data-i18n="chkPctL">Their cut (%)</span>
-        <span class="hint" data-i18n="chkPctHint">Stores charge about 1–6%.</span></label>
-        <input type="text" inputmode="decimal" id="chk-pct" value="2"></div>
-    </div>
-    <p class="fee-cost"><span data-i18n="costYear">Cost per year:</span> <span class="yr" id="chk-yr">$0</span></p>
-    <p class="free-move"><b data-i18n="freeMove">The free move:</b> <span data-i18n="chkFree">a BankOn-approved account cashes your pay free with direct deposit: no minimum balance, no overdraft. Find one at bankon.org.</span></p>
-  </div>
-
-  <div class="card">
-    <p class="q" data-i18n="qMO">Buy money orders to pay bills?</p>
-    <div class="grid2">
-      <div class="row"><label for="mo-times" data-i18n="moTimesL">Money orders per month</label>
-        <input type="text" inputmode="decimal" id="mo-times" placeholder="0"></div>
-      <div class="row"><label for="mo-fee" data-i18n="moFeeL">Cost each ($)</label>
-        <input type="text" inputmode="decimal" id="mo-fee" value="1.75"></div>
-    </div>
-    <p class="fee-cost"><span data-i18n="costYear">Cost per year:</span> <span class="yr" id="mo-yr">$0</span></p>
-    <p class="free-move"><b data-i18n="freeMove">The free move:</b> <span data-i18n="moFree">a basic checking account pays the same bills free, online or by check.</span></p>
-  </div>
-
-  <div class="card">
-    <p class="q" data-i18n="qOD">Get hit with overdraft charges?</p>
-    <div class="grid2">
-      <div class="row"><label for="od-times" data-i18n="odTimesL">Times per month</label>
-        <input type="text" inputmode="decimal" id="od-times" placeholder="0"></div>
-      <div class="row"><label for="od-fee" data-i18n="odFeeL">Charge each ($)</label>
-        <input type="text" inputmode="decimal" id="od-fee" value="27"></div>
-    </div>
-    <p class="fee-cost"><span data-i18n="costYear">Cost per year:</span> <span class="yr" id="od-yr">$0</span></p>
-    <p class="free-move"><b data-i18n="freeMove">The free move:</b> <span data-i18n="odFree">ask the bank to turn overdraft OFF. Then the card just declines, and a decline costs nothing.</span></p>
-  </div>
-
-  <div class="card">
-    <p class="q" data-i18n="qPP">Use a prepaid card?</p>
-    <div class="grid2">
-      <div class="row"><label for="pp-fee" data-i18n="ppFeeL">Monthly card fee ($)</label>
-        <input type="text" inputmode="decimal" id="pp-fee" placeholder="0"></div>
-      <div class="row"><label for="atm-times" data-i18n="atmTimesL">Out-of-network ATM visits per month</label>
-        <input type="text" inputmode="decimal" id="atm-times" placeholder="0"></div>
-    </div>
-    <div class="row"><label for="atm-fee" data-i18n="atmFeeL">ATM fee each ($)</label>
-      <input type="text" inputmode="decimal" id="atm-fee" value="3"></div>
-    <p class="fee-cost"><span data-i18n="costYear">Cost per year:</span> <span class="yr" id="pp-yr">$0</span></p>
-    <p class="free-move"><b data-i18n="freeMove">The free move:</b> <span data-i18n="ppFree">BankOn accounts come with free ATM networks and no monthly fee. bankon.org.</span></p>
-  </div>
-</section>
-
-<!-- ================= GOAL ================= -->
-<section id="panel-goal" role="tabpanel" aria-labelledby="tab-goal" tabindex="-1" hidden>
-  <h2 data-i18n="goalH">One goal, tracked</h2>
-  <p class="lede" data-i18n="goalLede">Pick one thing worth saving for. Small and steady beats big and never.</p>
-
-  <div class="card">
-    <div class="row"><label for="goal-name" data-i18n="goalNameL">What are you saving for?</label>
-      <input type="text" id="goal-name" maxlength="40" placeholder="" autocomplete="off"></div>
-    <div class="grid2">
-      <div class="row"><label for="goal-target" data-i18n="goalTargetL">Goal amount</label>
-        <div class="field"><span class="cur" aria-hidden="true">$</span><input type="text" inputmode="decimal" id="goal-target" placeholder="0"></div></div>
-      <div class="row"><label for="goal-saved" data-i18n="goalSavedL">Saved so far</label>
-        <div class="field"><span class="cur" aria-hidden="true">$</span><input type="text" inputmode="decimal" id="goal-saved" placeholder="0"></div></div>
-    </div>
-    <div class="chips" role="group" aria-label="Add to savings">
-      <button type="button" class="chip" data-add="5">+ $5</button>
-      <button type="button" class="chip" data-add="10">+ $10</button>
-      <button type="button" class="chip" data-add="20">+ $20</button>
-    </div>
-
-    <div class="goal-bar" role="img" id="goal-bar-wrap" aria-label="">
-      <div class="goal-fill" id="goal-fill"></div>
-    </div>
-    <div class="goal-read">
-      <span class="pct" id="goal-pct">0%</span>
-      <span id="goal-left">$0</span>
-    </div>
-    <p class="goal-cheer" id="goal-cheer" aria-live="polite"></p>
-    <p class="goal-weeks" id="goal-weeks"></p>
-  </div>
-
-  <div class="card">
-    <p class="q" data-i18n="goalWhereH">Where to keep it</p>
-    <p style="font-size:15px" data-i18n="goalWhere">Cash gets spent and can be lost. A BankOn-approved savings account is free, has no minimum, and the money is still yours the same day you need it: bankon.org.</p>
-  </div>
-</section>
-
-<!-- ================= BILLS FIRST ================= -->
+<!-- ================= BILLS ================= -->
 <section id="panel-bills" role="tabpanel" aria-labelledby="tab-bills" tabindex="-1" hidden>
-  <h2 data-i18n="billsH">When money is short, pay in this order</h2>
-  <p class="lede" data-i18n="billsLede">Check what you owe. The order protects your housing, your health, and your job: the things that can't wait.</p>
+  <h2 data-i18n="billsH">What to pay first</h2>
+  <p class="lede" data-i18n="billsLede">Enter the cash you have and check what you owe. The list shows what to pay now and what can wait.</p>
+
+  <div class="card">
+    <div class="row">
+      <label for="bills-cash" data-i18n="cashL">Cash you have right now</label>
+      <div class="field"><span class="cur" aria-hidden="true">$</span><input type="text" inputmode="decimal" id="bills-cash" placeholder="0"></div>
+    </div>
+  </div>
 
   <div class="card" id="bill-list"><!-- rows built by JS --></div>
 
   <div class="note">
-    <span data-i18n="billsNote">Short this month? Pay down the list until the money runs out. Then call the ones you can't pay, before the due date. Most will work with you. 211 connects you to bill help.</span>
+    <span data-i18n="billsNote">Can't cover everything? Pay in this order until the cash runs out. Then call the rest before the due date. Most companies will set up a plan. Call 211 for bill help.</span>
   </div>
 </section>
 
-<!-- ================= CREDIT ================= -->
-<section id="panel-credit" role="tabpanel" aria-labelledby="tab-credit" tabindex="-1" hidden>
-  <h2 data-i18n="creditH">Credit, in plain language</h2>
-  <p class="lede" data-i18n="creditLede">No mystery, no lecture. What a score is, how to see yours free, and how to build one from zero.</p>
+<!-- ================= GOALS ================= -->
+<section id="panel-goals" role="tabpanel" aria-labelledby="tab-goals" tabindex="-1" hidden>
+  <h2 data-i18n="goalsH">Your goals</h2>
+  <p class="lede" data-i18n="goalsLede">Pick something to save for. Set an amount you can add each week.</p>
+
+  <div id="goal-due-box"></div>
+  <div id="goal-list"></div>
+
+  <div class="empty" id="goals-empty" hidden>
+    <p data-i18n="goalsEmpty">No goals yet.</p>
+    <button type="button" class="btn small primary" id="btn-add-goal-empty">
+      <svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg>
+      <span data-i18n="addGoal">Add a goal</span>
+    </button>
+  </div>
+  <button type="button" class="btn" id="btn-add-goal">
+    <svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg>
+    <span data-i18n="addGoal">Add a goal</span>
+  </button>
+
+  <div class="card">
+    <p class="q" data-i18n="goalWhereH">Where to keep savings</p>
+    <p style="font-size:0.88rem" data-i18n="goalWhere">Cash at hand gets spent. A BankOn savings account is free, has no minimum, and you can take the money out the day you need it. Find one at bankon.org.</p>
+  </div>
+</section>
+
+<!-- ================= LEARN ================= -->
+<section id="panel-learn" role="tabpanel" aria-labelledby="tab-learn" tabindex="-1" hidden>
+  <h2 data-i18n="learnH">Learn</h2>
+  <p class="lede" data-i18n="learnLede">Short reads. Each one saves you money or stress.</p>
+
+  <h3 data-i18n="feesH">Stop losing money to fees</h3>
 
   <details>
-    <summary data-i18n="cr1H">What a credit score actually is</summary>
+    <summary data-i18n="qChk">Do you cash your paycheck at a store?</summary>
     <div class="body">
-      <p data-i18n="cr1a">It's a number from 300 to 850 that summarizes one thing: do you pay what you owe, on time. Landlords, phone companies, and lenders check it.</p>
-      <p data-i18n="cr1b">It is not a judgment of you. It's a payment history, and histories can be rebuilt, starting any time.</p>
+      <p class="hint" data-i18n="chkDef">Check cashing: a store turns your paycheck into cash and keeps a cut, often 1 to 6 percent.</p>
+      <div class="row"><label for="chk-amt" data-i18n="chkAmtL">Paycheck amount</label>
+        <div class="field"><span class="cur" aria-hidden="true">$</span><input type="text" inputmode="decimal" id="chk-amt" placeholder="0"></div></div>
+      <div class="grid2">
+        <div class="row"><label for="chk-times" data-i18n="chkTimesL">Times per month</label>
+          <input type="text" inputmode="decimal" id="chk-times" placeholder="0"></div>
+        <div class="row"><label for="chk-pct" data-i18n="chkPctL">Their cut (%)</label>
+          <input type="text" inputmode="decimal" id="chk-pct" value="2"></div>
+      </div>
+      <p class="fee-cost"><span data-i18n="costYear">Cost per year:</span> <span class="yr" id="chk-yr">$0</span></p>
+      <p class="free-move"><b data-i18n="freeMove">Free instead:</b> <span data-i18n="chkFree">a BankOn account with direct deposit cashes your pay at no cost. No minimum, no overdraft. Find one at bankon.org.</span></p>
     </div>
   </details>
 
   <details>
-    <summary data-i18n="cr2H">See your report free, the official way</summary>
+    <summary data-i18n="qMO">Do you buy money orders?</summary>
     <div class="body">
-      <p><span data-i18n="cr2a">Every week, free, from the only official site:</span> <span class="where">annualcreditreport.com</span><span data-i18n="cr2b">. Lookalike sites charge money or sell you things. Skip them.</span></p>
-      <p data-i18n="cr2c">The report shows what's being said about you. The score costs extra there; you usually don't need it; fixing the report fixes the score.</p>
+      <p class="hint" data-i18n="moDef">Money order: a paper payment you buy with cash and mail like a check. Each one costs a fee.</p>
+      <div class="grid2">
+        <div class="row"><label for="mo-times" data-i18n="moTimesL">Money orders per month</label>
+          <input type="text" inputmode="decimal" id="mo-times" placeholder="0"></div>
+        <div class="row"><label for="mo-fee" data-i18n="moFeeL">Cost of each ($)</label>
+          <input type="text" inputmode="decimal" id="mo-fee" value="1.75"></div>
+      </div>
+      <p class="fee-cost"><span data-i18n="costYear">Cost per year:</span> <span class="yr" id="mo-yr">$0</span></p>
+      <p class="free-move"><b data-i18n="freeMove">Free instead:</b> <span data-i18n="moFree">a basic checking account pays the same bills at no cost, online or by check.</span></p>
     </div>
   </details>
 
   <details>
-    <summary data-i18n="cr3H">Build from zero with a secured card</summary>
+    <summary data-i18n="qOD">Do overdraft fees hit you?</summary>
     <div class="body">
-      <p data-i18n="cr3a">A secured card is a credit card with training wheels: you put down a deposit (often $200), and that's your limit. The bank risks nothing, so approval is easy even with no history.</p>
-      <p data-i18n="cr3b">Use it for one small thing, like a phone bill, and pay it in full every month. In about six months, there's a payment history where there was none.</p>
+      <p class="hint" data-i18n="odDef">Overdraft: the bank pays a charge you can't cover, then adds a fee, usually about $27.</p>
+      <div class="grid2">
+        <div class="row"><label for="od-times" data-i18n="odTimesL">Times per month</label>
+          <input type="text" inputmode="decimal" id="od-times" placeholder="0"></div>
+        <div class="row"><label for="od-fee" data-i18n="odFeeL">Fee each time ($)</label>
+          <input type="text" inputmode="decimal" id="od-fee" value="27"></div>
+      </div>
+      <p class="fee-cost"><span data-i18n="costYear">Cost per year:</span> <span class="yr" id="od-yr">$0</span></p>
+      <p class="free-move"><b data-i18n="freeMove">Free instead:</b> <span data-i18n="odFree">ask the bank to turn overdraft off. Then the card declines and you pay nothing.</span></p>
     </div>
   </details>
 
   <details>
-    <summary data-i18n="cr4H">Fix mistakes: free, and they're common</summary>
+    <summary data-i18n="qPP">Do you use a prepaid card?</summary>
     <div class="body">
-      <p data-i18n="cr4a">Reports have errors more often than you'd think: debts that aren't yours, things paid long ago. Disputing is free, online or by mail, and the bureau must answer within 30 days.</p>
-      <p data-i18n="cr4b">Never pay a "credit repair" company. Everything they charge for, you can do free.</p>
+      <p class="hint" data-i18n="ppDef">Prepaid card: a card you load money onto before you spend. Many charge monthly and ATM fees.</p>
+      <div class="grid2">
+        <div class="row"><label for="pp-fee" data-i18n="ppFeeL">Monthly card fee ($)</label>
+          <input type="text" inputmode="decimal" id="pp-fee" placeholder="0"></div>
+        <div class="row"><label for="atm-times" data-i18n="atmTimesL">ATM visits per month</label>
+          <input type="text" inputmode="decimal" id="atm-times" placeholder="0"></div>
+      </div>
+      <div class="row"><label for="atm-fee" data-i18n="atmFeeL">ATM fee each time ($)</label>
+        <input type="text" inputmode="decimal" id="atm-fee" value="3"></div>
+      <p class="fee-cost"><span data-i18n="costYear">Cost per year:</span> <span class="yr" id="pp-yr">$0</span></p>
+      <p class="free-move"><b data-i18n="freeMove">Free instead:</b> <span data-i18n="ppFree">BankOn accounts have free ATM networks and no monthly fee. bankon.org.</span></p>
+    </div>
+  </details>
+
+  <h3 data-i18n="creditH">Credit</h3>
+  <p class="lede" data-i18n="creditLede">What a credit score is, how to check yours free, and how to build one from nothing.</p>
+
+  <details>
+    <summary data-i18n="cr1H">What a credit score is</summary>
+    <div class="body">
+      <p data-i18n="cr1a">A number from 300 to 850. It tracks one thing: do you pay what you owe on time. Landlords, phone companies, and lenders check it before they say yes.</p>
+      <p data-i18n="cr1b">Here's what makes up the number:</p>
+      <div class="weightbar"><span class="wb-label" data-i18n="wb1">Paying on time</span><span class="wb-track"><span class="wb-fill" style="width:35%"></span></span><span class="wb-pct">~35%</span></div>
+      <div class="weightbar"><span class="wb-label" data-i18n="wb2">How much of your limit you use</span><span class="wb-track"><span class="wb-fill" style="width:30%"></span></span><span class="wb-pct">~30%</span></div>
+      <div class="weightbar"><span class="wb-label" data-i18n="wb3">Age of your accounts</span><span class="wb-track"><span class="wb-fill" style="width:15%"></span></span><span class="wb-pct">~15%</span></div>
+      <div class="weightbar"><span class="wb-label" data-i18n="wb4">New applications</span><span class="wb-track"><span class="wb-fill" style="width:10%"></span></span><span class="wb-pct">~10%</span></div>
+      <div class="weightbar"><span class="wb-label" data-i18n="wb5">Types of accounts</span><span class="wb-track"><span class="wb-fill" style="width:10%"></span></span><span class="wb-pct">~10%</span></div>
+      <p data-i18n="cr1c">Paying on time is the biggest piece. Start there.</p>
     </div>
   </details>
 
   <details>
-    <summary data-i18n="cr5H">What helps, what hurts</summary>
+    <summary data-i18n="cr2H">Check your report free</summary>
     <div class="body">
-      <p data-i18n="cr5a">Helps most: paying on time, every time, even the minimum. Keeping old accounts open. Using only a little of your limit.</p>
-      <p data-i18n="cr5b">Hurts most: missed payments, collections, maxed-out cards. One late payment fades; a pattern doesn't.</p>
+      <p><span data-i18n="cr2a">One official site gives you your report free every week:</span> <span class="where">annualcreditreport.com</span><span data-i18n="cr2b">. Other sites with similar names charge money. Close them.</span></p>
+      <p data-i18n="cr2c">The report lists your accounts and payment history. Errors on it are common, and fixing them is free. See "Fix errors" below.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary data-i18n="cr3H">Build a score from nothing, in about 6 months</summary>
+    <div class="body">
+      <p class="hint" data-i18n="secDef">Secured card: a credit card backed by your own deposit.</p>
+      <ol>
+        <li data-i18n="cr3s1">Put down a deposit at a bank. Most secured cards start at $200.</li>
+        <li data-i18n="cr3s2">You get a card with a $200 limit. The deposit covers the bank, so approval is easy with no history.</li>
+        <li data-i18n="cr3s3">Put one small bill on it, like your phone. Keep the balance under $60. That's a third of the limit.</li>
+        <li data-i18n="cr3s4">Pay the full balance every month, on time.</li>
+        <li data-i18n="cr3s5">After about 6 months of this, you'll have your first score. Ask the bank when you get the deposit back.</li>
+      </ol>
+      <p><span data-i18n="cr3boost">Also free: Experian Boost counts your phone and utility payments toward your credit file. Sign up at</span> <span class="where">experian.com/boost</span><span data-i18n="cr3rent">. Some landlords can report your rent too. Ask yours.</span></p>
+    </div>
+  </details>
+
+  <details>
+    <summary data-i18n="cr4H">Fix errors on your report</summary>
+    <div class="body">
+      <p data-i18n="cr4a">Reports often list debts that aren't yours or bills you already paid. Disputing an error is free.</p>
+      <ol>
+        <li data-i18n="cr4s1">Get your report at annualcreditreport.com.</li>
+        <li data-i18n="cr4s2">Mark anything wrong.</li>
+        <li data-i18n="cr4s3">File a dispute on the bureau's website (Equifax, Experian, or TransUnion) or by mail.</li>
+        <li data-i18n="cr4s4">They must answer within 30 days.</li>
+        <li data-i18n="cr4s5">Get the result in writing. A fixed report fixes the score.</li>
+      </ol>
+    </div>
+  </details>
+
+  <details>
+    <summary data-i18n="cr5H">Traps to skip</summary>
+    <div class="body">
+      <ul>
+        <li data-i18n="trap1">Paid "credit repair" companies. Everything they sell, you can do free with the steps above.</li>
+        <li data-i18n="trap2">Payday and title loans. They're illegal in New Jersey. If someone offers you one, don't sign.</li>
+        <li data-i18n="trap3">Report sites that charge. Only annualcreditreport.com is the official free one.</li>
+      </ul>
+    </div>
+  </details>
+
+  <h3 id="help-anchor" data-i18n="helpH">Free help near you</h3>
+  <p class="lede" data-i18n="helpLede">Everything on this page is free. Not sure where to start? Call 211.</p>
+
+  <details>
+    <summary data-i18n="h211H">Any problem: call 211</summary>
+    <div class="body">
+      <p data-i18n="h211a">Free, 24 hours, in English and Spanish. They connect you to food, housing, and bill help in Hudson County.</p>
+      <p><span data-i18n="callW">Call:</span> <span class="where">211</span> · <span data-i18n="webW">Online:</span> <span class="where">nj211.org</span></p>
+    </div>
+  </details>
+
+  <details>
+    <summary data-i18n="hSnapH">Food money: NJ SNAP</summary>
+    <div class="body">
+      <p data-i18n="hSnapA">Monthly money for groceries on a card. Many working people qualify.</p>
+      <p><span data-i18n="callW">Call:</span> <span class="where">1-800-687-9512</span> · <span data-i18n="applyW">Apply:</span> <span class="where">mynjhelps.gov</span></p>
+    </div>
+  </details>
+
+  <details>
+    <summary data-i18n="hHeatH">Heat and lights: LIHEAP</summary>
+    <div class="body">
+      <p data-i18n="hHeatA">Help paying heating and electric bills, about $300 to $400 a season for most who qualify.</p>
+      <p><span data-i18n="callW">Call:</span> <span class="where">1-800-510-3102</span> · <span data-i18n="applyW">Apply:</span> <span class="where">nj.gov/dca/dcaid</span></p>
+    </div>
+  </details>
+
+  <details>
+    <summary data-i18n="hFamH">Health coverage: NJ FamilyCare</summary>
+    <div class="body">
+      <p data-i18n="hFamA">Free or low-cost health insurance. Live translators on the phone line.</p>
+      <p><span data-i18n="callW">Call:</span> <span class="where">1-800-701-0710</span> · <span data-i18n="applyW">Apply:</span> <span class="where">njfamilycare.org</span></p>
+    </div>
+  </details>
+
+  <details>
+    <summary data-i18n="hVitaH">Free tax filing: VITA</summary>
+    <div class="body">
+      <p class="hint" data-i18n="eitcDef">EITC: a tax refund for workers with low pay. It can be thousands of dollars. VITA volunteers check if you qualify.</p>
+      <p data-i18n="hVitaA">IRS-trained volunteers file your taxes free.</p>
+      <p><span data-i18n="callW">Call:</span> <span class="where">800-906-9887</span> · <span data-i18n="webW">Online:</span> <span class="where">irs.gov</span> <span data-i18n="hVitaB">(search "VITA")</span></p>
+      <p><span class="staff-confirm" data-i18n="staffConfirm">Staff to confirm</span> <span data-i18n="hVitaC">Nearest site this year. Sites change each tax season.</span></p>
+    </div>
+  </details>
+
+  <details>
+    <summary data-i18n="hShelH">The Hoboken Shelter</summary>
+    <div class="body">
+      <p data-i18n="hShelA">Meals, showers, case management, and budgeting help. Entrance on 3rd Street, on the ramp.</p>
+      <p><span class="where">300 Bloomfield St, Hoboken</span> · <span data-i18n="callW">Call:</span> <span class="where">201-656-5069</span></p>
+    </div>
+  </details>
+
+  <details>
+    <summary data-i18n="hReadyH">Have this ready when you call</summary>
+    <div class="body">
+      <ul>
+        <li data-i18n="ready1">Photo ID</li>
+        <li data-i18n="ready2">Social Security cards for everyone in your household</li>
+        <li data-i18n="ready3">Proof of income from the last 30 days, like pay stubs</li>
+        <li data-i18n="ready4">Proof of address: a lease, a bill, or a letter with your name on it</li>
+        <li data-i18n="ready5">The bill you need help with</li>
+      </ul>
     </div>
   </details>
 </section>
 
-<!-- ================= HELP ================= -->
-<section id="panel-help" role="tabpanel" aria-labelledby="tab-help" tabindex="-1" hidden>
-  <h2 data-i18n="helpH">Free help that's actually free</h2>
-  <p class="lede" data-i18n="helpLede">Four doors, all free, all real. Start with the first one if you're not sure.</p>
+<!-- ================= YOU ================= -->
+<section id="panel-you" role="tabpanel" aria-labelledby="tab-you" tabindex="-1" hidden>
 
-  <div class="card">
-    <div class="help-item"><b data-i18n="help1a">Any kind of help, one call:</b> <span data-i18n="help1b">dial</span> <span class="where">211</span> <span data-i18n="help1c">for free, 24/7. They point you to food, housing, and bill help near you. Online:</span> <span class="where">findhelp.org</span></div>
-    <div class="help-item"><b data-i18n="help2a">Free tax filing (VITA):</b> <span data-i18n="help2b">IRS-sponsored, human help, no charge. Many workers miss refunds worth thousands (the EITC). Search "VITA" at</span> <span class="where">irs.gov</span></div>
-    <div class="help-item"><b data-i18n="help3a">Your real credit report, free:</b> <span class="where">annualcreditreport.com</span> <span data-i18n="help3b">It's the official one; ignore lookalike sites that charge.</span></div>
-    <div class="help-item"><b data-i18n="help4a">A bank account that can't surprise you:</b> <span class="where">bankon.org</span> <span data-i18n="help4b">Accounts with no overdraft and no minimum, even with past banking problems.</span></div>
+  <div id="you-root">
+    <div class="you-head">
+      <div class="avatar" id="you-avatar">M</div>
+      <div>
+        <div class="name" id="you-name">Me</div>
+        <div class="since" id="you-since"></div>
+      </div>
+    </div>
+    <p class="you-stats" id="you-stats"></p>
+    <div class="rows">
+      <button type="button" class="rowitem" id="row-profiles">
+        <svg class="icon lead" aria-hidden="true"><use href="#i-users"/></svg>
+        <span class="grow" data-i18n="rowProfiles">Profiles</span>
+        <span class="val" id="profiles-count"></span>
+        <svg class="icon chev" aria-hidden="true"><use href="#i-chevron-right"/></svg>
+      </button>
+      <button type="button" class="rowitem" id="row-settings">
+        <svg class="icon lead" aria-hidden="true"><use href="#i-settings"/></svg>
+        <span class="grow" data-i18n="rowSettings">Settings</span>
+        <svg class="icon chev" aria-hidden="true"><use href="#i-chevron-right"/></svg>
+      </button>
+      <button type="button" class="rowitem" id="row-about">
+        <svg class="icon lead" aria-hidden="true"><use href="#i-info"/></svg>
+        <span class="grow" data-i18n="rowAbout">About and privacy</span>
+        <svg class="icon chev" aria-hidden="true"><use href="#i-chevron-right"/></svg>
+      </button>
+      <button type="button" class="rowitem" id="row-help">
+        <svg class="icon lead" aria-hidden="true"><use href="#i-life-buoy"/></svg>
+        <span class="grow" data-i18n="rowHelp">Get help</span>
+        <svg class="icon chev" aria-hidden="true"><use href="#i-chevron-right"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <div id="you-profiles" hidden>
+    <div class="subhead">
+      <button type="button" class="back" data-back aria-label="Back"><svg class="icon" aria-hidden="true"><use href="#i-chevron-left"/></svg></button>
+      <h2 data-i18n="profilesH">Profiles</h2>
+    </div>
+    <p class="lede" data-i18n="profilesLede">For shared phones. Each profile keeps its own budget, goals, and bills. Profiles live on this phone only.</p>
+    <div class="rows" id="profile-list"></div>
+    <button type="button" class="btn" id="btn-add-profile">
+      <svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg>
+      <span data-i18n="addProfile">Add a profile</span>
+    </button>
+  </div>
+
+  <div id="you-settings" hidden>
+    <div class="subhead">
+      <button type="button" class="back" data-back aria-label="Back"><svg class="icon" aria-hidden="true"><use href="#i-chevron-left"/></svg></button>
+      <h2 data-i18n="settingsH">Settings</h2>
+    </div>
+
+    <p class="group-h" data-i18n="grpGeneral">General</p>
+    <div class="rows">
+      <button type="button" class="rowitem" id="set-lang">
+        <svg class="icon lead" aria-hidden="true"><use href="#i-globe"/></svg>
+        <span class="grow" data-i18n="setLang">Language</span>
+        <span class="val" id="val-lang">English</span>
+        <svg class="icon chev" aria-hidden="true"><use href="#i-chevron-right"/></svg>
+      </button>
+      <button type="button" class="rowitem" id="set-theme">
+        <svg class="icon lead" aria-hidden="true"><use href="#i-sun-moon"/></svg>
+        <span class="grow" data-i18n="setTheme">Theme</span>
+        <span class="val" id="val-theme">Auto</span>
+        <svg class="icon chev" aria-hidden="true"><use href="#i-chevron-right"/></svg>
+      </button>
+      <button type="button" class="rowitem" id="set-ts">
+        <svg class="icon lead" aria-hidden="true"><use href="#i-type"/></svg>
+        <span class="grow" data-i18n="setTs">Text size</span>
+        <span class="val" id="val-ts">Normal</span>
+        <svg class="icon chev" aria-hidden="true"><use href="#i-chevron-right"/></svg>
+      </button>
+      <div class="rowitem static">
+        <svg class="icon lead" aria-hidden="true"><use href="#i-accessibility"/></svg>
+        <span class="grow" data-i18n="setMotion">Reduce motion</span>
+        <button type="button" class="switch" id="set-motion" role="switch" aria-checked="false" aria-labelledby="set-motion-label"></button>
+        <span id="set-motion-label" hidden data-i18n="setMotion">Reduce motion</span>
+      </div>
+      <div class="rowitem static">
+        <svg class="icon lead" aria-hidden="true"><use href="#i-bell"/></svg>
+        <span class="grow"><span data-i18n="setRem">Weekly reminder</span>
+          <span class="hint" data-i18n="setRemHint">Shows when you open the app. With permission, it can also ring your phone. The app has no server, so a fully closed app can't message you on some phones.</span></span>
+        <button type="button" class="switch" id="set-reminder" role="switch" aria-checked="false" aria-labelledby="set-rem-label"></button>
+        <span id="set-rem-label" hidden data-i18n="setRem">Weekly reminder</span>
+      </div>
+      <div class="rowitem static" id="rem-day-row" hidden>
+        <span class="grow" data-i18n="setRemDay">Day</span>
+        <select id="rem-day" aria-labelledby="rem-day-label"></select>
+        <span id="rem-day-label" hidden data-i18n="setRemDay">Day</span>
+      </div>
+    </div>
+
+    <p class="group-h" data-i18n="grpData">Data</p>
+    <div class="rows">
+      <div class="rowitem static">
+        <svg class="icon lead" aria-hidden="true"><use href="#i-wallet"/></svg>
+        <span class="grow" data-i18n="setPresets">Saved budgets</span>
+        <span class="val" id="val-presets">0</span>
+      </div>
+      <button type="button" class="rowitem caution" id="set-erase">
+        <svg class="icon lead" aria-hidden="true"><use href="#i-trash-2"/></svg>
+        <span class="grow" data-i18n="setErase">Erase everything on this phone</span>
+        <svg class="icon chev" aria-hidden="true"><use href="#i-chevron-right"/></svg>
+      </button>
+    </div>
+
+    <div class="settings-foot">
+      <p>Money Basics v2 · <span data-i18n="ftDate">July 2026</span></p>
+      <p data-i18n="ftBy">Built by Alexander G., student volunteer</p>
+    </div>
+  </div>
+
+  <div id="you-about" hidden>
+    <div class="subhead">
+      <button type="button" class="back" data-back aria-label="Back"><svg class="icon" aria-hidden="true"><use href="#i-chevron-left"/></svg></button>
+      <h2 data-i18n="aboutH">About and privacy</h2>
+    </div>
+    <div class="card">
+      <p class="q" data-i18n="abWhatH">What this is</p>
+      <p style="font-size:0.88rem" data-i18n="abWhat">Money Basics helps you plan a week of money, sort bills when cash is short, and save toward a goal. Alexander G., a student volunteer, built it for guests of the Hoboken Shelter.</p>
+    </div>
+    <div class="card">
+      <p class="q" data-i18n="abPrivH">Privacy</p>
+      <p style="font-size:0.88rem" data-i18n="abPriv">This app has no accounts and no tracking. It doesn't connect to the internet. What you type stays on this phone. To erase it all, open Settings and tap "Erase everything on this phone."</p>
+    </div>
+    <div class="card">
+      <p class="q" data-i18n="abDiscH">Not financial advice</p>
+      <p style="font-size:0.88rem" data-i18n="abDisc">This app teaches general money skills. It's not financial advice. For help with your own situation, use the free services under Get help.</p>
+    </div>
+    <div class="card" id="install-card">
+      <p class="q" data-i18n="abInstH">Add this app to your phone</p>
+      <p style="font-size:0.88rem" data-i18n="abInst">It opens full screen and works without internet.</p>
+      <p style="font-size:0.88rem; margin-top:8px" id="install-how" data-i18n="abInstIos">On iPhone: tap Share, then "Add to Home Screen." On Android: tap the browser menu, then "Add to Home screen."</p>
+      <button type="button" class="btn small primary" id="btn-install" hidden style="margin-top:12px">
+        <svg class="icon" aria-hidden="true"><use href="#i-download"/></svg>
+        <span data-i18n="abInstBtn">Install now</span>
+      </button>
+    </div>
   </div>
 </section>
 
 </main>
 
-<footer>
-  <p data-i18n="foot1">Built by Alexander G., student volunteer, for guests of the Hoboken Shelter. v1 · July 2026.</p>
-  <p data-i18n="foot2">This is general money education, not financial advice. For personal decisions, the free help above is the real thing.</p>
-  <p data-i18n="foot3">Private by design: this page makes no internet connections and keeps nothing except what you choose to save on your own phone.</p>
+<footer style="margin-top:var(--sp-7); padding:var(--sp-5) 0; border-top:1px solid var(--line-strong); color:var(--muted); font-size:0.82rem;">
+  <p data-i18n="foot1">Built by Alexander G., student volunteer, for guests of the Hoboken Shelter.</p>
+  <p data-i18n="foot2">General money education, not financial advice.</p>
 </footer>
 
 </div><!-- /wrap -->
 
-<!-- ================= THE TAPE ================= -->
+<!-- ================= NAV + TAPE + TOAST ================= -->
+<div class="scrim" id="scrim"></div>
+
 <aside class="tape" id="tape" aria-label="Running total">
   <div class="tape-torn" aria-hidden="true"></div>
   <button type="button" class="tape-bar" id="tape-bar" aria-expanded="false" aria-controls="tape-sheet">
@@ -647,24 +1048,46 @@ footer p{margin-bottom:var(--sp-2); max-width:60ch;}
   </button>
   <div class="tape-sheet" id="tape-sheet">
     <div class="tape-inner">
-    <div class="receipt" id="receipt">
-      <h3 id="rcp-title">YOUR WEEK · MONEY BASICS</h3>
-      <div class="line"><span class="lbl" id="rcp-inc-l">MONEY IN (PLANNED)</span><span class="amt" id="rcp-inc">$0</span></div>
-      <div id="rcp-items"></div>
-      <div class="line total"><span class="lbl" id="rcp-tot-l">BILLS TOTAL</span><span class="amt" id="rcp-tot">−$0</span></div>
-      <span class="stamp" id="rcp-stamp">LEFT OVER $0</span>
-      <p class="after" id="rcp-after"></p>
-      <div id="rcp-extra"></div>
-    </div>
-    <div class="tape-actions">
-      <button type="button" class="btn" id="btn-print" data-i18n="btnPrint">Print this page</button>
-      <button type="button" class="btn" id="btn-clear" data-i18n="btnClear">Start over: erase my numbers</button>
-    </div>
-    <p class="saved-note" id="saved-note"></p>
-    <p class="tape-foot" id="tape-foot">✂ NOTHING SENT · SAVED ON THIS PHONE ONLY</p>
+      <div class="receipt" id="receipt">
+        <h3 id="rcp-title">YOUR WEEK · MONEY BASICS</h3>
+        <div class="line"><span class="lbl" id="rcp-inc-l">MONEY IN (PLANNED)</span><span class="amt" id="rcp-inc">$0</span></div>
+        <div id="rcp-items"></div>
+        <div class="line total"><span class="lbl" id="rcp-tot-l">BILLS TOTAL</span><span class="amt" id="rcp-tot">−$0</span></div>
+        <span class="stamp" id="rcp-stamp">LEFT OVER $0</span>
+        <p class="after" id="rcp-after"></p>
+        <div id="rcp-extra"></div>
+      </div>
+      <div class="tape-actions">
+        <button type="button" class="btn" id="btn-print">
+          <svg class="icon" aria-hidden="true"><use href="#i-printer"/></svg>
+          <span data-i18n="btnPrint">Print this page</span>
+        </button>
+      </div>
+      <p class="tape-foot" id="tape-foot">✂ NOTHING SENT · SAVED ON THIS PHONE ONLY</p>
     </div>
   </div>
 </aside>
+
+<nav class="tabbar" role="tablist" aria-label="Sections" id="tabbar">
+  <button type="button" id="tab-budget" role="tab" aria-selected="true" aria-controls="panel-budget">
+    <svg class="icon" aria-hidden="true"><use href="#i-wallet"/></svg><span data-i18n="tabBudget">Budget</span>
+  </button>
+  <button type="button" id="tab-bills" role="tab" aria-selected="false" aria-controls="panel-bills">
+    <svg class="icon" aria-hidden="true"><use href="#i-list-ordered"/></svg><span data-i18n="tabBills">Bills</span>
+  </button>
+  <button type="button" id="tab-goals" role="tab" aria-selected="false" aria-controls="panel-goals">
+    <svg class="icon" aria-hidden="true"><use href="#i-target"/></svg><span data-i18n="tabGoals">Goals</span>
+  </button>
+  <button type="button" id="tab-learn" role="tab" aria-selected="false" aria-controls="panel-learn">
+    <svg class="icon" aria-hidden="true"><use href="#i-book-open"/></svg><span data-i18n="tabLearn">Learn</span>
+  </button>
+  <button type="button" id="tab-you" role="tab" aria-selected="false" aria-controls="panel-you">
+    <svg class="icon" aria-hidden="true"><use href="#i-circle-user"/></svg><span data-i18n="tabYou">You</span>
+    <span class="badge" id="you-badge"></span>
+  </button>
+</nav>
+
+<div class="toast" id="toast" role="status"></div>
 
 <script>
 (function(){
@@ -673,285 +1096,544 @@ footer p{margin-bottom:var(--sp-2); max-width:60ch;}
 /* ================= STRINGS ================= */
 var STR = {
 en:{
-  promise1:"Plain-language money tools from a Hoboken Shelter volunteer.",
-  promise2:"Nothing you type leaves this phone.",
-  tabBudget:"Budget", tabFees:"Fee check", tabGoal:"Goal", tabBills:"Bills first", tabCredit:"Credit", tabHelp:"Free help",
-  budgetH:"Plan the week ahead",
-  budgetLede:"Put in what comes in and what has to go out. The tape at the bottom keeps the math. Tap it any time.",
-  qPay:"How does your pay come in?",
-  modeSteady:"About the same each week", modeVaries:"It changes",
-  incSteadyL:"Money in, a typical week", incSteadyHint:"Paid monthly? Divide by 4.",
+  tabBudget:"Budget", tabBills:"Bills", tabGoals:"Goals", tabLearn:"Learn", tabYou:"You",
+  budgetH:"Plan your week",
+  greetH:function(n){ return "Hi, "+n+". Plan your week"; },
+  budgetLede:"Enter what comes in and what you pay. The tape at the bottom shows what's left.",
+  qPay:"How do you get paid?",
+  modeSteady:"Same most weeks", modeVaries:"It changes",
+  incSteadyL:"Money in for one week", incSteadyHint:"Paid monthly? Divide by 4.",
   w1L:"Last week", w2L:"2 weeks ago", w3L:"3 weeks ago", w4L:"4 weeks ago",
-  lowNote1:"When pay jumps around, plan on your lowest week:",
-  lowNote2:". Anything above that is cushion, not spending money.",
-  qEss:"What has to be paid, most important first",
-  essHousing:"Housing: rent, program fees (per week)", essFood:"Food (per week)",
-  essTransport:"Getting to work: bus, PATH, gas (per week)", essPhone:"Phone (per week)",
-  essHealth:"Medicine & health (per week)", essOther:"Everything else: laundry, clothes, all of it (per week)",
-  feesH:"Little fees, real money",
-  feesLede:"These prices are typical. Change any number to match yours. The free way around each fee is under it.",
-  qChk:"Cash your paycheck at a store or check casher?",
-  chkAmtL:"Paycheck amount", chkTimesL:"Times per month", chkPctL:"Their cut (%)", chkPctHint:"Stores charge about 1–6%.",
-  costYear:"Cost per year:", freeMove:"The free move:",
-  chkFree:"a BankOn-approved account cashes your pay free with direct deposit: no minimum balance, no overdraft. Find one at bankon.org.",
-  qMO:"Buy money orders to pay bills?", moTimesL:"Money orders per month", moFeeL:"Cost each ($)",
-  moFree:"a basic checking account pays the same bills free, online or by check.",
-  qOD:"Get hit with overdraft charges?", odTimesL:"Times per month", odFeeL:"Charge each ($)",
-  odFree:"ask the bank to turn overdraft OFF. Then the card just declines, and a decline costs nothing.",
-  qPP:"Use a prepaid card?", ppFeeL:"Monthly card fee ($)", atmTimesL:"Out-of-network ATM visits per month", atmFeeL:"ATM fee each ($)",
-  ppFree:"BankOn accounts come with free ATM networks and no monthly fee. bankon.org.",
-  goalH:"One goal, tracked",
-  goalLede:"Pick one thing worth saving for. Small and steady beats big and never.",
-  goalNameL:"What are you saving for?", goalNamePH:"Security deposit, work boots, a paid-off phone…",
-  goalTargetL:"Goal amount", goalSavedL:"Saved so far",
-  goalWhereH:"Where to keep it",
-  goalWhere:"Cash gets spent and can be lost. A BankOn-approved savings account is free, has no minimum, and the money is still yours the same day you need it: bankon.org.",
-  goalTo:"to go",
-  cheer0:"Every dollar counts. Even $5 this week is a start.",
-  cheer1:"Started. That's the hardest part, and it's done.",
-  cheer2:"A quarter of the way. This is a habit now.",
-  cheer3:"Past halfway. More behind you than ahead.",
-  cheer4:"Almost there. Don't let it stall now.",
-  cheer5:"Goal met. That's real money you kept on purpose.",
-  weeksAway:function(w,amt){ return "At "+amt+" left over a week, that's about "+w+" week"+(w===1?"":"s")+" away."; },
-  billsH:"When money is short, pay in this order",
-  billsLede:"Check what you owe. The order protects your housing, your health, and your job: the things that can't wait.",
-  billsNote:"Short this month? Pay down the list until the money runs out. Then call the ones you can't pay, before the due date. Most will work with you. 211 connects you to bill help.",
-  owe:"I owe this",
+  lowNote1:"Plan with your lowest week:",
+  lowNote2:". Money above that is backup, not spending.",
+  qEss:"What you pay each week",
+  essHousing:"Housing: rent or program fee", essFood:"Food",
+  essTransport:"Getting to work: bus, PATH, gas", essPhone:"Phone",
+  essHealth:"Medicine and health", essOther:"Everything else: laundry, clothes, the rest",
+  savePreset:"Save this budget", presetName:"Name this budget (example: Normal week)",
+  presetSaved:"Budget saved", presetLoaded:"Budget loaded", presetDeleted:"Budget deleted",
+  presetDelQ:function(n){ return 'Delete the saved budget "'+n+'"?'; },
+  presetFull:"You can keep 6 saved budgets. Delete one first.",
+  billsH:"What to pay first",
+  billsLede:"Enter the cash you have and check what you owe. The list shows what to pay now and what can wait.",
+  cashL:"Cash you have right now",
+  billsNote:"Can't cover everything? Pay in this order until the cash runs out. Then call the rest before the due date. Most companies will set up a plan. Call 211 for bill help.",
+  owedL:"How much?",
+  stPaid:function(a){ return "PAY "+a; },
+  stPart:function(a,o){ return a+" OF "+o; },
+  stWaits:"WAITS",
+  scriptPart:function(paid){ return 'Pay '+paid+' now, then call: "I paid '+paid+' today. Can I pay the rest on my next payday?"'; },
+  scriptWaits:'Call before the due date: "I can\'t pay this today. Can we set up a payment plan?"',
   bills:[
-    {b:"Rent or program fee", w:"Keeps the roof. Always first."},
-    {b:"Electric, gas, water", w:"Shutoffs cost deposits and reconnect fees later."},
-    {b:"Food and medicine", w:"Not a bill, but it comes before any debt."},
-    {b:"Getting to work: bus, PATH, gas", w:"Lose the ride, lose the job, lose everything downstream."},
-    {b:"Child support", w:"Court-ordered. If income dropped, ask the court to adjust it. Don't just skip."},
-    {b:"Car payment (if work needs the car)", w:"They can take the car, and the job goes with it."},
-    {b:"Phone", w:"Ask your carrier about Lifeline, a federal discount many qualify for."},
-    {b:"Rent-to-own, title loans", w:"Secured: they can take the item back."},
-    {b:"Credit cards, medical bills, old debts", w:"Last, on purpose. They can wait; they can't take your home. Ask hospitals about financial assistance. It's real."}
+    {b:"Rent or program fee", w:"Housing keeps everything else possible."},
+    {b:"Electric, gas, water", w:"A shutoff adds deposits and reconnect fees."},
+    {b:"Food and medicine", w:"Feed your household before any debt."},
+    {b:"Bus, PATH, or gas to get to work", w:"No ride, no paycheck."},
+    {b:"Child support", w:"A court order. If your income dropped, ask the court to lower the amount."},
+    {b:"Car payment, if work needs the car", w:"Miss payments and they can take the car."},
+    {b:"Phone", w:"Ask your carrier about Lifeline, a federal discount on phone bills."},
+    {b:"Rent-to-own or title loan payments", w:"They can take the item if you stop paying."},
+    {b:"Credit cards, medical bills, old debts", w:"These wait last. No one can take your home over them. Ask hospitals about financial assistance."}
   ],
-  creditH:"Credit, in plain language",
-  creditLede:"No mystery, no lecture. What a score is, how to see yours free, and how to build one from zero.",
-  cr1H:"What a credit score actually is",
-  cr1a:"It's a number from 300 to 850 that summarizes one thing: do you pay what you owe, on time. Landlords, phone companies, and lenders check it.",
-  cr1b:"It is not a judgment of you. It's a payment history, and histories can be rebuilt, starting any time.",
-  cr2H:"See your report free, the official way",
-  cr2a:"Every week, free, from the only official site:",
-  cr2b:". Lookalike sites charge money or sell you things. Skip them.",
-  cr2c:"The report shows what's being said about you. The score costs extra there; you usually don't need it; fixing the report fixes the score.",
-  cr3H:"Build from zero with a secured card",
-  cr3a:"A secured card is a credit card with training wheels: you put down a deposit (often $200), and that's your limit. The bank risks nothing, so approval is easy even with no history.",
-  cr3b:"Use it for one small thing, like a phone bill, and pay it in full every month. In about six months, there's a payment history where there was none.",
-  cr4H:"Fix mistakes: free, and they're common",
-  cr4a:"Reports have errors more often than you'd think: debts that aren't yours, things paid long ago. Disputing is free, online or by mail, and the bureau must answer within 30 days.",
-  cr4b:"Never pay a “credit repair” company. Everything they charge for, you can do free.",
-  cr5H:"What helps, what hurts",
-  cr5a:"Helps most: paying on time, every time, even the minimum. Keeping old accounts open. Using only a little of your limit.",
-  cr5b:"Hurts most: missed payments, collections, maxed-out cards. One late payment fades; a pattern doesn't.",
-  helpH:"Free help that's actually free",
-  helpLede:"Four doors, all free, all real. Start with the first one if you're not sure.",
-  help1a:"Any kind of help, one call:", help1b:"dial",
-  help1c:"for free, 24/7. They point you to food, housing, and bill help near you. Online:",
-  help2a:"Free tax filing (VITA):",
-  help2b:"IRS-sponsored, human help, no charge. Many workers miss refunds worth thousands (the EITC). Search “VITA” at",
-  help3a:"Your real credit report, free:", help3b:"It's the official one; ignore lookalike sites that charge.",
-  help4a:"A bank account that can't surprise you:", help4b:"Accounts with no overdraft and no minimum, even with past banking problems.",
-  foot1:"Built by Alexander G., student volunteer, for guests of the Hoboken Shelter. v1 · July 2026.",
-  foot2:"This is general money education, not financial advice. For personal decisions, the free help above is the real thing.",
-  foot3:"Private by design: this page makes no internet connections and keeps nothing except what you choose to save on your own phone.",
-  btnPrint:"Print this page", btnClear:"Start over: erase my numbers",
-  tapeAdd:"ADD YOUR NUMBERS", tapeLeft:"LEFT OVER", tapeShort:"SHORT", tapeFees:"FEES COST", tapeFeesYr:"/YR",
-  tapeGoalTo:"TO GO", tapeGoalMet:"GOAL MET", tapeFirst:"FIRST:",
+  goalsH:"Your goals",
+  goalsLede:"Pick something to save for. Set an amount you can add each week.",
+  goalsEmpty:"No goals yet.",
+  addGoal:"Add a goal", goalFull:"You can keep 5 goals. Delete one first.",
+  goalNameQ:"What are you saving for? (example: Work boots)",
+  goalTargetQ:"How much do you need? (numbers only)",
+  goalRenameQ:"New name for this goal:",
+  goalDelQ:function(n){ return 'Delete the goal "'+n+'" and its saved amount?'; },
+  goalDeleted:"Goal deleted", goalAdded:"Goal added", goalRenamed:"Name saved",
+  goalTargetL:"Goal amount", goalSavedL:"Saved so far",
+  goalTo:"to go", goalMet:"Done. You saved the full amount.",
+  chipCustomQ:"Set your own quick-add amount (numbers only):",
+  chipCustom:"Set my amount",
+  addedTo:function(a,n){ return "Added "+a+" to "+n; },
+  weeksAway:function(w,amt){ return "At "+amt+" left over a week, about "+w+" week"+(w===1?"":"s")+" to go."; },
+  planL:"Add every week", planDayL:"Day",
+  planQ:"How much will you add each week? (numbers only)",
+  planDue:function(n,misses,amt,goal){ return n+" "+misses+" passed. Add "+amt+" to "+goal+"?"; },
+  planAdd:function(a){ return "Add "+a; }, planSkip:"Skip",
+  planNote:"The app tracks your plan. It can't move money.",
+  goalWhereH:"Where to keep savings",
+  goalWhere:"Cash at hand gets spent. A BankOn savings account is free, has no minimum, and you can take the money out the day you need it. Find one at bankon.org.",
+  learnH:"Learn", learnLede:"Short reads. Each one saves you money or stress.",
+  feesH:"Stop losing money to fees",
+  qChk:"Do you cash your paycheck at a store?",
+  chkDef:"Check cashing: a store turns your paycheck into cash and keeps a cut, often 1 to 6 percent.",
+  chkAmtL:"Paycheck amount", chkTimesL:"Times per month", chkPctL:"Their cut (%)",
+  costYear:"Cost per year:", freeMove:"Free instead:",
+  chkFree:"a BankOn account with direct deposit cashes your pay at no cost. No minimum, no overdraft. Find one at bankon.org.",
+  qMO:"Do you buy money orders?",
+  moDef:"Money order: a paper payment you buy with cash and mail like a check. Each one costs a fee.",
+  moTimesL:"Money orders per month", moFeeL:"Cost of each ($)",
+  moFree:"a basic checking account pays the same bills at no cost, online or by check.",
+  qOD:"Do overdraft fees hit you?",
+  odDef:"Overdraft: the bank pays a charge you can't cover, then adds a fee, usually about $27.",
+  odTimesL:"Times per month", odFeeL:"Fee each time ($)",
+  odFree:"ask the bank to turn overdraft off. Then the card declines and you pay nothing.",
+  qPP:"Do you use a prepaid card?",
+  ppDef:"Prepaid card: a card you load money onto before you spend. Many charge monthly and ATM fees.",
+  ppFeeL:"Monthly card fee ($)", atmTimesL:"ATM visits per month", atmFeeL:"ATM fee each time ($)",
+  ppFree:"BankOn accounts have free ATM networks and no monthly fee. bankon.org.",
+  creditH:"Credit",
+  creditLede:"What a credit score is, how to check yours free, and how to build one from nothing.",
+  cr1H:"What a credit score is",
+  cr1a:"A number from 300 to 850. It tracks one thing: do you pay what you owe on time. Landlords, phone companies, and lenders check it before they say yes.",
+  cr1b:"Here's what makes up the number:",
+  wb1:"Paying on time", wb2:"How much of your limit you use", wb3:"Age of your accounts",
+  wb4:"New applications", wb5:"Types of accounts",
+  cr1c:"Paying on time is the biggest piece. Start there.",
+  cr2H:"Check your report free",
+  cr2a:"One official site gives you your report free every week:",
+  cr2b:". Other sites with similar names charge money. Close them.",
+  cr2c:"The report lists your accounts and payment history. Errors on it are common, and fixing them is free. See \"Fix errors\" below.",
+  cr3H:"Build a score from nothing, in about 6 months",
+  secDef:"Secured card: a credit card backed by your own deposit.",
+  cr3s1:"Put down a deposit at a bank. Most secured cards start at $200.",
+  cr3s2:"You get a card with a $200 limit. The deposit covers the bank, so approval is easy with no history.",
+  cr3s3:"Put one small bill on it, like your phone. Keep the balance under $60. That's a third of the limit.",
+  cr3s4:"Pay the full balance every month, on time.",
+  cr3s5:"After about 6 months of this, you'll have your first score. Ask the bank when you get the deposit back.",
+  cr3boost:"Also free: Experian Boost counts your phone and utility payments toward your credit file. Sign up at",
+  cr3rent:". Some landlords can report your rent too. Ask yours.",
+  cr4H:"Fix errors on your report",
+  cr4a:"Reports often list debts that aren't yours or bills you already paid. Disputing an error is free.",
+  cr4s1:"Get your report at annualcreditreport.com.",
+  cr4s2:"Mark anything wrong.",
+  cr4s3:"File a dispute on the bureau's website (Equifax, Experian, or TransUnion) or by mail.",
+  cr4s4:"They must answer within 30 days.",
+  cr4s5:"Get the result in writing. A fixed report fixes the score.",
+  cr5H:"Traps to skip",
+  trap1:"Paid \"credit repair\" companies. Everything they sell, you can do free with the steps above.",
+  trap2:"Payday and title loans. They're illegal in New Jersey. If someone offers you one, don't sign.",
+  trap3:"Report sites that charge. Only annualcreditreport.com is the official free one.",
+  helpH:"Free help near you",
+  helpLede:"Everything on this page is free. Not sure where to start? Call 211.",
+  h211H:"Any problem: call 211",
+  h211a:"Free, 24 hours, in English and Spanish. They connect you to food, housing, and bill help in Hudson County.",
+  callW:"Call:", webW:"Online:", applyW:"Apply:",
+  hSnapH:"Food money: NJ SNAP",
+  hSnapA:"Monthly money for groceries on a card. Many working people qualify.",
+  hHeatH:"Heat and lights: LIHEAP",
+  hHeatA:"Help paying heating and electric bills, about $300 to $400 a season for most who qualify.",
+  hFamH:"Health coverage: NJ FamilyCare",
+  hFamA:"Free or low-cost health insurance. Live translators on the phone line.",
+  hVitaH:"Free tax filing: VITA",
+  eitcDef:"EITC: a tax refund for workers with low pay. It can be thousands of dollars. VITA volunteers check if you qualify.",
+  hVitaA:"IRS-trained volunteers file your taxes free.",
+  hVitaB:"(search \"VITA\")",
+  staffConfirm:"Staff to confirm",
+  hVitaC:"Nearest site this year. Sites change each tax season.",
+  hShelH:"The Hoboken Shelter",
+  hShelA:"Meals, showers, case management, and budgeting help. Entrance on 3rd Street, on the ramp.",
+  hReadyH:"Have this ready when you call",
+  ready1:"Photo ID",
+  ready2:"Social Security cards for everyone in your household",
+  ready3:"Proof of income from the last 30 days, like pay stubs",
+  ready4:"Proof of address: a lease, a bill, or a letter with your name on it",
+  ready5:"The bill you need help with",
+  rowProfiles:"Profiles", rowSettings:"Settings", rowAbout:"About and privacy", rowHelp:"Get help",
+  youSince:function(d){ return "Using Money Basics since "+d; },
+  youStats:function(b,g){ return b+" saved budget"+(b===1?"":"s")+" · "+g+" goal"+(g===1?"":"s"); },
+  profilesH:"Profiles",
+  profilesLede:"For shared phones. Each profile keeps its own budget, goals, and bills. Profiles live on this phone only.",
+  addProfile:"Add a profile", profileFull:"This phone can hold 4 profiles. Delete one first.",
+  profileNameQ:"Name for this profile:",
+  profileRenameQ:"New name:",
+  profileDelQ:function(n){ return 'Delete the profile "'+n+'" and everything saved in it?'; },
+  profileAdded:"Profile added", profileDeleted:"Profile deleted", profileSwitched:function(n){ return "Switched to "+n; },
+  activeMark:"In use",
+  settingsH:"Settings",
+  grpGeneral:"General", grpData:"Data",
+  setLang:"Language", setTheme:"Theme", setTs:"Text size", setMotion:"Reduce motion",
+  setRem:"Weekly reminder",
+  setRemHint:"Shows when you open the app. With permission, it can also ring your phone. The app has no server, so a fully closed app can't message you on some phones.",
+  setRemDay:"Day",
+  setPresets:"Saved budgets",
+  setErase:"Erase everything on this phone",
+  eraseQ1:"This erases every profile, budget, goal, and setting on this phone. There's no undo. Erase it all?",
+  erased:"Everything erased",
+  themeAuto:"Auto", themeLight:"Light", themeDark:"Dark",
+  tsNormal:"Normal", tsLg:"Large", tsXl:"Extra large",
+  langName:"English",
+  ftDate:"July 2026",
+  ftBy:"Built by Alexander G., student volunteer",
+  aboutH:"About and privacy",
+  abWhatH:"What this is",
+  abWhat:"Money Basics helps you plan a week of money, sort bills when cash is short, and save toward a goal. Alexander G., a student volunteer, built it for guests of the Hoboken Shelter.",
+  abPrivH:"Privacy",
+  abPriv:"This app has no accounts and no tracking. It doesn't connect to the internet. What you type stays on this phone. To erase it all, open Settings and tap \"Erase everything on this phone.\"",
+  abDiscH:"Not financial advice",
+  abDisc:"This app teaches general money skills. It's not financial advice. For help with your own situation, use the free services under Get help.",
+  abInstH:"Add this app to your phone",
+  abInst:"It opens full screen and works without internet.",
+  abInstIos:"On iPhone: tap Share, then \"Add to Home Screen.\" On Android: tap the browser menu, then \"Add to Home screen.\"",
+  abInstBtn:"Install now",
+  remBanner:"Reminder: check your budget this week.",
+  remGot:"Got it",
+  remNotifTitle:"Money Basics",
+  remNotifBody:"Time to check your budget.",
+  foot1:"Built by Alexander G., student volunteer, for guests of the Hoboken Shelter.",
+  foot2:"General money education, not financial advice.",
+  btnPrint:"Print this page",
+  saved:"Saved ✓",
+  tapeAdd:"ADD YOUR NUMBERS", tapeLeft:"LEFT OVER", tapeShort:"SHORT",
+  tapeFees:"FEES COST", tapeFeesYr:"/YR",
+  tapeGoalTo:"TO GO", tapeGoalMet:"GOAL MET",
+  tapeBills:function(p,w){ return "PAY "+p+" NOW · "+w+" WAIT"+(w===1?"S":""); },
   tapeOpen:"▲ OPEN", tapeClose:"▼ CLOSE", tapeAria:"Running total",
   rcpTitle:"YOUR WEEK · MONEY BASICS", rcpInc:"MONEY IN (PLANNED)", rcpTot:"BILLS TOTAL",
-  rcpFees:"FEES, PER YEAR", rcpFeesWk:"THAT'S PER WEEK", rcpGoal:"GOAL", rcpFoot:"✂ NOTHING SENT · SAVED ON THIS PHONE ONLY",
+  rcpFees:"FEES, PER YEAR", rcpFeesWk:"PER WEEK", rcpGoal:"GOAL", rcpBills:"PAY FIRST",
+  rcpFoot:"✂ NOTHING SENT · SAVED ON THIS PHONE ONLY",
   stampLeft:"LEFT OVER", stampShort:"SHORT",
-  afterEven:"Exactly even. One surprise tips it; the Fee check tab often finds slack.",
-  afterPos:"If you can, tuck part of this toward the goal tab.",
-  afterCovers:"Covers:", afterMissing:"Not yet covered:", afterFees:"The Fee check tab often finds this money.",
-  savedAt:function(t){ return "SAVED ON THIS PHONE · "+t; },
-  clearConfirm:"Erase everything you've typed on this phone?",
-  goalBarLabel:function(p){ return "Savings progress: "+p+"% of goal"; },
-  langBtn:"ES", langLabel:"Cambiar a español", printedFor:"General money education, not financial advice."
+  afterEven:"Money in equals money out. One surprise breaks even weeks. The fees section under Learn can find slack.",
+  afterPos:"You can add some of this to a goal.",
+  afterShort:function(short,covered,next){
+    var s="You're "+short+" short.";
+    if (covered) s+=" The plan covers "+covered+".";
+    if (next) s+=" Open Bills to decide what to pay first.";
+    return s;
+  },
+  days:["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],
+  daysPl:["Sundays","Mondays","Tuesdays","Wednesdays","Thursdays","Fridays","Saturdays"],
+  defaultProfile:"Me"
 },
 es:{
-  promise1:"Herramientas de dinero en lenguaje claro, de un voluntario del Hoboken Shelter.",
-  promise2:"Nada de lo que escriba sale de este teléfono.",
-  tabBudget:"Presupuesto", tabFees:"Cobros", tabGoal:"Meta", tabBills:"¿Qué pago primero?", tabCredit:"Crédito", tabHelp:"Ayuda gratis",
-  budgetH:"Planee la semana",
-  budgetLede:"Ponga lo que entra y lo que hay que pagar. La cinta de abajo lleva la cuenta. Tóquela cuando quiera.",
-  qPay:"¿Cómo le llega su pago?",
+  tabBudget:"Presupuesto", tabBills:"Cuentas", tabGoals:"Metas", tabLearn:"Aprender", tabYou:"Usted",
+  budgetH:"Planee su semana",
+  greetH:function(n){ return "Hola, "+n+". Planee su semana"; },
+  budgetLede:"Escriba lo que entra y lo que paga. La cinta de abajo muestra lo que queda.",
+  qPay:"¿Cómo le pagan?",
   modeSteady:"Casi igual cada semana", modeVaries:"Cambia",
-  incSteadyL:"Lo que entra en una semana típica", incSteadyHint:"¿Le pagan por mes? Divida entre 4.",
+  incSteadyL:"Lo que entra en una semana", incSteadyHint:"¿Le pagan por mes? Divida entre 4.",
   w1L:"La semana pasada", w2L:"Hace 2 semanas", w3L:"Hace 3 semanas", w4L:"Hace 4 semanas",
-  lowNote1:"Cuando el pago sube y baja, planee con su semana más baja:",
-  lowNote2:". Lo que pase de ahí es colchón, no gasto.",
-  qEss:"Lo que hay que pagar, lo más importante primero",
-  essHousing:"Vivienda: renta, cuotas del programa (por semana)", essFood:"Comida (por semana)",
-  essTransport:"Ir al trabajo: bus, PATH, gasolina (por semana)", essPhone:"Teléfono (por semana)",
-  essHealth:"Medicinas y salud (por semana)", essOther:"Todo lo demás: lavandería, ropa, todo (por semana)",
-  feesH:"Cobros chicos, dinero real",
-  feesLede:"Estos precios son típicos. Cambie cualquier número al suyo. Debajo de cada cobro está la salida gratis.",
-  qChk:"¿Cambia su cheque en una tienda o casa de cambio?",
-  chkAmtL:"Monto del cheque", chkTimesL:"Veces al mes", chkPctL:"Lo que le quitan (%)", chkPctHint:"Las tiendas cobran entre 1–6%.",
-  costYear:"Costo al año:", freeMove:"La salida gratis:",
-  chkFree:"una cuenta aprobada por BankOn le deposita su pago gratis con depósito directo: sin saldo mínimo, sin sobregiro. Búsquela en bankon.org.",
-  qMO:"¿Compra giros (money orders) para pagar cuentas?", moTimesL:"Giros al mes", moFeeL:"Costo de cada uno ($)",
-  moFree:"una cuenta de cheques básica paga las mismas cuentas gratis, en línea o con cheque.",
-  qOD:"¿Le cobran sobregiro (overdraft)?", odTimesL:"Veces al mes", odFeeL:"Cobro cada vez ($)",
-  odFree:"pida al banco APAGAR el sobregiro. La tarjeta simplemente se rechaza, y eso no cuesta nada.",
-  qPP:"¿Usa una tarjeta prepagada?", ppFeeL:"Cuota mensual ($)", atmTimesL:"Visitas al mes a cajeros fuera de la red", atmFeeL:"Cobro por cajero ($)",
-  ppFree:"las cuentas BankOn traen cajeros gratis y sin cuota mensual. bankon.org.",
-  goalH:"Una meta, con seguimiento",
-  goalLede:"Elija una sola cosa que valga la pena. Poco y constante gana a mucho y nunca.",
-  goalNameL:"¿Para qué está ahorrando?", goalNamePH:"Depósito de renta, botas de trabajo, un teléfono pagado…",
-  goalTargetL:"Monto de la meta", goalSavedL:"Ahorrado hasta hoy",
-  goalWhereH:"Dónde guardarlo",
-  goalWhere:"El efectivo se gasta y se pierde. Una cuenta de ahorros aprobada por BankOn es gratis, sin mínimo, y el dinero sigue siendo suyo el mismo día que lo necesite: bankon.org.",
-  goalTo:"faltan",
-  cheer0:"Cada dólar cuenta. Hasta $5 esta semana ya es un comienzo.",
-  cheer1:"Ya empezó. Eso era lo más difícil, y ya está hecho.",
-  cheer2:"Un cuarto del camino. Esto ya es un hábito.",
-  cheer3:"Pasó la mitad. Queda menos de lo que ya hizo.",
-  cheer4:"Ya casi. Que no se pare ahora.",
-  cheer5:"Meta cumplida. Ese es dinero real que usted guardó a propósito.",
-  weeksAway:function(w,amt){ return "Con "+amt+" que le sobra a la semana, faltan unas "+w+" semana"+(w===1?"":"s")+"."; },
-  billsH:"Cuando no alcanza, pague en este orden",
-  billsLede:"Marque lo que debe. El orden protege su vivienda, su salud y su trabajo: lo que no puede esperar.",
-  billsNote:"¿No alcanza este mes? Pague la lista hasta donde llegue el dinero. Llame a los que no pueda pagar, antes de la fecha. La mayoría hace arreglos. El 211 lo conecta con ayuda para cuentas.",
-  owe:"Debo esto",
+  lowNote1:"Planee con su semana más baja:",
+  lowNote2:". Lo que pase de ahí es respaldo, no gasto.",
+  qEss:"Lo que paga cada semana",
+  essHousing:"Vivienda: renta o cuota del programa", essFood:"Comida",
+  essTransport:"Ir al trabajo: bus, PATH, gasolina", essPhone:"Teléfono",
+  essHealth:"Medicinas y salud", essOther:"Todo lo demás: lavandería, ropa, el resto",
+  savePreset:"Guardar este presupuesto", presetName:"Nombre para este presupuesto (ejemplo: Semana normal)",
+  presetSaved:"Presupuesto guardado", presetLoaded:"Presupuesto cargado", presetDeleted:"Presupuesto borrado",
+  presetDelQ:function(n){ return '¿Borrar el presupuesto "'+n+'"?'; },
+  presetFull:"Puede guardar 6 presupuestos. Borre uno primero.",
+  billsH:"Qué pagar primero",
+  billsLede:"Escriba el efectivo que tiene y marque lo que debe. La lista muestra qué pagar ahora y qué puede esperar.",
+  cashL:"Efectivo que tiene ahora",
+  billsNote:"¿No alcanza para todo? Pague en este orden hasta donde llegue. Luego llame a los demás antes de la fecha de pago. La mayoría acepta un plan de pagos. Llame al 211 para ayuda con cuentas.",
+  owedL:"¿Cuánto?",
+  stPaid:function(a){ return "PAGUE "+a; },
+  stPart:function(a,o){ return a+" DE "+o; },
+  stWaits:"ESPERA",
+  scriptPart:function(paid){ return 'Pague '+paid+' hoy y luego llame: "Pagué '+paid+' hoy. ¿Puedo pagar el resto en mi próximo pago?"'; },
+  scriptWaits:'Llame antes de la fecha: "No puedo pagar esto hoy. ¿Podemos hacer un plan de pagos?"',
   bills:[
-    {b:"Renta o cuota del programa", w:"Mantiene el techo. Siempre primero."},
-    {b:"Luz, gas, agua", w:"Un corte cuesta depósitos y cargos de reconexión después."},
-    {b:"Comida y medicinas", w:"No es una cuenta, pero va antes que cualquier deuda."},
-    {b:"Ir al trabajo: bus, PATH, gasolina", w:"Sin transporte no hay trabajo, y sin trabajo se cae todo."},
-    {b:"Manutención de hijos (child support)", w:"Es orden de la corte. Si bajó su ingreso, pida a la corte un ajuste. No deje de pagar sin más."},
-    {b:"Pago del carro (si lo necesita para trabajar)", w:"Se lo pueden llevar, y el trabajo se va con él."},
-    {b:"Teléfono", w:"Pregunte por Lifeline, un descuento federal que muchos pueden recibir."},
-    {b:"Rent-to-own, préstamos de título", w:"Con garantía: pueden llevarse la cosa."},
-    {b:"Tarjetas, cuentas médicas, deudas viejas", w:"Al final, a propósito. Pueden esperar; no pueden quitarle la casa. Pregunte al hospital por asistencia financiera. Existe."}
+    {b:"Renta o cuota del programa", w:"La vivienda hace posible todo lo demás."},
+    {b:"Luz, gas, agua", w:"Un corte suma depósitos y cargos de reconexión."},
+    {b:"Comida y medicinas", w:"Alimente a su familia antes que cualquier deuda."},
+    {b:"Bus, PATH o gasolina para trabajar", w:"Sin transporte no hay pago."},
+    {b:"Manutención de hijos", w:"Es orden de la corte. Si bajó su ingreso, pida a la corte que baje el monto."},
+    {b:"Pago del carro, si lo necesita para trabajar", w:"Si deja de pagar, se lo pueden llevar."},
+    {b:"Teléfono", w:"Pregunte por Lifeline, un descuento federal en el teléfono."},
+    {b:"Rent-to-own o préstamos de título", w:"Pueden llevarse la cosa si deja de pagar."},
+    {b:"Tarjetas, cuentas médicas, deudas viejas", w:"Esperan al final. Nadie puede quitarle la casa por ellas. Pregunte al hospital por asistencia financiera."}
   ],
-  creditH:"El crédito, en lenguaje claro",
-  creditLede:"Sin misterio y sin sermón. Qué es el puntaje, cómo verlo gratis y cómo empezar de cero.",
-  cr1H:"Qué es en realidad el puntaje de crédito",
-  cr1a:"Es un número de 300 a 850 que resume una sola cosa: si usted paga lo que debe, a tiempo. Lo revisan caseros, compañías de teléfono y prestamistas.",
-  cr1b:"No es un juicio sobre usted. Es un historial de pagos, y un historial se puede reconstruir, empezando cuando sea.",
-  cr2H:"Vea su reporte gratis, la vía oficial",
-  cr2a:"Cada semana, gratis, en el único sitio oficial:",
-  cr2b:". Los sitios parecidos cobran o le venden cosas. Ignórelos.",
-  cr2c:"El reporte muestra lo que dicen de usted. El puntaje ahí cuesta extra; casi nunca lo necesita; arreglar el reporte arregla el puntaje.",
-  cr3H:"Empezar de cero con una tarjeta asegurada",
-  cr3a:"Una tarjeta asegurada es una tarjeta de crédito con rueditas: usted deja un depósito (unos $200) y ese es su límite. El banco no arriesga nada, así que aprueban fácil aunque no tenga historial.",
-  cr3b:"Úsela para una sola cosa chica, como el teléfono, y páguela completa cada mes. En unos seis meses, hay historial donde no había nada.",
-  cr4H:"Corrija errores: gratis, y son comunes",
-  cr4a:"Los reportes traen errores más seguido de lo que cree: deudas que no son suyas, cosas ya pagadas. Disputar es gratis, en línea o por correo, y el buró debe responder en 30 días.",
-  cr4b:"Nunca pague a una compañía de “reparación de crédito”. Todo lo que cobran, usted lo puede hacer gratis.",
-  cr5H:"Qué ayuda, qué daña",
-  cr5a:"Lo que más ayuda: pagar a tiempo, siempre, aunque sea el mínimo. Mantener cuentas viejas abiertas. Usar poco de su límite.",
-  cr5b:"Lo que más daña: pagos perdidos, cobranzas, tarjetas al tope. Un pago tarde se borra con el tiempo; un patrón no.",
-  helpH:"Ayuda gratis que sí es gratis",
-  helpLede:"Cuatro puertas, todas gratis, todas reales. Si no sabe por dónde, empiece por la primera.",
-  help1a:"Cualquier ayuda, una llamada:", help1b:"marque",
-  help1c:"gratis, 24/7. Lo dirigen a comida, vivienda y ayuda con cuentas cerca de usted. En línea:",
-  help2a:"Impuestos gratis (VITA):",
-  help2b:"del IRS, con personas de verdad, sin costo. Muchos trabajadores pierden reembolsos de miles (el EITC). Busque “VITA” en",
-  help3a:"Su reporte de crédito real, gratis:", help3b:"Es el oficial; ignore los sitios parecidos que cobran.",
-  help4a:"Una cuenta de banco sin sorpresas:", help4b:"Cuentas sin sobregiro y sin mínimo, aun con problemas bancarios pasados.",
-  foot1:"Hecho por Alexander G., estudiante voluntario, para los huéspedes del Hoboken Shelter. v1 · julio 2026.",
-  foot2:"Esto es educación general sobre el dinero, no asesoría financiera. Para decisiones personales, la ayuda gratis de arriba es lo verdadero.",
-  foot3:"Privado por diseño: esta página no hace conexiones a internet y no guarda nada excepto lo que usted decida guardar en su propio teléfono.",
-  btnPrint:"Imprimir esta página", btnClear:"Empezar de nuevo: borrar mis números",
-  tapeAdd:"PONGA SUS NÚMEROS", tapeLeft:"LE QUEDA", tapeShort:"FALTA", tapeFees:"COBROS", tapeFeesYr:"/AÑO",
-  tapeGoalTo:"FALTAN", tapeGoalMet:"META CUMPLIDA", tapeFirst:"PRIMERO:",
+  goalsH:"Sus metas",
+  goalsLede:"Elija algo para ahorrar. Fije una cantidad que pueda agregar cada semana.",
+  goalsEmpty:"Todavía no hay metas.",
+  addGoal:"Agregar una meta", goalFull:"Puede tener 5 metas. Borre una primero.",
+  goalNameQ:"¿Para qué está ahorrando? (ejemplo: Botas de trabajo)",
+  goalTargetQ:"¿Cuánto necesita? (solo números)",
+  goalRenameQ:"Nuevo nombre para esta meta:",
+  goalDelQ:function(n){ return '¿Borrar la meta "'+n+'" y lo ahorrado?'; },
+  goalDeleted:"Meta borrada", goalAdded:"Meta agregada", goalRenamed:"Nombre guardado",
+  goalTargetL:"Monto de la meta", goalSavedL:"Ahorrado hasta hoy",
+  goalTo:"faltan", goalMet:"Listo. Ahorró la cantidad completa.",
+  chipCustomQ:"Fije su propia cantidad rápida (solo números):",
+  chipCustom:"Fijar mi cantidad",
+  addedTo:function(a,n){ return "Agregó "+a+" a "+n; },
+  weeksAway:function(w,amt){ return "Con "+amt+" que sobra a la semana, faltan unas "+w+" semana"+(w===1?"":"s")+"."; },
+  planL:"Agregar cada semana", planDayL:"Día",
+  planQ:"¿Cuánto agregará cada semana? (solo números)",
+  planDue:function(n,misses,amt,goal){ return "Pasaron "+n+" "+misses+". ¿Agregar "+amt+" a "+goal+"?"; },
+  planAdd:function(a){ return "Agregar "+a; }, planSkip:"Ahora no",
+  planNote:"La app lleva la cuenta del plan. No puede mover dinero.",
+  goalWhereH:"Dónde guardar los ahorros",
+  goalWhere:"El efectivo a la mano se gasta. Una cuenta de ahorros BankOn es gratis, sin mínimo, y puede sacar el dinero el día que lo necesite. Búsquela en bankon.org.",
+  learnH:"Aprender", learnLede:"Lecturas cortas. Cada una le ahorra dinero o estrés.",
+  feesH:"Deje de perder dinero en cobros",
+  qChk:"¿Cambia su cheque en una tienda?",
+  chkDef:"Cambio de cheques: una tienda convierte su cheque en efectivo y se queda con una parte, entre 1 y 6 por ciento.",
+  chkAmtL:"Monto del cheque", chkTimesL:"Veces al mes", chkPctL:"Lo que cobran (%)",
+  costYear:"Costo al año:", freeMove:"Gratis en su lugar:",
+  chkFree:"una cuenta BankOn con depósito directo le entrega su pago sin costo. Sin mínimo, sin sobregiro. Búsquela en bankon.org.",
+  qMO:"¿Compra giros (money orders)?",
+  moDef:"Giro: un pago en papel que se compra con efectivo y se manda como un cheque. Cada uno cobra una cuota.",
+  moTimesL:"Giros al mes", moFeeL:"Costo de cada uno ($)",
+  moFree:"una cuenta de cheques básica paga las mismas cuentas sin costo, en línea o con cheque.",
+  qOD:"¿Le cobran sobregiro?",
+  odDef:"Sobregiro: el banco paga un cargo que usted no puede cubrir y luego cobra una cuota, normalmente unos $27.",
+  odTimesL:"Veces al mes", odFeeL:"Cuota cada vez ($)",
+  odFree:"pida al banco que apague el sobregiro. La tarjeta se rechaza y usted no paga nada.",
+  qPP:"¿Usa una tarjeta prepagada?",
+  ppDef:"Tarjeta prepagada: una tarjeta a la que se le carga dinero antes de gastar. Muchas cobran cuota mensual y por cajero.",
+  ppFeeL:"Cuota mensual ($)", atmTimesL:"Visitas al cajero por mes", atmFeeL:"Cobro por cajero ($)",
+  ppFree:"las cuentas BankOn tienen cajeros gratis y sin cuota mensual. bankon.org.",
+  creditH:"Crédito",
+  creditLede:"Qué es el puntaje de crédito, cómo verlo gratis y cómo construirlo desde cero.",
+  cr1H:"Qué es el puntaje de crédito",
+  cr1a:"Un número de 300 a 850. Mide una sola cosa: si usted paga lo que debe a tiempo. Caseros, compañías de teléfono y prestamistas lo revisan antes de decir que sí.",
+  cr1b:"Esto es lo que forma el número:",
+  wb1:"Pagar a tiempo", wb2:"Cuánto de su límite usa", wb3:"Edad de sus cuentas",
+  wb4:"Solicitudes nuevas", wb5:"Tipos de cuentas",
+  cr1c:"Pagar a tiempo es la parte más grande. Empiece ahí.",
+  cr2H:"Vea su reporte gratis",
+  cr2a:"Un solo sitio oficial le da su reporte gratis cada semana:",
+  cr2b:". Otros sitios con nombres parecidos cobran. Ciérrelos.",
+  cr2c:"El reporte muestra sus cuentas y su historial de pagos. Los errores son comunes y corregirlos es gratis. Vea \"Corrija errores\" abajo.",
+  cr3H:"Construya un puntaje desde cero, en unos 6 meses",
+  secDef:"Tarjeta asegurada: una tarjeta de crédito respaldada por su propio depósito.",
+  cr3s1:"Deje un depósito en un banco. La mayoría de las tarjetas aseguradas empiezan en $200.",
+  cr3s2:"Recibe una tarjeta con límite de $200. El depósito cubre al banco, así que aprueban fácil sin historial.",
+  cr3s3:"Ponga una sola cuenta chica en la tarjeta, como el teléfono. Mantenga el saldo bajo $60. Eso es un tercio del límite.",
+  cr3s4:"Pague el saldo completo cada mes, a tiempo.",
+  cr3s5:"Después de unos 6 meses así, tendrá su primer puntaje. Pregunte al banco cuándo le devuelven el depósito.",
+  cr3boost:"También gratis: Experian Boost cuenta sus pagos de teléfono y servicios para su historial. Regístrese en",
+  cr3rent:". Algunos caseros pueden reportar su renta también. Pregunte al suyo.",
+  cr4H:"Corrija errores en su reporte",
+  cr4a:"Los reportes a veces muestran deudas que no son suyas o cuentas ya pagadas. Disputar un error es gratis.",
+  cr4s1:"Saque su reporte en annualcreditreport.com.",
+  cr4s2:"Marque lo que esté mal.",
+  cr4s3:"Presente una disputa en el sitio del buró (Equifax, Experian o TransUnion) o por correo.",
+  cr4s4:"Deben responder en 30 días.",
+  cr4s5:"Pida el resultado por escrito. Un reporte corregido corrige el puntaje.",
+  cr5H:"Trampas que debe evitar",
+  trap1:"Compañías de \"reparación de crédito\" que cobran. Todo lo que venden, usted lo puede hacer gratis con los pasos de arriba.",
+  trap2:"Préstamos payday y de título. Son ilegales en New Jersey. Si alguien le ofrece uno, no firme.",
+  trap3:"Sitios de reportes que cobran. Solo annualcreditreport.com es el oficial gratis.",
+  helpH:"Ayuda gratis cerca de usted",
+  helpLede:"Todo en esta página es gratis. ¿No sabe por dónde empezar? Llame al 211.",
+  h211H:"Cualquier problema: llame al 211",
+  h211a:"Gratis, 24 horas, en inglés y español. Lo conectan con comida, vivienda y ayuda con cuentas en el condado de Hudson.",
+  callW:"Llame:", webW:"En línea:", applyW:"Solicite:",
+  hSnapH:"Dinero para comida: NJ SNAP",
+  hSnapA:"Dinero mensual para el mercado en una tarjeta. Mucha gente que trabaja califica.",
+  hHeatH:"Calefacción y luz: LIHEAP",
+  hHeatA:"Ayuda para pagar calefacción y luz, entre $300 y $400 por temporada para la mayoría que califica.",
+  hFamH:"Seguro médico: NJ FamilyCare",
+  hFamA:"Seguro de salud gratis o de bajo costo. Hay traductores en la línea.",
+  hVitaH:"Impuestos gratis: VITA",
+  eitcDef:"EITC: un reembolso de impuestos para trabajadores con pago bajo. Puede ser de miles de dólares. Los voluntarios de VITA revisan si califica.",
+  hVitaA:"Voluntarios entrenados por el IRS preparan sus impuestos gratis.",
+  hVitaB:"(busque \"VITA\")",
+  staffConfirm:"Personal por confirmar",
+  hVitaC:"El sitio más cercano este año. Los sitios cambian cada temporada.",
+  hShelH:"El Hoboken Shelter",
+  hShelA:"Comidas, duchas, manejo de casos y ayuda con presupuestos. Entrada por la calle 3, por la rampa.",
+  hReadyH:"Tenga esto listo cuando llame",
+  ready1:"Identificación con foto",
+  ready2:"Tarjetas de Seguro Social de todos en su hogar",
+  ready3:"Prueba de ingresos de los últimos 30 días, como talones de pago",
+  ready4:"Prueba de dirección: contrato de renta, una cuenta o una carta con su nombre",
+  ready5:"La cuenta con la que necesita ayuda",
+  rowProfiles:"Perfiles", rowSettings:"Ajustes", rowAbout:"Acerca de y privacidad", rowHelp:"Buscar ayuda",
+  youSince:function(d){ return "Usa Money Basics desde "+d; },
+  youStats:function(b,g){ return b+" presupuesto"+(b===1?"":"s")+" guardado"+(b===1?"":"s")+" · "+g+" meta"+(g===1?"":"s"); },
+  profilesH:"Perfiles",
+  profilesLede:"Para teléfonos compartidos. Cada perfil guarda su propio presupuesto, metas y cuentas. Los perfiles viven solo en este teléfono.",
+  addProfile:"Agregar un perfil", profileFull:"Este teléfono puede tener 4 perfiles. Borre uno primero.",
+  profileNameQ:"Nombre para este perfil:",
+  profileRenameQ:"Nuevo nombre:",
+  profileDelQ:function(n){ return '¿Borrar el perfil "'+n+'" y todo lo guardado en él?'; },
+  profileAdded:"Perfil agregado", profileDeleted:"Perfil borrado", profileSwitched:function(n){ return "Cambió a "+n; },
+  activeMark:"En uso",
+  settingsH:"Ajustes",
+  grpGeneral:"General", grpData:"Datos",
+  setLang:"Idioma", setTheme:"Tema", setTs:"Tamaño de letra", setMotion:"Reducir movimiento",
+  setRem:"Recordatorio semanal",
+  setRemHint:"Aparece cuando abre la app. Con permiso, también puede sonar en su teléfono. La app no tiene servidor, así que en algunos teléfonos no puede avisarle si está cerrada del todo.",
+  setRemDay:"Día",
+  setPresets:"Presupuestos guardados",
+  setErase:"Borrar todo en este teléfono",
+  eraseQ1:"Esto borra todos los perfiles, presupuestos, metas y ajustes de este teléfono. No se puede deshacer. ¿Borrar todo?",
+  erased:"Todo borrado",
+  themeAuto:"Automático", themeLight:"Claro", themeDark:"Oscuro",
+  tsNormal:"Normal", tsLg:"Grande", tsXl:"Extra grande",
+  langName:"Español",
+  ftDate:"julio 2026",
+  ftBy:"Hecho por Alexander G., estudiante voluntario",
+  aboutH:"Acerca de y privacidad",
+  abWhatH:"Qué es esto",
+  abWhat:"Money Basics le ayuda a planear una semana de dinero, ordenar cuentas cuando falta efectivo y ahorrar para una meta. Alexander G., estudiante voluntario, lo hizo para los huéspedes del Hoboken Shelter.",
+  abPrivH:"Privacidad",
+  abPriv:"Esta app no tiene cuentas ni rastreo. No se conecta a internet. Lo que escribe se queda en este teléfono. Para borrarlo todo, abra Ajustes y toque \"Borrar todo en este teléfono\".",
+  abDiscH:"No es asesoría financiera",
+  abDisc:"Esta app enseña destrezas generales de dinero. No es asesoría financiera. Para su situación personal, use los servicios gratis en Buscar ayuda.",
+  abInstH:"Agregue esta app a su teléfono",
+  abInst:"Se abre en pantalla completa y funciona sin internet.",
+  abInstIos:"En iPhone: toque Compartir y luego \"Agregar a inicio\". En Android: toque el menú del navegador y luego \"Agregar a pantalla de inicio\".",
+  abInstBtn:"Instalar ahora",
+  remBanner:"Recordatorio: revise su presupuesto esta semana.",
+  remGot:"Entendido",
+  remNotifTitle:"Money Basics",
+  remNotifBody:"Hora de revisar su presupuesto.",
+  foot1:"Hecho por Alexander G., estudiante voluntario, para los huéspedes del Hoboken Shelter.",
+  foot2:"Educación general sobre el dinero, no asesoría financiera.",
+  btnPrint:"Imprimir esta página",
+  saved:"Guardado ✓",
+  tapeAdd:"PONGA SUS NÚMEROS", tapeLeft:"LE QUEDA", tapeShort:"FALTA",
+  tapeFees:"COBROS", tapeFeesYr:"/AÑO",
+  tapeGoalTo:"FALTAN", tapeGoalMet:"META CUMPLIDA",
+  tapeBills:function(p,w){ return "PAGUE "+p+" AHORA · "+w+" ESPERA"+(w===1?"":"N"); },
   tapeOpen:"▲ ABRIR", tapeClose:"▼ CERRAR", tapeAria:"Su total",
-  rcpTitle:"SU SEMANA · MONEY BASICS", rcpInc:"ENTRA (PLANEADO)", rcpTot:"TOTAL DE CUENTAS",
-  rcpFees:"COBROS, AL AÑO", rcpFeesWk:"POR SEMANA ES", rcpGoal:"META", rcpFoot:"✂ NADA ENVIADO · GUARDADO SOLO EN ESTE TELÉFONO",
+  rcpTitle:"SU SEMANA · MONEY BASICS", rcpInc:"ENTRA (PLANEADO)", rcpTot:"TOTAL DE PAGOS",
+  rcpFees:"COBROS, AL AÑO", rcpFeesWk:"POR SEMANA", rcpGoal:"META", rcpBills:"PAGUE PRIMERO",
+  rcpFoot:"✂ NADA ENVIADO · GUARDADO SOLO EN ESTE TELÉFONO",
   stampLeft:"LE QUEDA", stampShort:"FALTA",
-  afterEven:"Justo parejo. Una sorpresa lo tumba; la pestaña Cobros suele encontrar espacio.",
-  afterPos:"Si puede, aparte una parte para la pestaña Meta.",
-  afterCovers:"Alcanza para:", afterMissing:"Aún no alcanza para:", afterFees:"La pestaña Cobros suele encontrar este dinero.",
-  savedAt:function(t){ return "GUARDADO EN ESTE TELÉFONO · "+t; },
-  clearConfirm:"¿Borrar todo lo que escribió en este teléfono?",
-  goalBarLabel:function(p){ return "Progreso de ahorro: "+p+"% de la meta"; },
-  langBtn:"EN", langLabel:"Switch to English", printedFor:"Educación general sobre el dinero, no asesoría financiera."
+  afterEven:"Entra lo mismo que sale. Una sorpresa rompe las semanas parejas. La sección de cobros en Aprender puede encontrar espacio.",
+  afterPos:"Puede agregar una parte a una meta.",
+  afterShort:function(short,covered,next){
+    var s="Le faltan "+short+".";
+    if (covered) s+=" El plan cubre "+covered+".";
+    if (next) s+=" Abra Cuentas para decidir qué pagar primero.";
+    return s;
+  },
+  days:["domingo","lunes","martes","miércoles","jueves","viernes","sábado"],
+  daysPl:["domingos","lunes","martes","miércoles","jueves","viernes","sábados"],
+  defaultProfile:"Yo"
 }
 };
 
 /* ================= HELPERS ================= */
 function $(id){ return document.getElementById(id); }
-var lang = "en";
-function t(key){ return STR[lang][key]; }
+var device, prof; // device meta + active profile data
+function L(){ return STR[device.lang]; }
+function t(k){ return L()[k]; }
 function num(id){
-  var v = parseFloat(String($(id).value).replace(/,/g,".").replace(/[^0-9.]/g,""));
+  var el = $(id); if (!el) return 0;
+  var v = parseFloat(String(el.value).replace(/,/g,".").replace(/[^0-9.]/g,""));
   return isNaN(v) || v < 0 ? 0 : v;
 }
+function parseAmt(s){
+  var v = parseFloat(String(s||"").replace(/,/g,".").replace(/[^0-9.]/g,""));
+  return isNaN(v) || v <= 0 ? 0 : v;
+}
 function fmt(n){
-  var loc = lang === "es" ? "es-US" : "en-US";
+  var loc = device.lang === "es" ? "es-US" : "en-US";
   try { return new Intl.NumberFormat(loc,{style:"currency",currency:"USD",maximumFractionDigits:0}).format(n); }
   catch(e){ return "$" + Math.round(n); }
 }
+function esc(s){
+  return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+}
 
-/* ================= STATE / STORAGE ================= */
-var KEY = "moneyBasics.v1";
-var FIELDS = ["inc-steady","w1","w2","w3","w4",
-  "ess-housing","ess-food","ess-transport","ess-phone","ess-health","ess-other",
-  "chk-amt","chk-times","chk-pct","mo-times","mo-fee","od-times","od-fee","pp-fee","atm-times","atm-fee",
-  "goal-name","goal-target","goal-saved"];
-var payMode = "steady";
-var activeTab = "budget";
-var billOwed = [false,false,false,false,false,false,false,false,false];
-var saveTimer = null, storageOK = true;
+/* ================= STORAGE ================= */
+var DKEY = "mb2.device";
+function pkey(id){ return "mb2.p." + id; }
+function lsGet(k){ try { return JSON.parse(localStorage.getItem(k)); } catch(e){ return null; } }
+function lsSet(k,v){ try { localStorage.setItem(k, JSON.stringify(v)); return true; } catch(e){ return false; } }
 
-function saveNow(){
-  var data = { lang:lang, mode:payMode, bills:billOwed, f:{} };
-  for (var i=0;i<FIELDS.length;i++) data.f[FIELDS[i]] = $(FIELDS[i]).value;
-  try {
-    localStorage.setItem(KEY, JSON.stringify(data));
-    var d = new Date();
-    var hh = d.getHours(), mm = d.getMinutes();
-    $("saved-note").textContent = t("savedAt")((hh<10?"0":"")+hh+":"+(mm<10?"0":"")+mm);
-  } catch(e){ storageOK = false; }
+function freshProfileData(){
+  return { f:{}, mode:"steady", bills:{cash:"", checked:[], owed:{}},
+    goals:[], presets:[], reminder:{on:false, day:5, lastAck:0}, lastTab:"budget",
+    since: new Date().toISOString().slice(0,7) };
+}
+function loadDevice(){
+  device = lsGet(DKEY);
+  if (!device){
+    device = { lang:"en", theme:"auto", ts:"normal", motion:false,
+      profiles:[{id:"p1", name:""}], active:"p1" };
+    // migrate v1 data into the first profile
+    var v1 = lsGet("moneyBasics.v1");
+    var pd = freshProfileData();
+    if (v1 && v1.f){
+      pd.f = v1.f; pd.mode = v1.mode || "steady";
+      if (v1.lang) device.lang = v1.lang;
+    }
+    lsSet(pkey("p1"), pd);
+    lsSet(DKEY, device);
+  }
+  if (!device.profiles.some(function(p){ return p.id === device.active; }))
+    device.active = device.profiles[0].id;
+  prof = lsGet(pkey(device.active)) || freshProfileData();
+}
+var saveTimer = null, erasing = false;
+function persist(showFlash){
+  if (erasing) return;
+  lsSet(DKEY, device);
+  var ok = lsSet(pkey(device.active), prof);
+  if (showFlash && ok) flashSaved();
 }
 function queueSave(){
   if (saveTimer) clearTimeout(saveTimer);
-  saveTimer = setTimeout(saveNow, 500);
+  saveTimer = setTimeout(function(){ persist(true); }, 600);
 }
-function restore(){
-  try {
-    var raw = localStorage.getItem(KEY);
-    if (!raw) return;
-    var data = JSON.parse(raw);
-    if (data.f) for (var i=0;i<FIELDS.length;i++){
-      if (data.f[FIELDS[i]] !== undefined) $(FIELDS[i]).value = data.f[FIELDS[i]];
-    }
-    if (data.bills && data.bills.length === billOwed.length) billOwed = data.bills;
-    if (data.mode) payMode = data.mode;
-    if (data.lang) lang = data.lang;
-  } catch(e){ /* private mode: start fresh */ }
+function flashSaved(){
+  var f = $("saved-flash");
+  f.textContent = t("saved");
+  f.className = "saved-flash show";
+  clearTimeout(flashSaved.t);
+  flashSaved.t = setTimeout(function(){ f.className = "saved-flash"; }, 1600);
+}
+function toast(msg){
+  var el = $("toast");
+  el.textContent = msg;
+  el.className = "toast show";
+  clearTimeout(toast.t);
+  toast.t = setTimeout(function(){ el.className = "toast"; }, 1800);
 }
 
-/* ================= I18N APPLY ================= */
+/* ================= FIELDS ================= */
+var FIELDS = ["inc-steady","w1","w2","w3","w4",
+  "ess-housing","ess-food","ess-transport","ess-phone","ess-health","ess-other",
+  "chk-amt","chk-times","chk-pct","mo-times","mo-fee","od-times","od-fee","pp-fee","atm-times","atm-fee",
+  "bills-cash"];
+var FEE_DEFAULTS = {"chk-pct":"2","mo-fee":"1.75","od-fee":"27","atm-fee":"3"};
+function fieldsToProf(){
+  for (var i=0;i<FIELDS.length;i++) prof.f[FIELDS[i]] = $(FIELDS[i]).value;
+}
+function profToFields(){
+  for (var i=0;i<FIELDS.length;i++){
+    var v = prof.f[FIELDS[i]];
+    $(FIELDS[i]).value = (v === undefined || v === null) ? (FEE_DEFAULTS[FIELDS[i]] || "") : v;
+  }
+}
+
+/* ================= SETTINGS APPLY ================= */
+function applySettings(){
+  document.documentElement.lang = device.lang;
+  if (device.theme === "auto") document.documentElement.removeAttribute("data-theme");
+  else document.documentElement.setAttribute("data-theme", device.theme);
+  if (device.ts === "normal") document.documentElement.removeAttribute("data-ts");
+  else document.documentElement.setAttribute("data-ts", device.ts === "large" ? "lg" : "xl");
+  document.documentElement.classList.toggle("no-motion", !!device.motion);
+}
+
+/* ================= I18N ================= */
 function applyLang(){
-  document.documentElement.lang = lang;
+  applySettings();
   var nodes = document.querySelectorAll("[data-i18n]");
   for (var i=0;i<nodes.length;i++){
     var k = nodes[i].getAttribute("data-i18n");
-    if (typeof STR[lang][k] === "string") nodes[i].textContent = STR[lang][k];
+    if (typeof L()[k] === "string") nodes[i].textContent = L()[k];
   }
-  $("lang-btn").textContent = t("langBtn");
-  $("lang-btn").setAttribute("aria-label", t("langLabel"));
-  $("goal-name").placeholder = t("goalNamePH");
   $("rcp-title").textContent = t("rcpTitle");
   $("rcp-inc-l").textContent = t("rcpInc");
   $("rcp-tot-l").textContent = t("rcpTot");
   $("tape-foot").textContent = t("rcpFoot");
   $("tape").setAttribute("aria-label", t("tapeAria"));
-  buildBills();
-  calcAll();
+  $("val-lang").textContent = t("langName");
+  $("val-theme").textContent = t(device.theme === "light" ? "themeLight" : device.theme === "dark" ? "themeDark" : "themeAuto");
+  $("val-ts").textContent = t(device.ts === "large" ? "tsLg" : device.ts === "xl" ? "tsXl" : "tsNormal");
+  buildRemDays();
+  renderAll();
 }
 
 /* ================= TABS ================= */
-var TABS = ["budget","fees","goal","bills","credit","help"];
-function showTab(name){
+var TABS = ["budget","bills","goals","learn","you"];
+var activeTab = "budget";
+function showTab(name, focusPanel){
   activeTab = name;
   for (var i=0;i<TABS.length;i++){
     var sel = TABS[i] === name;
@@ -960,12 +1642,17 @@ function showTab(name){
     if (sel) $("panel-"+TABS[i]).removeAttribute("hidden");
     else $("panel-"+TABS[i]).setAttribute("hidden","");
   }
+  prof.lastTab = name; queueSave();
+  if (name === "you"){ clearBadge(); renderYou(); }
+  closeTape();
   updateTape();
+  if (focusPanel) $("panel-"+name).focus();
+  window.scrollTo(0,0);
 }
 for (var ti=0;ti<TABS.length;ti++)(function(name){
   $("tab-"+name).addEventListener("click", function(){ showTab(name); });
 })(TABS[ti]);
-document.querySelector(".rail").addEventListener("keydown", function(e){
+$("tabbar").addEventListener("keydown", function(e){
   if (e.key !== "ArrowRight" && e.key !== "ArrowLeft") return;
   var idx = TABS.indexOf(activeTab);
   idx = (idx + (e.key === "ArrowRight" ? 1 : -1) + TABS.length) % TABS.length;
@@ -976,7 +1663,7 @@ document.querySelector(".rail").addEventListener("keydown", function(e){
 
 /* ================= BUDGET ================= */
 function setMode(m){
-  payMode = m;
+  prof.mode = m;
   $("mode-steady").setAttribute("aria-pressed", m==="steady" ? "true":"false");
   $("mode-varies").setAttribute("aria-pressed", m==="varies" ? "true":"false");
   if (m==="steady"){ $("steady-box").removeAttribute("hidden"); $("varies-box").setAttribute("hidden",""); }
@@ -994,12 +1681,10 @@ var ESS = [
   {id:"ess-other", key:"essOther"}
 ];
 function shortLabel(key){
-  // first clause of the label, before the dash/paren
-  var s = t(key);
-  return s.split("(")[0].split(":")[0].trim();
+  return t(key).split("(")[0].split(":")[0].trim();
 }
 function planIncome(){
-  if (payMode === "steady") return num("inc-steady");
+  if (prof.mode === "steady") return num("inc-steady");
   var weeks = [num("w1"),num("w2"),num("w3"),num("w4")].filter(function(w){ return w>0; });
   return weeks.length ? Math.min.apply(null, weeks) : 0;
 }
@@ -1008,6 +1693,296 @@ function budgetTouched(){
   if (num("w1")>0||num("w2")>0||num("w3")>0||num("w4")>0) return true;
   for (var i=0;i<ESS.length;i++) if (num(ESS[i].id)>0) return true;
   return false;
+}
+
+/* ---- presets ---- */
+function renderPresets(){
+  var box = $("preset-chips"), html = "";
+  for (var i=0;i<prof.presets.length;i++){
+    var p = prof.presets[i];
+    html += '<button type="button" class="chip" data-load="'+i+'">'+esc(p.name)+'</button>'
+      + '<button type="button" class="iconbtn" data-delp="'+i+'" aria-label="'+esc(t("presetDelQ")(p.name))+'">'
+      + '<svg class="icon" aria-hidden="true"><use href="#i-trash-2"/></svg></button>';
+  }
+  box.innerHTML = html;
+  box.style.display = prof.presets.length ? "" : "none";
+  $("val-presets").textContent = String(prof.presets.length);
+}
+$("preset-chips").addEventListener("click", function(e){
+  var load = e.target.closest("[data-load]"), del = e.target.closest("[data-delp]");
+  if (load){
+    var p = prof.presets[+load.getAttribute("data-load")];
+    for (var k in p.data) if ($(k)) $(k).value = p.data[k];
+    if (p.mode) setMode(p.mode);
+    fieldsToProf(); calcAll(); queueSave();
+    toast(t("presetLoaded"));
+  } else if (del){
+    var i = +del.getAttribute("data-delp");
+    if (!window.confirm(t("presetDelQ")(prof.presets[i].name))) return;
+    prof.presets.splice(i,1);
+    renderPresets(); queueSave();
+    toast(t("presetDeleted"));
+  }
+});
+$("btn-save-preset").addEventListener("click", function(){
+  if (prof.presets.length >= 6){ toast(t("presetFull")); return; }
+  var name = window.prompt(t("presetName"));
+  if (!name) return;
+  var data = {};
+  var ids = ["inc-steady","w1","w2","w3","w4"].concat(ESS.map(function(e){ return e.id; }));
+  for (var i=0;i<ids.length;i++) data[ids[i]] = $(ids[i]).value;
+  prof.presets.push({name:name.slice(0,30), mode:prof.mode, data:data});
+  renderPresets(); persist(true);
+  toast(t("presetSaved"));
+});
+
+/* ================= BILLS ALLOCATOR ================= */
+function billOwedAmt(i){ return parseAmt(prof.bills.owed[i]); }
+function allocate(){
+  var cash = num("bills-cash"), out = [];
+  var bills = L().bills;
+  for (var i=0;i<bills.length;i++){
+    if (prof.bills.checked.indexOf(i) === -1){ out.push(null); continue; }
+    var owed = billOwedAmt(i);
+    if (owed <= 0){ out.push({state:"none"}); continue; }
+    if (cash >= owed){ out.push({state:"paid", pay:owed}); cash -= owed; }
+    else if (cash > 0){ out.push({state:"part", pay:cash, owed:owed}); cash = 0; }
+    else out.push({state:"waits", owed:owed});
+  }
+  return out;
+}
+function renderBills(){
+  var bills = L().bills, alloc = allocate(), html = "";
+  for (var i=0;i<bills.length;i++){
+    var checked = prof.bills.checked.indexOf(i) !== -1;
+    var a = alloc[i];
+    var chipHtml = "";
+    if (a && a.state === "paid") chipHtml = '<span class="verdict-chip paid">'+t("stPaid")(fmt(a.pay))+'</span>';
+    else if (a && a.state === "part") chipHtml = '<span class="verdict-chip part">'+t("stPart")(fmt(a.pay),fmt(a.owed))+'</span>';
+    else if (a && a.state === "waits") chipHtml = '<span class="verdict-chip waits">'+t("stWaits")+'</span>';
+    html += '<div class="bill">'
+      + '<div class="toprow">'
+      + '<label class="tap"><input type="checkbox" data-bill="'+i+'"'+(checked?' checked':'')+'>'
+      + '<span class="what"><b>'+esc(bills[i].b)+'</b><span class="why">'+esc(bills[i].w)+'</span></span>'
+      + '</label>' + chipHtml + '</div>';
+    if (checked){
+      html += '<div class="owed-row"><label for="owed-'+i+'">'+t("owedL")+'</label>'
+        + '<div class="field"><span class="cur" aria-hidden="true">$</span>'
+        + '<input type="text" inputmode="decimal" id="owed-'+i+'" data-owed="'+i+'" value="'+esc(prof.bills.owed[i]||"")+'" placeholder="0"></div></div>';
+      if (a && a.state === "part") html += '<p class="script">'+t("scriptPart")(fmt(a.pay))+'</p>';
+      else if (a && a.state === "waits") html += '<p class="script">'+t("scriptWaits")+'</p>';
+    }
+    html += '</div>';
+  }
+  $("bill-list").innerHTML = html;
+}
+$("bill-list").addEventListener("change", function(e){
+  var cb = e.target.closest("[data-bill]");
+  if (!cb) return;
+  var i = +cb.getAttribute("data-bill");
+  var pos = prof.bills.checked.indexOf(i);
+  if (cb.checked && pos === -1) prof.bills.checked.push(i);
+  if (!cb.checked && pos !== -1) prof.bills.checked.splice(pos,1);
+  renderBills(); updateTape(); queueSave();
+});
+$("bill-list").addEventListener("input", function(e){
+  var inp = e.target.closest("[data-owed]");
+  if (!inp) return;
+  prof.bills.owed[+inp.getAttribute("data-owed")] = inp.value;
+  // re-render chips without rebuilding inputs mid-typing: update chips only
+  refreshBillChips(); updateTape(); queueSave();
+});
+function refreshBillChips(){
+  // cheap path: recompute allocation and redraw chips + scripts by full render on blur;
+  // while typing, only tape + chips text change matters, so re-render is deferred
+  clearTimeout(refreshBillChips.t);
+  refreshBillChips.t = setTimeout(function(){
+    var focused = document.activeElement && document.activeElement.id;
+    var focusVal = focused && document.activeElement.value, selEnd = 0;
+    if (focused && document.activeElement.setSelectionRange) selEnd = document.activeElement.selectionStart;
+    renderBills();
+    if (focused && $(focused)){
+      var el = $(focused); el.focus();
+      if (el.setSelectionRange && focusVal !== undefined){ try{ el.setSelectionRange(selEnd, selEnd); }catch(err){} }
+    }
+  }, 350);
+}
+function billsSummary(){
+  var alloc = allocate(), pay = 0, waits = 0, any = false;
+  for (var i=0;i<alloc.length;i++){
+    var a = alloc[i];
+    if (!a || a.state === "none") continue;
+    any = true;
+    if (a.state === "paid" || a.state === "part") pay++;
+    if (a.state === "waits") waits++;
+    if (a.state === "part") waits++; // a partial also needs a call
+  }
+  return any ? {pay:pay, waits:waits} : null;
+}
+
+/* ================= GOALS ================= */
+function goalPct(g){
+  return g.target>0 ? Math.min(100, Math.round(g.saved/g.target*100)) : 0;
+}
+function renderGoals(){
+  var list = $("goal-list"), html = "";
+  var leftOver = Math.max(0, planIncome() - essTotal());
+  for (var i=0;i<prof.goals.length;i++){
+    var g = prof.goals[i], pct = goalPct(g), left = Math.max(0, g.target-g.saved);
+    html += '<div class="card goal-card" data-goal="'+i+'">'
+      + '<div class="goal-top"><b>'+esc(g.name)+'</b>'
+      + '<button type="button" class="iconbtn" data-grename="'+i+'" aria-label="'+t("goalRenameQ")+'"><svg class="icon" aria-hidden="true"><use href="#i-pencil"/></svg></button>'
+      + '<button type="button" class="iconbtn" data-gdel="'+i+'" aria-label="'+esc(t("goalDelQ")(g.name))+'"><svg class="icon" aria-hidden="true"><use href="#i-trash-2"/></svg></button>'
+      + '</div>'
+      + '<div class="grid2">'
+      + '<div class="row"><label for="gt-'+i+'">'+t("goalTargetL")+'</label><div class="field"><span class="cur" aria-hidden="true">$</span><input type="text" inputmode="decimal" id="gt-'+i+'" data-gtarget="'+i+'" value="'+(g.target||"")+'" placeholder="0"></div></div>'
+      + '<div class="row"><label for="gs-'+i+'">'+t("goalSavedL")+'</label><div class="field"><span class="cur" aria-hidden="true">$</span><input type="text" inputmode="decimal" id="gs-'+i+'" data-gsaved="'+i+'" value="'+(g.saved||"")+'" placeholder="0"></div></div>'
+      + '</div>'
+      + '<div class="chips">'
+      + '<button type="button" class="chip" data-gadd="'+i+'" data-amt="5">+ $5</button>'
+      + '<button type="button" class="chip" data-gadd="'+i+'" data-amt="10">+ $10</button>'
+      + (g.chip ? '<button type="button" class="chip" data-gadd="'+i+'" data-amt="'+g.chip+'">+ '+fmt(g.chip)+'</button>' : '')
+      + '<button type="button" class="chip" data-gchip="'+i+'"><svg class="icon" aria-hidden="true"><use href="#i-pencil"/></svg>'+t("chipCustom")+'</button>'
+      + '</div>'
+      + '<div class="goal-bar" role="img" aria-label="'+pct+'%"><div class="goal-fill" style="transform:scaleX('+(pct/100)+')"></div></div>'
+      + '<div class="goal-read"><span class="pct">'+pct+'%</span><span>'
+      + (g.target>0 ? (pct>=100 ? t("goalMet") : fmt(left)+" "+t("goalTo")) : "") + '</span></div>';
+    if (g.target>0 && left>0 && leftOver>0){
+      var weeks = Math.ceil(left/leftOver);
+      if (weeks <= 104) html += '<div class="goal-weeks">'+t("weeksAway")(weeks, fmt(leftOver))+'</div>';
+    }
+    html += '<div class="plan-line">'
+      + '<span class="grow">'+t("planL")
+      + (g.plan ? ' · '+fmt(g.plan.amt)+' · '+L().daysPl[g.plan.day] : '')
+      + '<span class="hint">'+t("planNote")+'</span></span>'
+      + '<button type="button" class="switch" role="switch" aria-checked="'+(g.plan?'true':'false')+'" data-gplan="'+i+'" aria-label="'+t("planL")+'"></button>'
+      + '</div>'
+      + '</div>';
+  }
+  list.innerHTML = html;
+  $("goals-empty").hidden = prof.goals.length > 0;
+  $("btn-add-goal").hidden = prof.goals.length === 0 || prof.goals.length >= 5;
+  renderGoalDue();
+}
+function essTotal(){
+  var total = 0;
+  for (var i=0;i<ESS.length;i++) total += num(ESS[i].id);
+  return total;
+}
+function addGoalFlow(){
+  if (prof.goals.length >= 5){ toast(t("goalFull")); return; }
+  var name = window.prompt(t("goalNameQ"));
+  if (!name) return;
+  var target = parseAmt(window.prompt(t("goalTargetQ")));
+  prof.goals.push({name:name.slice(0,30), target:target, saved:0, chip:0, plan:null});
+  renderGoals(); persist(true); updateTape();
+  toast(t("goalAdded"));
+}
+$("btn-add-goal").addEventListener("click", addGoalFlow);
+$("btn-add-goal-empty").addEventListener("click", addGoalFlow);
+$("goal-list").addEventListener("click", function(e){
+  var b;
+  if ((b = e.target.closest("[data-gadd]"))){
+    var g = prof.goals[+b.getAttribute("data-gadd")];
+    var amt = parseFloat(b.getAttribute("data-amt"));
+    g.saved = Math.round((g.saved + amt)*100)/100;
+    renderGoals(); persist(true); updateTape();
+    toast(t("addedTo")(fmt(amt), g.name));
+  } else if ((b = e.target.closest("[data-gchip]"))){
+    var gi = +b.getAttribute("data-gchip");
+    var v = parseAmt(window.prompt(t("chipCustomQ")));
+    if (v > 0){ prof.goals[gi].chip = v; renderGoals(); persist(true); }
+  } else if ((b = e.target.closest("[data-grename]"))){
+    var gr = +b.getAttribute("data-grename");
+    var name = window.prompt(t("goalRenameQ"), prof.goals[gr].name);
+    if (name){ prof.goals[gr].name = name.slice(0,30); renderGoals(); persist(true); toast(t("goalRenamed")); }
+  } else if ((b = e.target.closest("[data-gdel]"))){
+    var gd = +b.getAttribute("data-gdel");
+    if (!window.confirm(t("goalDelQ")(prof.goals[gd].name))) return;
+    prof.goals.splice(gd,1);
+    renderGoals(); persist(true); updateTape();
+    toast(t("goalDeleted"));
+  } else if ((b = e.target.closest("[data-gplan]"))){
+    var gp = +b.getAttribute("data-gplan");
+    if (prof.goals[gp].plan){ prof.goals[gp].plan = null; }
+    else {
+      var amt2 = parseAmt(window.prompt(t("planQ")));
+      if (amt2 <= 0) return;
+      prof.goals[gp].plan = {amt:amt2, day:5, last:Date.now()};
+    }
+    renderGoals(); persist(true);
+  }
+});
+$("goal-list").addEventListener("input", function(e){
+  var ti2;
+  if ((ti2 = e.target.closest("[data-gtarget]"))) prof.goals[+ti2.getAttribute("data-gtarget")].target = parseAmt(ti2.value);
+  else if ((ti2 = e.target.closest("[data-gsaved]"))) prof.goals[+ti2.getAttribute("data-gsaved")].saved = parseAmt(ti2.value);
+  else return;
+  clearTimeout(renderGoals.t);
+  renderGoals.t = setTimeout(function(){
+    var focused = document.activeElement && document.activeElement.id;
+    renderGoals();
+    if (focused && $(focused)) $(focused).focus();
+  }, 700);
+  updateTape(); queueSave();
+});
+/* missed scheduled adds */
+function weeksMissed(plan){
+  var now = new Date(), last = new Date(plan.last || Date.now());
+  var count = 0, d = new Date(last);
+  d.setDate(d.getDate()+1);
+  for (; d <= now && count < 8; d.setDate(d.getDate()+1)){
+    if (d.getDay() === plan.day) count++;
+  }
+  return count;
+}
+function renderGoalDue(){
+  var box = $("goal-due-box"), html = "";
+  for (var i=0;i<prof.goals.length;i++){
+    var g = prof.goals[i];
+    if (!g.plan) continue;
+    var missed = weeksMissed(g.plan);
+    if (missed < 1) continue;
+    var total = Math.round(missed * g.plan.amt * 100)/100;
+    html += '<div class="card due-card">'
+      + '<p class="q">'+esc(t("planDue")(missed, L().daysPl[g.plan.day], fmt(total), g.name))+'</p>'
+      + '<div class="due-actions">'
+      + '<button type="button" class="btn small primary" data-dueadd="'+i+'" data-dueamt="'+total+'">'+t("planAdd")(fmt(total))+'</button>'
+      + '<button type="button" class="btn small" data-dueskip="'+i+'">'+t("planSkip")+'</button>'
+      + '</div></div>';
+  }
+  box.innerHTML = html;
+}
+$("goal-due-box").addEventListener("click", function(e){
+  var b;
+  if ((b = e.target.closest("[data-dueadd]"))){
+    var g = prof.goals[+b.getAttribute("data-dueadd")];
+    g.saved = Math.round((g.saved + parseFloat(b.getAttribute("data-dueamt")))*100)/100;
+    g.plan.last = Date.now();
+    renderGoals(); persist(true); updateTape();
+    toast(t("addedTo")(fmt(parseFloat(b.getAttribute("data-dueamt"))), g.name));
+  } else if ((b = e.target.closest("[data-dueskip]"))){
+    var g2 = prof.goals[+b.getAttribute("data-dueskip")];
+    g2.plan.last = Date.now();
+    renderGoals(); persist(true);
+  }
+});
+function tapeGoal(){
+  var best = null;
+  for (var i=0;i<prof.goals.length;i++){
+    var g = prof.goals[i];
+    if (g.target <= 0) continue;
+    var pct = goalPct(g);
+    if (!best || (pct < 100 && (goalPct(best) >= 100 || pct > goalPct(best))) ||
+        (pct >= 100 && goalPct(best) >= 100)) {
+      if (!best || (goalPct(best) >= 100 && pct < 100) || (pct < 100 && pct > goalPct(best)) ) best = g;
+      else if (!best) best = g;
+    }
+  }
+  if (!best){
+    for (var j=0;j<prof.goals.length;j++) if (prof.goals[j].target>0){ best = prof.goals[j]; break; }
+  }
+  return best;
 }
 
 /* ================= FEES ================= */
@@ -1023,99 +1998,209 @@ function feesTotal(){
   return chk+mo+od+pp;
 }
 
-/* ================= GOAL ================= */
-function goalState(){
-  var target = num("goal-target"), saved = num("goal-saved");
-  var pct = target>0 ? Math.min(100, Math.round(saved/target*100)) : 0;
-  return {target:target, saved:saved, pct:pct, left:Math.max(0, target-saved)};
+/* ================= YOU ================= */
+var youViews = ["you-root","you-profiles","you-settings","you-about"];
+function showYou(view){
+  for (var i=0;i<youViews.length;i++) $(youViews[i]).hidden = youViews[i] !== view;
+  window.scrollTo(0,0);
 }
-function renderGoal(leftOver){
-  var g = goalState();
-  $("goal-fill").style.transform = "scaleX(" + (g.pct/100) + ")";
-  $("goal-pct").textContent = g.pct + "%";
-  $("goal-left").textContent = g.target>0 ? fmt(g.left)+" "+t("goalTo") : "";
-  $("goal-bar-wrap").setAttribute("aria-label", t("goalBarLabel")(g.pct));
-  var cheer = "";
-  if (g.target>0){
-    if (g.pct>=100) cheer = t("cheer5");
-    else if (g.pct>=75) cheer = t("cheer4");
-    else if (g.pct>=50) cheer = t("cheer3");
-    else if (g.pct>=25) cheer = t("cheer2");
-    else if (g.saved>0) cheer = t("cheer1");
-    else cheer = t("cheer0");
-  }
-  $("goal-cheer").textContent = cheer;
-  var wk = "";
-  if (g.target>0 && g.left>0 && leftOver>0){
-    var weeks = Math.ceil(g.left/leftOver);
-    if (weeks <= 104) wk = t("weeksAway")(weeks, fmt(leftOver));
-  }
-  $("goal-weeks").textContent = wk;
+document.querySelectorAll("[data-back]").forEach(function(b){
+  b.addEventListener("click", function(){ showYou("you-root"); renderYou(); });
+});
+$("row-profiles").addEventListener("click", function(){ renderProfiles(); showYou("you-profiles"); });
+$("row-settings").addEventListener("click", function(){ showYou("you-settings"); });
+$("row-about").addEventListener("click", function(){ showYou("you-about"); });
+$("row-help").addEventListener("click", function(){
+  showTab("learn");
+  var anchor = $("help-anchor");
+  if (anchor) setTimeout(function(){ anchor.scrollIntoView(); }, 50);
+});
+function profileName(p){ return p.name || t("defaultProfile"); }
+function renderYou(){
+  var active = device.profiles.filter(function(p){ return p.id === device.active; })[0];
+  var name = profileName(active);
+  $("you-name").textContent = name;
+  $("you-avatar").textContent = name.charAt(0).toUpperCase();
+  var d = new Date((prof.since || "2026-07") + "-02");
+  var mon = d.toLocaleDateString(device.lang === "es" ? "es-US" : "en-US", {month:"long", year:"numeric"});
+  $("you-since").textContent = t("youSince")(mon);
+  $("you-stats").textContent = t("youStats")(prof.presets.length, prof.goals.length);
+  $("profiles-count").textContent = String(device.profiles.length);
+  // greeting on budget tab
+  $("greet").textContent = active.name ? t("greetH")(active.name) : t("budgetH");
 }
-var chips = document.querySelectorAll(".chip");
-for (var ci=0;ci<chips.length;ci++)(function(chip){
-  chip.addEventListener("click", function(){
-    var cur = num("goal-saved");
-    $("goal-saved").value = String(Math.round((cur + parseFloat(chip.getAttribute("data-add")))*100)/100);
-    calcAll(); queueSave();
-  });
-})(chips[ci]);
+function renderProfiles(){
+  var html = "";
+  for (var i=0;i<device.profiles.length;i++){
+    var p = device.profiles[i], isActive = p.id === device.active;
+    html += '<div class="rowitem static">'
+      + '<span class="avatar" style="width:36px;height:36px;font-size:1rem">'+esc(profileName(p).charAt(0).toUpperCase())+'</span>'
+      + '<button type="button" class="grow" style="background:none;border:none;text-align:left;font:inherit;font-weight:600;cursor:pointer;min-height:48px" data-pswitch="'+i+'">'
+      + esc(profileName(p)) + (isActive ? ' <span class="val">· '+t("activeMark")+'</span>' : '') + '</button>'
+      + '<button type="button" class="iconbtn" data-prename="'+i+'" aria-label="'+t("profileRenameQ")+'"><svg class="icon" aria-hidden="true"><use href="#i-pencil"/></svg></button>'
+      + (device.profiles.length > 1 ? '<button type="button" class="iconbtn" data-pdel="'+i+'" aria-label="'+esc(t("profileDelQ")(profileName(p)))+'"><svg class="icon" aria-hidden="true"><use href="#i-trash-2"/></svg></button>' : '')
+      + '</div>';
+  }
+  $("profile-list").innerHTML = html;
+  $("btn-add-profile").hidden = device.profiles.length >= 4;
+}
+$("profile-list").addEventListener("click", function(e){
+  var b;
+  if ((b = e.target.closest("[data-pswitch]"))){
+    var p = device.profiles[+b.getAttribute("data-pswitch")];
+    if (p.id !== device.active){
+      persist(false);
+      device.active = p.id;
+      prof = lsGet(pkey(p.id)) || freshProfileData();
+      persist(false);
+      profToFields(); setMode(prof.mode); applyLang();
+      toast(t("profileSwitched")(profileName(p)));
+    }
+    renderProfiles(); renderYou();
+  } else if ((b = e.target.closest("[data-prename]"))){
+    var pr = device.profiles[+b.getAttribute("data-prename")];
+    var name = window.prompt(t("profileRenameQ"), pr.name);
+    if (name !== null){ pr.name = name.slice(0,20); persist(true); renderProfiles(); renderYou(); }
+  } else if ((b = e.target.closest("[data-pdel]"))){
+    var i = +b.getAttribute("data-pdel"), pd = device.profiles[i];
+    if (!window.confirm(t("profileDelQ")(profileName(pd)))) return;
+    try { localStorage.removeItem(pkey(pd.id)); } catch(err){}
+    device.profiles.splice(i,1);
+    if (device.active === pd.id){
+      device.active = device.profiles[0].id;
+      prof = lsGet(pkey(device.active)) || freshProfileData();
+      profToFields(); setMode(prof.mode); applyLang();
+    }
+    persist(false); renderProfiles(); renderYou();
+    toast(t("profileDeleted"));
+  }
+});
+$("btn-add-profile").addEventListener("click", function(){
+  if (device.profiles.length >= 4){ toast(t("profileFull")); return; }
+  var name = window.prompt(t("profileNameQ"));
+  if (!name) return;
+  var id = "p" + Date.now().toString(36);
+  device.profiles.push({id:id, name:name.slice(0,20)});
+  lsSet(pkey(id), freshProfileData());
+  persist(true); renderProfiles(); renderYou();
+  toast(t("profileAdded"));
+});
 
-/* ================= BILLS ================= */
-function buildBills(){
-  var list = $("bill-list"), bills = STR[lang].bills, html = "";
-  for (var i=0;i<bills.length;i++){
-    html += '<div class="bill'+(billOwed[i]?' owed':'')+'" id="bill-'+i+'">'
-      + '<span class="ord" aria-hidden="true" id="bill-ord-'+i+'"></span>'
-      + '<label class="tap"><input type="checkbox" id="bill-cb-'+i+'"'+(billOwed[i]?' checked':'')+'>'
-      + '<span class="what"><b>'+bills[i].b+'</b><span class="why">'+bills[i].w+'</span></span>'
-      + '</label></div>';
+/* ---- settings ---- */
+$("set-lang").addEventListener("click", function(){
+  device.lang = device.lang === "en" ? "es" : "en";
+  applyLang(); persist(true);
+});
+$("set-theme").addEventListener("click", function(){
+  device.theme = device.theme === "auto" ? "light" : device.theme === "light" ? "dark" : "auto";
+  applyLang(); persist(true);
+});
+$("set-ts").addEventListener("click", function(){
+  device.ts = device.ts === "normal" ? "large" : device.ts === "large" ? "xl" : "normal";
+  applyLang(); persist(true);
+});
+$("set-motion").addEventListener("click", function(){
+  device.motion = !device.motion;
+  this.setAttribute("aria-checked", device.motion ? "true" : "false");
+  applySettings(); persist(true);
+});
+function buildRemDays(){
+  var sel = $("rem-day"), html = "";
+  for (var i=0;i<7;i++) html += '<option value="'+i+'"'+(prof.reminder.day===i?' selected':'')+'>'+L().days[i]+'</option>';
+  sel.innerHTML = html;
+}
+$("set-reminder").addEventListener("click", function(){
+  prof.reminder.on = !prof.reminder.on;
+  this.setAttribute("aria-checked", prof.reminder.on ? "true" : "false");
+  $("rem-day-row").hidden = !prof.reminder.on;
+  if (prof.reminder.on){
+    prof.reminder.lastAck = Date.now();
+    if ("Notification" in window && Notification.permission === "default"){
+      try { Notification.requestPermission(); } catch(e){}
+    }
   }
-  list.innerHTML = html;
-  for (var j=0;j<bills.length;j++)(function(idx){
-    $("bill-cb-"+idx).addEventListener("change", function(){
-      billOwed[idx] = this.checked;
-      $("bill-"+idx).className = "bill" + (this.checked ? " owed" : "");
-      renderBillOrder(); updateTape(); queueSave();
-    });
-  })(j);
-  renderBillOrder();
+  persist(true);
+});
+$("rem-day").addEventListener("change", function(){
+  prof.reminder.day = +this.value;
+  persist(true);
+});
+$("set-erase").addEventListener("click", function(){
+  if (!window.confirm(t("eraseQ1"))) return;
+  erasing = true;
+  if (saveTimer) clearTimeout(saveTimer);
+  try {
+    var keys = [];
+    for (var i=0;i<localStorage.length;i++){
+      var k = localStorage.key(i);
+      if (k && (k.indexOf("mb2.") === 0 || k === "moneyBasics.v1" || k === "moneyBasics.v0")) keys.push(k);
+    }
+    keys.forEach(function(k){ localStorage.removeItem(k); });
+  } catch(e){}
+  toast(t("erased"));
+  setTimeout(function(){ location.reload(); }, 600);
+});
+
+/* ---- reminder on open ---- */
+function reminderDue(){
+  if (!prof.reminder.on) return false;
+  var last = new Date(prof.reminder.lastAck || 0), now = new Date();
+  var d = new Date(last); d.setDate(d.getDate()+1);
+  for (; d <= now; d.setDate(d.getDate()+1)){
+    if (d.getDay() === prof.reminder.day) return true;
+  }
+  return false;
 }
-function renderBillOrder(){
-  var n = 0;
-  for (var i=0;i<billOwed.length;i++){
-    $("bill-ord-"+i).textContent = billOwed[i] ? String(++n) : "";
+function clearBadge(){ $("you-badge").className = "badge"; }
+function checkReminder(){
+  if (!reminderDue()) return;
+  $("reminder-text").textContent = t("remBanner");
+  $("reminder-banner").hidden = false;
+  $("you-badge").className = "badge on";
+  if ("Notification" in window && Notification.permission === "granted"){
+    try { new Notification(t("remNotifTitle"), {body:t("remNotifBody"), icon:"./icon-512.png"}); } catch(e){}
   }
 }
-function firstBill(){
-  for (var i=0;i<billOwed.length;i++) if (billOwed[i]) return STR[lang].bills[i].b;
-  return null;
-}
+$("reminder-dismiss").addEventListener("click", function(){
+  prof.reminder.lastAck = Date.now();
+  $("reminder-banner").hidden = true;
+  clearBadge(); persist(true);
+});
 
 /* ================= TAPE ================= */
 var tapeOpen = false;
+function closeTape(){
+  if (!tapeOpen) return;
+  tapeOpen = false;
+  $("tape").className = "tape";
+  $("tape-bar").setAttribute("aria-expanded","false");
+  $("scrim").className = "scrim";
+  $("tape-car").textContent = t("tapeOpen");
+}
 $("tape-bar").addEventListener("click", function(){
   tapeOpen = !tapeOpen;
   $("tape").className = "tape" + (tapeOpen ? " open" : "");
   this.setAttribute("aria-expanded", tapeOpen ? "true" : "false");
+  $("scrim").className = "scrim" + (tapeOpen ? " on" : "");
   $("tape-car").textContent = tapeOpen ? t("tapeClose") : t("tapeOpen");
 });
+$("scrim").addEventListener("click", closeTape);
+document.addEventListener("keydown", function(e){ if (e.key === "Escape") closeTape(); });
 
+var feesCache = 0;
 function updateTape(){
-  var income = planIncome(), total = 0;
-  for (var i=0;i<ESS.length;i++) total += num(ESS[i].id);
-  var left = income - total;
-  var fees = feesCache;
+  var income = planIncome(), total = essTotal(), left = income - total;
   var lbl = "", amt = "", cls = "";
-
-  if (activeTab === "fees" && fees > 0){
-    lbl = t("tapeFees"); amt = fmt(fees)+t("tapeFeesYr"); cls = "neg";
-  } else if (activeTab === "goal" && goalState().target > 0){
-    var g = goalState();
-    if (g.left <= 0){ lbl = t("tapeGoalMet"); amt = "✓"; cls = "pos"; }
-    else { lbl = t("tapeGoalTo"); amt = fmt(g.left); cls = "pos"; }
-  } else if (activeTab === "bills" && firstBill()){
-    lbl = t("tapeFirst"); amt = firstBill().toUpperCase(); cls = "";
+  var bs = activeTab === "bills" ? billsSummary() : null;
+  var tg = activeTab === "goals" ? tapeGoal() : null;
+  if (activeTab === "learn" && feesCache > 0){
+    lbl = t("tapeFees"); amt = fmt(feesCache)+t("tapeFeesYr"); cls = "neg";
+  } else if (tg){
+    var left2 = Math.max(0, tg.target - tg.saved);
+    if (left2 <= 0){ lbl = t("tapeGoalMet"); amt = "✓"; cls = "pos"; }
+    else { lbl = tg.name.toUpperCase()+":"; amt = fmt(left2)+" "+t("tapeGoalTo"); cls = "pos"; }
+  } else if (bs){
+    lbl = t("tapeBills")(bs.pay, bs.waits); amt = ""; cls = "";
   } else if (budgetTouched()){
     if (left >= 0){ lbl = t("tapeLeft"); amt = fmt(left); cls = "pos"; }
     else { lbl = t("tapeShort"); amt = fmt(-left); cls = "neg"; }
@@ -1125,9 +2210,7 @@ function updateTape(){
   $("tape-lbl").textContent = lbl;
   $("tape-amt").textContent = amt;
   $("tape-amt").className = "amt" + (cls ? " "+cls : "");
-  $("tape-car").textContent = tapeOpen ? t("tapeClose") : t("tapeOpen");
 }
-
 function renderReceipt(){
   var income = planIncome();
   $("rcp-inc").textContent = fmt(income);
@@ -1140,7 +2223,6 @@ function renderReceipt(){
   }
   $("rcp-items").innerHTML = html;
   $("rcp-tot").textContent = "−"+fmt(total);
-
   var left = income - total;
   var stamp = $("rcp-stamp"), after = $("rcp-after");
   if (!budgetTouched()){
@@ -1152,75 +2234,96 @@ function renderReceipt(){
   } else {
     stamp.style.display = ""; stamp.className = "stamp neg";
     stamp.textContent = t("stampShort")+" "+fmt(-left);
-    var covered = [], missing = [], running = income;
+    var covered = [], running = income;
     for (var j=0;j<ESS.length;j++){
       var w = num(ESS[j].id);
       if (w<=0) continue;
-      if (running >= w){ covered.push(shortLabel(ESS[j].key)); running -= w; }
-      else missing.push(shortLabel(ESS[j].key));
+      if (running >= w){ covered.push(shortLabel(ESS[j].key).toLowerCase()); running -= w; }
     }
-    var msg = "";
-    if (covered.length) msg += t("afterCovers")+" "+covered.join(", ")+". ";
-    if (missing.length) msg += t("afterMissing")+" "+missing.join(", ")+". ";
-    after.textContent = msg + t("afterFees");
+    after.textContent = t("afterShort")(fmt(-left), covered.join(", "), true);
   }
-
-  /* extras: fees + goal, printed like departments on the tape */
   var ex = "";
   if (feesCache > 0){
     ex += '<div class="sect">'+t("rcpFees")+'</div>'
       + '<div class="line"><span class="lbl">TOTAL</span><span class="amt">−'+fmt(feesCache)+'</span></div>'
       + '<div class="line"><span class="lbl">'+t("rcpFeesWk")+'</span><span class="amt">−'+fmt(feesCache/52)+'</span></div>';
   }
-  var g = goalState();
-  if (g.target > 0){
-    var bar = "", ticks = 12, done = Math.round(g.pct/100*ticks);
-    for (var b2=0;b2<ticks;b2++) bar += b2<done ? "▓" : "░";
-    var gname = ($("goal-name").value || t("rcpGoal")).toUpperCase();
-    ex += '<div class="sect">'+t("rcpGoal")+'</div>'
-      + '<div class="line"><span class="lbl">'+gname+'</span><span class="amt">'+g.pct+'%</span></div>'
+  var bs = billsSummary();
+  if (bs){
+    var alloc = allocate(), bills = L().bills;
+    ex += '<div class="sect">'+t("rcpBills")+'</div>';
+    for (var b2=0;b2<alloc.length;b2++){
+      var a = alloc[b2];
+      if (!a || a.state === "none") continue;
+      var mark = a.state === "paid" ? t("stPaid")(fmt(a.pay)) : a.state === "part" ? t("stPart")(fmt(a.pay),fmt(a.owed)) : t("stWaits");
+      ex += '<div class="line"><span class="lbl">'+esc(bills[b2].b.toUpperCase())+'</span><span class="amt">'+mark+'</span></div>';
+    }
+  }
+  for (var gi=0;gi<prof.goals.length;gi++){
+    var g = prof.goals[gi];
+    if (g.target <= 0) continue;
+    if (gi === 0) ex += '<div class="sect">'+t("rcpGoal")+'</div>';
+    var pct = goalPct(g), ticks = 12, done = Math.round(pct/100*ticks), bar = "";
+    for (var b3=0;b3<ticks;b3++) bar += b3<done ? "▓" : "░";
+    ex += '<div class="line"><span class="lbl">'+esc(g.name.toUpperCase())+'</span><span class="amt">'+pct+'%</span></div>'
       + '<div class="line"><span class="lbl">'+bar+'</span><span class="amt">'+fmt(g.saved)+' / '+fmt(g.target)+'</span></div>';
   }
   $("rcp-extra").innerHTML = ex;
-  return left;
 }
 
-/* ================= MASTER CALC ================= */
-var feesCache = 0;
+/* ================= MASTER ================= */
 function calcAll(){
   feesCache = feesTotal();
-  if (payMode === "varies") $("low-fig").textContent = fmt(planIncome());
-  var left = renderReceipt();
-  renderGoal(Math.max(0, left));
+  if (prof.mode === "varies") $("low-fig").textContent = fmt(planIncome());
+  renderReceipt();
   updateTape();
 }
-
-/* ================= ACTIONS ================= */
-$("btn-print").addEventListener("click", function(){ window.print(); });
-$("btn-clear").addEventListener("click", function(){
-  if (!window.confirm(t("clearConfirm"))) return;
-  for (var i=0;i<FIELDS.length;i++) $(FIELDS[i]).value = "";
-  $("chk-pct").value="2"; $("mo-fee").value="1.75"; $("od-fee").value="27"; $("atm-fee").value="3";
-  billOwed = billOwed.map(function(){ return false; });
-  try { localStorage.removeItem(KEY); } catch(e){}
-  $("saved-note").textContent = "";
-  setMode("steady"); buildBills(); calcAll();
-});
-$("lang-btn").addEventListener("click", function(){
-  lang = lang === "en" ? "es" : "en";
-  applyLang(); queueSave();
-});
-
-/* ================= INPUT WIRING ================= */
-for (var fi=0;fi<FIELDS.length;fi++){
-  $(FIELDS[fi]).addEventListener("input", function(){ calcAll(); queueSave(); });
+function renderAll(){
+  renderPresets(); renderBills(); renderGoals(); renderYou();
+  $("set-motion").setAttribute("aria-checked", device.motion ? "true" : "false");
+  $("set-reminder").setAttribute("aria-checked", prof.reminder.on ? "true" : "false");
+  $("rem-day-row").hidden = !prof.reminder.on;
+  calcAll();
 }
 
+/* ================= WIRING ================= */
+for (var fi=0;fi<FIELDS.length;fi++){
+  $(FIELDS[fi]).addEventListener("input", function(){
+    fieldsToProf();
+    if (this.id === "bills-cash") renderBills();
+    calcAll(); queueSave();
+  });
+}
+$("btn-print").addEventListener("click", function(){ window.print(); });
+
+/* ================= PWA ================= */
+if ("serviceWorker" in navigator){
+  window.addEventListener("load", function(){
+    navigator.serviceWorker.register("./sw.js").catch(function(){});
+  });
+}
+var deferredInstall = null;
+window.addEventListener("beforeinstallprompt", function(e){
+  e.preventDefault();
+  deferredInstall = e;
+  $("btn-install").hidden = false;
+});
+$("btn-install").addEventListener("click", function(){
+  if (!deferredInstall) return;
+  deferredInstall.prompt();
+  deferredInstall = null;
+  this.hidden = true;
+});
+
 /* ================= BOOT ================= */
-restore();
-setMode(payMode);
+loadDevice();
+profToFields();
+setMode(prof.mode);
 applyLang();
+if (prof.lastTab && TABS.indexOf(prof.lastTab) !== -1 && prof.lastTab !== "budget") showTab(prof.lastTab);
+checkReminder();
 })();
+
 </script>
 </body>
 </html>
