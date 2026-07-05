@@ -9,7 +9,7 @@
 <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#121316">
 <link rel="manifest" href="./manifest.webmanifest">
 <link rel="apple-touch-icon" href="./icon-512.png">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M6 2h20v24l-2.5 3-2.5-3-2.5 3-2.5-3-2.5 3-2.5-3-2.5 3L6 26z' fill='%23FCFBF7' stroke='%239E3226' stroke-width='2'/%3E%3Cpath d='M10 9h12M10 14h12M10 19h7' stroke='%239E3226' stroke-width='2.5' stroke-linecap='round'/%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%231B1D21'/%3E%3Cpath d='M8 5h16v19l-2 2.4-2-2.4-2 2.4-2-2.4-2 2.4-2-2.4-2 2.4L8 24z' fill='%23FCFBF7'/%3E%3Cpath d='M11 10h10M11 14h10M11 18h6' stroke='%231B1D21' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E">
 <style>
 /* ============ FONTS (embedded: zero network calls) ============ */
 @font-face{
@@ -176,8 +176,11 @@ select{
   border:1.5px solid var(--line-strong); border-radius:var(--r-ctl);
   padding:0 var(--sp-2);
 }
-.grid2{display:flex; gap:var(--sp-3); flex-wrap:wrap;}
-.grid2 .row{flex:1 1 150px;}
+.grid2{display:flex; gap:var(--sp-3); flex-wrap:wrap; align-items:stretch; margin-bottom:var(--sp-4);}
+.grid2:last-child{margin-bottom:0;}
+.grid2 .row{flex:1 1 150px; display:flex; flex-direction:column; margin-bottom:0;}
+.grid2 .row label{flex:1;}
+.grid2 .row .field, .grid2 .row > input{margin-top:auto;}
 
 .seg{
   display:flex; background:var(--track);
@@ -469,15 +472,20 @@ details .body li{margin-bottom:var(--sp-2); max-width:55ch;}
   padding:0 var(--sp-4) var(--sp-4);
 }
 
-/* keyboard open: the tape never floats over the keypad */
+/* keyboard open: nothing floats over the keypad, and the page behind locks */
 body.kb-open .tape{display:none;}
+@media (max-width: 899px){
+  body.kb-open .tabbar{display:none;}
+}
+body.kb-open, body.sheet-open{overflow:hidden; overscroll-behavior:none;}
+body.sheet-open{touch-action:none;}
 
 /* ============ SHEET (in-app dialogs) ============ */
 .sheet-wrap{position:fixed; inset:0; z-index:45; display:none;}
 .sheet-wrap.on{display:block;}
 .sheet-scrim{position:absolute; inset:0; background:var(--scrim);}
 .sheet{
-  position:absolute; left:0; right:0; bottom:0;
+  position:absolute; left:0; right:0; bottom:var(--kb-inset, 0px);
   max-width:560px; margin:0 auto;
   background:var(--surface); color:var(--ink);
   border:1px solid var(--line); border-bottom:none;
@@ -535,16 +543,36 @@ body.kb-open .tape{display:none;}
   .tape{left:auto; right:24px; bottom:0; width:392px; margin:0;}
 }
 
-/* ============ PRINT: only the receipt slip renders ============ */
+/* ============ PRINT: an actual receipt slip, centered ============ */
 @media print{
   body{background:#fff; padding:0;}
   body > *{display:none !important;}
   body > .tape{display:block !important; position:static; filter:none; max-width:none; width:auto;}
-  .tape-torn, .tape-bar, .tape-actions, .tape-foot{display:none !important;}
+  .tape-torn, .tape-bar, .tape-actions{display:none !important;}
   .tape-sheet{display:block !important; grid-template-rows:none;}
   .tape-inner{max-height:none !important; overflow:visible;}
-  .receipt{color:#000; padding:24px;}
-  .receipt .sect, .after{color:#333;}
+  .receipt{
+    color:#000; max-width:340px; margin:48px auto 0;
+    border-top:2px dashed #777; border-bottom:2px dashed #777;
+    padding:20px 8px 24px;
+  }
+  .receipt::before{
+    content:"MONEY BASICS";
+    display:block; text-align:center;
+    font-family:var(--font-money); font-size:15px; font-weight:700; letter-spacing:0.22em;
+    padding-bottom:10px; margin-bottom:12px;
+    border-bottom:1.5px dashed #999;
+  }
+  .receipt h3{border-color:#999;}
+  .receipt .line.total{border-color:#999;}
+  .receipt .sect{border-color:#999; color:#444;}
+  .after{color:#444;}
+  .stamp{border-color:#000 !important; color:#000 !important;}
+  .tape-foot{
+    display:block !important;
+    max-width:340px; margin:0 auto; padding:12px 0 0;
+    color:#666;
+  }
 }
 </style>
 </head>
@@ -900,8 +928,7 @@ body.kb-open .tape{display:none;}
     <div class="body">
       <p class="hint" data-i18n="eitcDef">EITC: a tax refund for workers with low pay. It can be thousands of dollars. VITA volunteers check if you qualify.</p>
       <p data-i18n="hVitaA">IRS-trained volunteers file your taxes free.</p>
-      <p><span data-i18n="callW">Call:</span> <span class="where">800-906-9887</span> · <span data-i18n="webW">Online:</span> <span class="where">irs.gov</span> <span data-i18n="hVitaB">(search "VITA")</span></p>
-      <p><span class="staff-confirm" data-i18n="staffConfirm">Staff to confirm</span> <span data-i18n="hVitaC">Nearest site this year. Sites change each tax season.</span></p>
+      <p data-i18n="hVitaLocal">Free tax prep in Hoboken: HOPES, 301 Garden St. Call 201-468-8805 or search "HOPES VITA" to book an appointment. Sites and hours change each tax season — the always-current list is at irs.gov (search VITA) or 800-906-9887.</p>
     </div>
   </details>
 
@@ -1290,9 +1317,7 @@ en:{
   hVitaH:"Free tax filing: VITA",
   eitcDef:"EITC: a tax refund for workers with low pay. It can be thousands of dollars. VITA volunteers check if you qualify.",
   hVitaA:"IRS-trained volunteers file your taxes free.",
-  hVitaB:"(search \"VITA\")",
-  staffConfirm:"Staff to confirm",
-  hVitaC:"Nearest site this year. Sites change each tax season.",
+  hVitaLocal:"Free tax prep in Hoboken: HOPES, 301 Garden St. Call 201-468-8805 or search \"HOPES VITA\" to book an appointment. Sites and hours change each tax season — the always-current list is at irs.gov (search VITA) or 800-906-9887.",
   hShelH:"The Hoboken Shelter",
   hShelA:"Meals, showers, case management, and budgeting help. Entrance on 3rd Street, on the ramp.",
   hReadyH:"Have this ready when you call",
@@ -1511,9 +1536,7 @@ es:{
   hVitaH:"Impuestos gratis: VITA",
   eitcDef:"EITC: un reembolso de impuestos para trabajadores con pago bajo. Puede ser de miles de dólares. Los voluntarios de VITA revisan si califica.",
   hVitaA:"Voluntarios entrenados por el IRS preparan sus impuestos gratis.",
-  hVitaB:"(busque \"VITA\")",
-  staffConfirm:"Personal por confirmar",
-  hVitaC:"El sitio más cercano este año. Los sitios cambian cada temporada.",
+  hVitaLocal:"Impuestos gratis en Hoboken: HOPES, 301 Garden St. Llame al 201-468-8805 o busque \"HOPES VITA\" para hacer una cita. Los sitios y horarios cambian cada temporada de impuestos — la lista siempre al día está en irs.gov (busque VITA) o al 800-906-9887.",
   hShelH:"El Hoboken Shelter",
   hShelA:"Comidas, duchas, manejo de casos y ayuda con presupuestos. Entrada por la calle 3, por la rampa.",
   hReadyH:"Tenga esto listo cuando llame",
@@ -1728,12 +1751,14 @@ function openSheet(cfg){
   ok.className = "btn " + (cfg.danger ? "danger" : "primary");
   var wrap = $("sheet-wrap");
   wrap.hidden = false;
+  document.body.classList.add("sheet-open");
   setTimeout(function(){ wrap.className = "sheet-wrap on"; }, 10);
   setTimeout(function(){ (cfg.field1 ? in1 : cfg.field2 ? in2 : ok).focus(); }, 70);
 }
 function closeSheet(){
   if (!sheetCfg) return;
   sheetCfg = null;
+  document.body.classList.remove("sheet-open");
   var wrap = $("sheet-wrap");
   wrap.className = "sheet-wrap";
   setTimeout(function(){ wrap.hidden = true; }, 220);
@@ -1762,7 +1787,7 @@ $("sheet-wrap").addEventListener("keydown", function(e){
   else if (!e.shiftKey && i === items.length-1){ e.preventDefault(); items[0].focus(); }
 });
 
-/* ---- keyboard open: hide the tape so it never floats over the keypad ---- */
+/* ---- keyboard open: hide floating chrome and lock the page behind ---- */
 document.addEventListener("focusin", function(e){
   var el = e.target;
   if (el && (el.tagName === "INPUT" || el.tagName === "SELECT" || el.tagName === "TEXTAREA"))
@@ -1775,6 +1800,19 @@ document.addEventListener("focusout", function(){
       document.body.classList.remove("kb-open");
   }, 80);
 });
+/* block background pan while a sheet or the keyboard is up; the sheet and tape stay scrollable */
+document.addEventListener("touchmove", function(e){
+  if (!document.body.classList.contains("sheet-open") && !document.body.classList.contains("kb-open")) return;
+  if (e.target && e.target.closest && e.target.closest(".sheet, .tape-inner")) return;
+  e.preventDefault();
+}, {passive:false});
+/* keep the sheet above the iOS keyboard */
+if (window.visualViewport){
+  window.visualViewport.addEventListener("resize", function(){
+    var inset = Math.max(0, window.innerHeight - window.visualViewport.height - window.visualViewport.offsetTop);
+    document.documentElement.style.setProperty("--kb-inset", inset + "px");
+  });
+}
 
 /* ================= FIELDS ================= */
 var FIELDS = ["inc-steady","w1","w2","w3","w4",
