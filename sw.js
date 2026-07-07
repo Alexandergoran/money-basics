@@ -1,6 +1,6 @@
 /* Money Basics v2 service worker: cache-first, fully offline after first load. */
-var CACHE = "money-basics-v3.0.0";
-var ASSETS = ["./", "./index.html", "./manifest.webmanifest", "./icon.svg", "./icon-512.png"];
+var CACHE = "money-basics-v3.0.1";
+var ASSETS = ["./", "./index.html", "./manifest.webmanifest", "./icon-v3.svg", "./icon-v3-512.png"];
 
 self.addEventListener("install", function (e) {
   e.waitUntil(

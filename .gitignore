@@ -1,5 +1,6 @@
 *.png
 !icon-512.png
+!icon-v3-512.png
 .impeccable/
 .playwright-mcp/
 .claude/

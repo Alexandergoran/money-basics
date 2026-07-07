@@ -8,7 +8,7 @@
 <meta name="theme-color" media="(prefers-color-scheme: light)" content="#F6F7F6">
 <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#15181D">
 <link rel="manifest" href="./manifest.webmanifest">
-<link rel="apple-touch-icon" href="./icon-512.png">
+<link rel="apple-touch-icon" href="./icon-v3-512.png">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%238FE3AE'/%3E%3Ctext x='16' y='21.5' text-anchor='middle' font-family='Menlo,monospace' font-size='13' font-weight='700' fill='%230E1013'%3Emb%3C/text%3E%3C/svg%3E">
 <style>
 /* ============ FONTS (embedded: zero network calls) ============ */
@@ -61,7 +61,7 @@
   --r-card:20px; --r-tile:14px; --r-ctl:12px;
   --font-ui:"Archivo", -apple-system, "Segoe UI", sans-serif;
   --font-money:"Plex Mono", ui-monospace, "SF Mono", "Roboto Mono", Menlo, monospace;
-  --z-rail:10; --z-tabbar:20; --z-scrim:25; --z-tape:30; --z-fab:35; --z-toast:40;
+  --z-rail:10; --z-scrim:25; --z-tape:30; --z-tabbar:32; --z-fab:35; --z-toast:40;
   --tabbar-h:64px;
 }
 /* dark: design-exact Charcoal Ledger values */
@@ -106,7 +106,7 @@ html[data-theme="dark"]{
 
 /* ============ BASE ============ */
 *{box-sizing:border-box; margin:0; padding:0;}
-html{-webkit-text-size-adjust:100%; font-size:17px;}
+html{-webkit-text-size-adjust:100%; font-size:17px; scroll-padding-bottom:140px;}
 html[data-ts="lg"]{font-size:19px;}
 html[data-ts="xl"]{font-size:21px;}
 body{
@@ -115,7 +115,7 @@ body{
   font-family:var(--font-ui);
   font-size:1rem;
   line-height:1.5;
-  padding-bottom:calc(var(--tabbar-h) + 52px + env(safe-area-inset-bottom, 0px) + 12px);
+  padding-bottom:calc(var(--tabbar-h) + 84px + env(safe-area-inset-bottom, 0px));
 }
 html.no-motion *, html.no-motion *::before, html.no-motion *::after{
   transition:none !important; animation:none !important;
@@ -131,10 +131,12 @@ button{font-family:var(--font-ui); color:inherit; font-size:1rem;}
 /* keyboard open: nothing floats over the keypad, and the page behind locks */
 body.kb-open .tape{display:none;}
 body.kb-open .fab{display:none;}
+body.tape-expanded .fab{display:none;}
 @media (max-width: 899px){
   body.kb-open .tabbar{display:none;}
 }
-body.kb-open, body.sheet-open{overflow:hidden; overscroll-behavior:none;}
+body.sheet-open{overflow:hidden;}
+body.kb-open, body.sheet-open{overscroll-behavior:none;}
 body.sheet-open{touch-action:none;}
 
 /* ============ HEADER: mb monogram + wordmark ============ */
@@ -267,8 +269,6 @@ h3{font-size:1.02rem; margin:var(--sp-5) 0 var(--sp-3); font-weight:700;}
 .ess-top label{flex:1; min-width:0; margin:0; font-size:0.94rem; font-weight:700;}
 .ess-top .field{width:124px; flex:none;}
 .ess-top .field input[type="text"]{min-height:48px; text-align:right; padding-right:12px;}
-.ess-bar{height:6px; border-radius:999px; background:var(--track); overflow:hidden; margin-top:var(--sp-3);}
-.ess-bar span{display:block; height:100%; border-radius:999px;}
 .btn.ghost{
   border:1.5px dashed var(--line-strong); background:none; color:var(--muted);
   box-shadow:none;
@@ -364,6 +364,17 @@ select{
 }
 .chip:hover{border-color:var(--muted);}
 .chip .icon{width:16px; height:16px;}
+.chip-group{display:inline-flex;}
+.chip-group .chip{border-radius:999px 0 0 999px; border-right:none;}
+.chip-group .chip-x{
+  display:inline-flex; align-items:center; justify-content:center;
+  min-height:48px; width:42px;
+  background:var(--surface2); color:var(--muted);
+  border:1.5px solid var(--line); border-left:1px solid var(--line-strong);
+  border-radius:0 999px 999px 0; cursor:pointer;
+}
+.chip-group .chip-x:hover{color:var(--caution);}
+.chip-group .chip-x .icon{width:15px; height:15px;}
 
 .switch{
   position:relative; width:52px; height:32px; flex:none;
@@ -859,7 +870,6 @@ details .body li{margin-bottom:var(--sp-2); max-width:55ch;}
       <label for="ess-housing" data-i18n="essHousing">Housing: rent or program fee</label>
       <div class="field"><span class="cur" aria-hidden="true">$</span><input type="text" inputmode="decimal" autocomplete="off" id="ess-housing" placeholder="0"></div>
     </div>
-    <div class="ess-bar" aria-hidden="true"><span id="bar-ess-housing" style="width:0%"></span></div>
   </div>
   <div class="ess-card">
     <div class="ess-top">
@@ -867,7 +877,6 @@ details .body li{margin-bottom:var(--sp-2); max-width:55ch;}
       <label for="ess-food" data-i18n="essFood">Food</label>
       <div class="field"><span class="cur" aria-hidden="true">$</span><input type="text" inputmode="decimal" autocomplete="off" id="ess-food" placeholder="0"></div>
     </div>
-    <div class="ess-bar" aria-hidden="true"><span id="bar-ess-food" style="width:0%"></span></div>
   </div>
   <div class="ess-card">
     <div class="ess-top">
@@ -875,7 +884,6 @@ details .body li{margin-bottom:var(--sp-2); max-width:55ch;}
       <label for="ess-transport" data-i18n="essTransport">Getting to work: bus, PATH, gas</label>
       <div class="field"><span class="cur" aria-hidden="true">$</span><input type="text" inputmode="decimal" autocomplete="off" id="ess-transport" placeholder="0"></div>
     </div>
-    <div class="ess-bar" aria-hidden="true"><span id="bar-ess-transport" style="width:0%"></span></div>
   </div>
   <div class="ess-card">
     <div class="ess-top">
@@ -883,7 +891,6 @@ details .body li{margin-bottom:var(--sp-2); max-width:55ch;}
       <label for="ess-phone" data-i18n="essPhone">Phone</label>
       <div class="field"><span class="cur" aria-hidden="true">$</span><input type="text" inputmode="decimal" autocomplete="off" id="ess-phone" placeholder="0"></div>
     </div>
-    <div class="ess-bar" aria-hidden="true"><span id="bar-ess-phone" style="width:0%"></span></div>
   </div>
   <div class="ess-card">
     <div class="ess-top">
@@ -891,7 +898,6 @@ details .body li{margin-bottom:var(--sp-2); max-width:55ch;}
       <label for="ess-health" data-i18n="essHealth">Medicine and health</label>
       <div class="field"><span class="cur" aria-hidden="true">$</span><input type="text" inputmode="decimal" autocomplete="off" id="ess-health" placeholder="0"></div>
     </div>
-    <div class="ess-bar" aria-hidden="true"><span id="bar-ess-health" style="width:0%"></span></div>
   </div>
   <div class="ess-card">
     <div class="ess-top">
@@ -899,7 +905,6 @@ details .body li{margin-bottom:var(--sp-2); max-width:55ch;}
       <label for="ess-other" data-i18n="essOther">Everything else: laundry, clothes, the rest</label>
       <div class="field"><span class="cur" aria-hidden="true">$</span><input type="text" inputmode="decimal" autocomplete="off" id="ess-other" placeholder="0"></div>
     </div>
-    <div class="ess-bar" aria-hidden="true"><span id="bar-ess-other" style="width:0%"></span></div>
   </div>
 
   <button type="button" class="btn ghost" id="btn-save-preset">
@@ -1432,7 +1437,7 @@ en:{
   stPaid:function(a){ return "PAY "+a; },
   stDone:function(a){ return "✓ PAID "+a; },
   stPart:function(a,o){ return a+" OF "+o; },
-  stWaits:"WAITS",
+  stWaits:"CAN WAIT",
   scriptPart:function(paid){ return 'Pay '+paid+' now, then call: "I paid '+paid+' today. Can I pay the rest on my next payday?"'; },
   scriptWaits:'Call before the due date: "I can\'t pay this today. Can we set up a payment plan?"',
   bills:[
@@ -1598,7 +1603,7 @@ en:{
     var parts = [];
     if (d) parts.push("PAID "+d);
     if (p) parts.push("PAY "+p);
-    if (w) parts.push(w+" WAIT"+(w===1?"S":""));
+    if (w) parts.push(w+" CAN WAIT");
     return parts.join(" · ");
   },
   tapeYouHave:"YOU HAVE",
@@ -1657,7 +1662,7 @@ es:{
   stPaid:function(a){ return "PAGUE "+a; },
   stDone:function(a){ return "✓ PAGÓ "+a; },
   stPart:function(a,o){ return a+" DE "+o; },
-  stWaits:"ESPERA",
+  stWaits:"PUEDE ESPERAR",
   scriptPart:function(paid){ return 'Pague '+paid+' hoy y luego llame: "Pagué '+paid+' hoy. ¿Puedo pagar el resto en mi próximo pago?"'; },
   scriptWaits:'Llame antes de la fecha: "No puedo pagar esto hoy. ¿Podemos hacer un plan de pagos?"',
   bills:[
@@ -1823,7 +1828,7 @@ es:{
     var parts = [];
     if (d) parts.push("PAGÓ "+d);
     if (p) parts.push("PAGUE "+p);
-    if (w) parts.push(w+" ESPERA"+(w===1?"":"N"));
+    if (w) parts.push(w+(w===1?" PUEDE ESPERAR":" PUEDEN ESPERAR"));
     return parts.join(" · ");
   },
   tapeYouHave:"TIENE",
@@ -1980,6 +1985,7 @@ function openSheet(cfg){
 function closeSheet(){
   if (!sheetCfg) return;
   sheetCfg = null;
+  document.documentElement.style.setProperty("--kb-inset", "0px");
   document.body.classList.remove("sheet-open");
   var wrap = $("sheet-wrap");
   wrap.className = "sheet-wrap";
@@ -2031,7 +2037,8 @@ document.addEventListener("touchmove", function(e){
 /* keep the sheet above the iOS keyboard */
 if (window.visualViewport){
   window.visualViewport.addEventListener("resize", function(){
-    var inset = Math.max(0, window.innerHeight - window.visualViewport.height - window.visualViewport.offsetTop);
+    var inset = 0;
+    if (sheetCfg) inset = Math.max(0, window.innerHeight - window.visualViewport.height);
     document.documentElement.style.setProperty("--kb-inset", inset + "px");
   });
 }
@@ -2155,9 +2162,10 @@ function renderPresets(){
   var box = $("preset-chips"), html = "";
   for (var i=0;i<prof.presets.length;i++){
     var p = prof.presets[i];
-    html += '<button type="button" class="chip" data-load="'+i+'">'+esc(p.name)+'</button>'
-      + '<button type="button" class="iconbtn" data-delp="'+i+'" aria-label="'+esc(t("presetDelQ")(p.name))+'">'
-      + '<svg class="icon" aria-hidden="true"><use href="#i-trash-2"/></svg></button>';
+    html += '<span class="chip-group">'
+      + '<button type="button" class="chip" data-load="'+i+'">'+esc(p.name)+'</button>'
+      + '<button type="button" class="chip-x" data-delp="'+i+'" aria-label="'+esc(t("presetDelQ")(p.name))+'">'
+      + '<svg class="icon" aria-hidden="true"><use href="#i-x"/></svg></button></span>';
   }
   box.innerHTML = html;
   box.style.display = prof.presets.length ? "" : "none";
@@ -2217,8 +2225,13 @@ function allocate(){
   allocate.remaining = money;
   return out;
 }
+function paidSum(){
+  var s = 0;
+  for (var k in prof.bills.paid) if (prof.bills.paid.hasOwnProperty(k)) s += prof.bills.paid[k];
+  return s;
+}
 function renderAvail(){
-  var avail = availAmount();
+  var avail = Math.max(0, availAmount() - paidSum());
   $("avail-fig").textContent = fmt(avail);
   $("avail-note").textContent = prof.bills.overrideOn ? t("yourNumber") : (avail > 0 ? t("fromBudget") : t("noIncomeHint"));
   $("btn-override-label").textContent = prof.bills.overrideOn ? t("overrideOff") : t("overrideBtn");
@@ -2694,6 +2707,7 @@ function closeTape(){
   $("tape").className = "tape";
   $("tape-bar").setAttribute("aria-expanded","false");
   $("scrim").className = "scrim";
+  document.body.classList.remove("tape-expanded");
   $("tape-car").textContent = t("tapeOpen");
 }
 $("tape-bar").addEventListener("click", function(){
@@ -2701,6 +2715,7 @@ $("tape-bar").addEventListener("click", function(){
   $("tape").className = "tape" + (tapeOpen ? " open" : "");
   this.setAttribute("aria-expanded", tapeOpen ? "true" : "false");
   $("scrim").className = "scrim" + (tapeOpen ? " on" : "");
+  document.body.classList.toggle("tape-expanded", tapeOpen);
   $("tape-car").textContent = tapeOpen ? t("tapeClose") : t("tapeOpen");
 });
 $("scrim").addEventListener("click", closeTape);
@@ -2734,7 +2749,7 @@ function updateTape(){
     else { lbl = tg.name.toUpperCase()+":"; amt = fmt(left2)+" "+t("tapeGoalTo"); cls = "pos"; }
   } else if (activeTab === "bills"){
     if (bs){ lbl = t("tapeBills")(bs.done, bs.pay, bs.waits); amt = ""; cls = ""; }
-    else { lbl = t("tapeYouHave"); amt = fmt(availAmount()); cls = "pos"; }
+    else { lbl = t("tapeYouHave"); amt = fmt(Math.max(0, availAmount() - paidSum())); cls = "pos"; }
   } else if (budgetTouched()){
     if (left >= 0){ lbl = t("tapeLeft"); amt = fmt(left); cls = "pos"; }
     else { lbl = t("tapeShort"); amt = fmt(-left); cls = "neg"; }
@@ -2857,12 +2872,6 @@ function renderHero(){
   var segs = "";
   for (var i=0;i<ESS.length;i++){
     var v = num(ESS[i].id);
-    var bar = $("bar-"+ESS[i].id);
-    if (bar){
-      var w = income > 0 ? Math.min(100, v/income*100) : 0;
-      bar.style.width = w + "%";
-      bar.style.background = "var(" + (ESS_TONE[ESS[i].id]||"--line-strong") + ")";
-    }
     if (v > 0 && income > 0){
       var sw = Math.min(100, v/income*100);
       segs += '<span style="width:'+sw+'%; background:var('+ESS_TONE[ESS[i].id]+')"></span>';
