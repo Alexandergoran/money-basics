@@ -41,9 +41,8 @@
   --line-strong:#B4BAB6;
   --shadow:0 1px 2px rgba(21,24,29,0.05), 0 3px 10px rgba(21,24,29,0.07);
   --money:#177245;
-  --fab-bg:#177245;
-  --fab-ink:#FFFFFF;
-  --fab-glow:0 4px 16px rgba(23,114,69,0.35);
+  --accent-bg:#177245;
+  --accent-ink:#FFFFFF;
   --acc-green:#177245;  --acc-green-dim:#DFF0E6;
   --acc-amber:#8A6114;  --acc-amber-dim:#F4EBD8;
   --acc-blue:#2D6CB0;   --acc-blue-dim:#DFEAF5;
@@ -61,7 +60,7 @@
   --r-card:20px; --r-tile:14px; --r-ctl:12px;
   --font-ui:"Archivo", -apple-system, "Segoe UI", sans-serif;
   --font-money:"Plex Mono", ui-monospace, "SF Mono", "Roboto Mono", Menlo, monospace;
-  --z-rail:10; --z-scrim:25; --z-tape:30; --z-tabbar:32; --z-fab:35; --z-toast:40;
+  --z-rail:10; --z-scrim:25; --z-tape:30; --z-tabbar:32; --z-toast:40;
   --tabbar-h:64px;
 }
 /* dark: design-exact Charcoal Ledger values */
@@ -71,8 +70,7 @@ html[data-theme="dark"]{
   --line:#262B32; --line-strong:#33383F;
   --shadow:none;
   --money:#8FE3AE;
-  --fab-bg:#8FE3AE; --fab-ink:#0E1013;
-  --fab-glow:0 0 24px rgba(143,227,174,0.35), 0 6px 20px rgba(0,0,0,0.4);
+  --accent-bg:#8FE3AE; --accent-ink:#0E1013;
   --acc-green:#5FAE83;  --acc-green-dim:#22331F;
   --acc-amber:#E8B04C;  --acc-amber-dim:#2C2418;
   --acc-blue:#7FB2E8;   --acc-blue-dim:#1E2530;
@@ -90,8 +88,7 @@ html[data-theme="dark"]{
     --line:#262B32; --line-strong:#33383F;
     --shadow:none;
     --money:#8FE3AE;
-    --fab-bg:#8FE3AE; --fab-ink:#0E1013;
-    --fab-glow:0 0 24px rgba(143,227,174,0.35), 0 6px 20px rgba(0,0,0,0.4);
+    --accent-bg:#8FE3AE; --accent-ink:#0E1013;
     --acc-green:#5FAE83;  --acc-green-dim:#22331F;
     --acc-amber:#E8B04C;  --acc-amber-dim:#2C2418;
     --acc-blue:#7FB2E8;   --acc-blue-dim:#1E2530;
@@ -130,8 +127,6 @@ button{font-family:var(--font-ui); color:inherit; font-size:1rem;}
 
 /* keyboard open: nothing floats over the keypad, and the page behind locks */
 body.kb-open .tape{display:none;}
-body.kb-open .fab{display:none;}
-body.tape-expanded .fab{display:none;}
 @media (max-width: 899px){
   body.kb-open .tabbar{display:none;}
 }
@@ -167,7 +162,7 @@ h1.wordmark .wb{color:var(--money);}
   border:none; border-radius:999px; background:none; cursor:pointer;
   font-size:0.72rem; font-weight:700; letter-spacing:0.03em; color:var(--muted);
 }
-.lang-pill button[aria-pressed="true"]{background:var(--fab-bg); color:var(--fab-ink);}
+.lang-pill button[aria-pressed="true"]{background:var(--accent-bg); color:var(--accent-ink);}
 
 /* ============ HERO (Budget: the week's number) ============ */
 .hero{
@@ -203,7 +198,7 @@ h1.wordmark .wb{color:var(--money);}
 .hero .hero-line.zero{color:var(--muted); font-weight:400;}
 h2.greet-line{color:var(--muted); font-size:0.94rem; font-weight:400; letter-spacing:0; margin-bottom:var(--sp-3);}
 
-/* ============ TAB BAR + FAB ============ */
+/* ============ TAB BAR ============ */
 .tabbar{
   position:fixed; left:0; right:0; bottom:0; z-index:var(--z-tabbar);
   display:flex; justify-content:space-around;
@@ -227,20 +222,6 @@ h2.greet-line{color:var(--muted); font-size:0.94rem; font-weight:400; letter-spa
   background:var(--acc-amber); display:none;
 }
 .tabbar .badge.on{display:block;}
-.fab-slot{
-  flex:1; max-width:110px;
-  display:flex; align-items:flex-start; justify-content:center;
-}
-.fab{
-  width:56px; height:56px; border-radius:50%; margin-top:-16px;
-  background:var(--fab-bg); color:var(--fab-ink);
-  border:none; cursor:pointer;
-  display:flex; align-items:center; justify-content:center;
-  box-shadow:var(--fab-glow);
-  transition:transform 120ms ease-out;
-}
-.fab:active{transform:scale(0.92);}
-.fab .icon{width:26px; height:26px; stroke-width:2.5;}
 
 /* ============ PANELS ============ */
 main{min-height:60vh;}
@@ -350,7 +331,7 @@ select{
   border:1.5px solid var(--line-strong); background:var(--surface); color:var(--ink);
 }
 .btn:hover{border-color:var(--muted);}
-.btn.primary{background:var(--fab-bg); border-color:var(--fab-bg); color:var(--fab-ink);}
+.btn.primary{background:var(--accent-bg); border-color:var(--accent-bg); color:var(--accent-ink);}
 .btn.primary:hover{filter:brightness(1.06);}
 .btn.small{width:auto; min-height:48px; padding:0 var(--sp-4); display:inline-flex; margin-bottom:0;}
 .btn .icon{width:18px; height:18px;}
@@ -489,7 +470,7 @@ select{
   border-radius:999px; white-space:nowrap;
 }
 button.verdict-chip{cursor:pointer;}
-.bill .verdict-chip.pay{background:var(--fab-bg); color:var(--fab-ink);}
+.bill .verdict-chip.pay{background:var(--accent-bg); color:var(--accent-ink);}
 .bill .verdict-chip.done{border:2px solid var(--money); color:var(--money); background:none;}
 .bill .verdict-chip.part{border:1.5px solid var(--money); color:var(--money);}
 .bill .verdict-chip.waits{border:1.5px solid var(--line-strong); color:var(--muted);}
@@ -675,20 +656,11 @@ details .body li{margin-bottom:var(--sp-2); max-width:55ch;}
   .tabbar button[aria-current="page"]{border-bottom-color:var(--money);}
   .tabbar .badge{top:10px; right:2px;}
   .tape{bottom:0;}
-  .fab-slot{
-    position:fixed; right:32px; bottom:32px; z-index:var(--z-fab);
-    flex:none; max-width:none;
-  }
-  .fab{margin-top:0;}
-  body.tape-on .fab-slot{bottom:92px;}
 }
 @media (min-width: 1160px){
   body{padding-right:440px; padding-bottom:48px;}
   .tabbar{padding:0 calc((100% - 440px - 660px) / 2);}
   .tape{left:auto; right:24px; bottom:0; width:392px; margin:0;}
-  .fab-slot{right:472px;}
-  body.tape-on .fab-slot{bottom:32px;}
-
 }
 
 /* ============ PRINT: an actual receipt slip, centered ============ */
@@ -1360,9 +1332,6 @@ details .body li{margin-bottom:var(--sp-2); max-width:55ch;}
   <button type="button" id="tab-bills" data-controls="panel-bills">
     <svg class="icon" aria-hidden="true"><use href="#i-list-ordered"/></svg><span data-i18n="tabBills">Bills</span>
   </button>
-  <div class="fab-slot"><button type="button" class="fab" id="fab" aria-label="Add">
-    <svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg>
-  </button></div>
   <button type="button" id="tab-goals" data-controls="panel-goals">
     <svg class="icon" aria-hidden="true"><use href="#i-target"/></svg><span data-i18n="tabGoals">Goals</span>
   </button>
@@ -1409,8 +1378,6 @@ en:{
   heroLineLeft:function(a){ return a+" left over"; },
   heroLineShort:function(a){ return a+" short"; },
   heroLineEmpty:"Add money in to start",
-  fabBudget:"Add money in", fabBills:"Add a bill", fabGoals:"Add a goal",
-  fabLearn:"Open fee check", fabYou:"Add a profile",
   greetH:function(n){ return "Hi, "+n+". Plan your week"; },
   budgetLede:"Enter what comes in and what you pay. The tape at the bottom shows what's left.",
   qPay:"How do you get paid?",
@@ -1634,8 +1601,6 @@ es:{
   heroLineLeft:function(a){ return "le quedan "+a; },
   heroLineShort:function(a){ return "faltan "+a; },
   heroLineEmpty:"Ponga lo que entra para empezar",
-  fabBudget:"Agregar lo que entra", fabBills:"Agregar una cuenta", fabGoals:"Agregar una meta",
-  fabLearn:"Abrir cobros", fabYou:"Agregar un perfil",
   greetH:function(n){ return "Hola, "+n+". Planee su semana"; },
   budgetLede:"Escriba lo que entra y lo que paga. La cinta de abajo muestra lo que queda.",
   qPay:"¿Cómo le pagan?",
@@ -2016,16 +1981,23 @@ $("sheet-wrap").addEventListener("keydown", function(e){
 });
 
 /* ---- keyboard open: hide floating chrome and lock the page behind ---- */
+/* only controls that raise a keyboard or picker count; checkboxes must never hide chrome */
+function raisesKeyboard(el){
+  if (!el) return false;
+  if (el.tagName === "TEXTAREA" || el.tagName === "SELECT") return true;
+  if (el.tagName !== "INPUT") return false;
+  var ty = (el.getAttribute("type") || "text").toLowerCase();
+  return ty !== "checkbox" && ty !== "radio";
+}
 document.addEventListener("focusin", function(e){
-  var el = e.target;
-  if (el && (el.tagName === "INPUT" || el.tagName === "SELECT" || el.tagName === "TEXTAREA"))
-    document.body.classList.add("kb-open");
+  if (raisesKeyboard(e.target)) document.body.classList.add("kb-open");
 });
 document.addEventListener("focusout", function(){
   setTimeout(function(){
-    var a = document.activeElement;
-    if (!a || !(a.tagName === "INPUT" || a.tagName === "SELECT" || a.tagName === "TEXTAREA"))
+    if (!raisesKeyboard(document.activeElement)){
       document.body.classList.remove("kb-open");
+      document.documentElement.style.setProperty("--kb-inset", "0px");
+    }
   }, 80);
 });
 /* block background pan while a sheet or the keyboard is up; the sheet and tape stay scrollable */
@@ -2034,13 +2006,20 @@ document.addEventListener("touchmove", function(e){
   if (e.target && e.target.closest && e.target.closest(".sheet, .tape-inner")) return;
   e.preventDefault();
 }, {passive:false});
-/* keep the sheet above the iOS keyboard */
+/* keep the sheet above the iOS keyboard: lift by the keyboard's real overlap only.
+   offsetTop matters — when iOS pans the visual viewport, innerHeight - height alone
+   over-lifts by the pan amount and leaves a dead gap under the sheet. */
+function syncKbInset(){
+  var inset = 0;
+  if (sheetCfg && raisesKeyboard(document.activeElement)){
+    var vv = window.visualViewport;
+    inset = Math.max(0, window.innerHeight - vv.height - vv.offsetTop);
+  }
+  document.documentElement.style.setProperty("--kb-inset", inset + "px");
+}
 if (window.visualViewport){
-  window.visualViewport.addEventListener("resize", function(){
-    var inset = 0;
-    if (sheetCfg) inset = Math.max(0, window.innerHeight - window.visualViewport.height);
-    document.documentElement.style.setProperty("--kb-inset", inset + "px");
-  });
+  window.visualViewport.addEventListener("resize", syncKbInset);
+  window.visualViewport.addEventListener("scroll", syncKbInset);
 }
 
 /* ================= FIELDS ================= */
@@ -2327,11 +2306,11 @@ function billsSummary(){
   var alloc = allocate(), done = 0, pay = 0, waits = 0, any = false;
   for (var i=0;i<alloc.length;i++){
     var a = alloc[i];
-    if (!a || a.state === "none") continue;
+    if (!a) continue; /* every checked bill counts, amount or not */
     any = true;
     if (a.state === "done") done++;
-    if (a.state === "pay" || a.state === "part") pay++;
-    if (a.state === "waits") waits++;
+    else if (a.state === "waits") waits++;
+    else pay++;
     if (a.state === "part") waits++; /* a partial also needs a call */
   }
   return any ? {done:done, pay:pay, waits:waits, remaining:allocate.remaining} : null;
@@ -2735,7 +2714,6 @@ function updateTape(){
   var vis = tapeVisible();
   $("tape").hidden = !vis;
   document.body.classList.toggle("tape-on", vis);
-  updateFab();
   if (!vis){ closeTape(); return; }
   var income = planIncome(), total = essTotal(), left = income - total;
   var lbl = "", amt = "", cls = "";
@@ -2773,11 +2751,12 @@ function renderBillsReceipt(){
   var bills = L().bills, alloc = allocate(), html = "";
   for (var i=0;i<alloc.length;i++){
     var a = alloc[i];
-    if (!a || a.state === "none") continue;
+    if (!a) continue;
     var mark = a.state === "done" ? t("stDone")(fmt(a.pay))
       : a.state === "pay" ? t("stPaid")(fmt(a.pay))
       : a.state === "part" ? t("stPart")(fmt(a.pay),fmt(a.owed))
-      : t("stWaits");
+      : a.state === "waits" ? t("stWaits")
+      : t("stPaid")("").trim();
     html += '<div class="line"><span class="lbl">'+esc(bills[i].b.toUpperCase())+'</span><span class="amt">'+mark+'</span></div>';
   }
   $("rcp-items").innerHTML = html;
@@ -2878,26 +2857,6 @@ function renderHero(){
     }
   }
   $("hero-segbar").innerHTML = segs;
-}
-
-/* ================= FAB ================= */
-$("fab").addEventListener("click", function(){
-  if (activeTab === "budget"){ $("inc-steady").focus(); window.scrollTo(0,0); }
-  else if (activeTab === "bills"){
-    var first = document.querySelector('#bill-list input[type="checkbox"]:not(:checked)');
-    if (first){ first.closest(".bill").scrollIntoView({block:"center"}); first.focus(); }
-  }
-  else if (activeTab === "goals"){ addGoalFlow(); }
-  else if (activeTab === "learn"){
-    var d = document.querySelector("#panel-learn details");
-    if (d){ d.open = true; d.scrollIntoView({block:"start"}); }
-  }
-  else if (activeTab === "you"){ renderProfiles(); showYou("you-profiles"); $("btn-add-profile").click(); }
-});
-function updateFab(){
-  var k = activeTab === "budget" ? "fabBudget" : activeTab === "bills" ? "fabBills"
-    : activeTab === "goals" ? "fabGoals" : activeTab === "learn" ? "fabLearn" : "fabYou";
-  $("fab").setAttribute("aria-label", t(k));
 }
 
 /* ================= MASTER ================= */
