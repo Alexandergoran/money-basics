@@ -599,6 +599,87 @@ details .body li{margin-bottom:var(--sp-2); max-width:55ch;}
   padding:0 var(--sp-4) var(--sp-4);
 }
 
+/* ============ WEEK BAR ============ */
+.weekbar{display:flex; align-items:stretch; gap:var(--sp-2); margin-bottom:var(--sp-3);}
+.wk-arrow{
+  min-width:48px; min-height:48px;
+  display:flex; align-items:center; justify-content:center;
+  background:var(--surface); border:1px solid var(--line); border-radius:12px;
+  cursor:pointer; color:var(--muted);
+}
+.wk-arrow:hover{color:var(--ink);}
+.wk-chip{
+  flex:1; min-height:48px;
+  display:flex; align-items:center; justify-content:center; gap:8px;
+  background:var(--surface); border:1px solid var(--line); border-radius:12px;
+  cursor:pointer; font-weight:700; font-size:0.94rem;
+}
+.wk-chip .icon{width:18px; height:18px; color:var(--muted);}
+.wk-banner{
+  display:flex; align-items:center; gap:var(--sp-3);
+  background:var(--surface); border:1px solid var(--line); border-left:3px solid var(--acc-amber);
+  border-radius:12px; padding:4px 4px 4px var(--sp-3);
+  margin-bottom:var(--sp-3); font-size:0.88rem; color:var(--muted);
+}
+.wk-banner span{flex:1;}
+.wk-pill{
+  min-height:48px; padding:0 16px; border:none; border-radius:999px;
+  background:var(--accent-bg); color:var(--accent-ink);
+  font-weight:700; font-size:0.85rem; cursor:pointer; white-space:nowrap;
+}
+
+/* ============ WEEK PICKER ============ */
+.pick-wrap{position:fixed; inset:0; z-index:46; display:none;}
+.pick-wrap.on{display:flex; align-items:center; justify-content:center; padding:var(--sp-4);}
+.pick-scrim{position:absolute; inset:0; background:var(--scrim);}
+.pick{
+  position:relative; width:100%; max-width:372px;
+  background:var(--surface); color:var(--ink);
+  border:1px solid var(--line); border-radius:22px;
+  padding:var(--sp-4);
+  box-shadow:0 10px 40px rgba(0,0,0,0.45);
+}
+@media (prefers-reduced-motion: no-preference){
+  .pick{transform:translateY(10px) scale(0.98); opacity:0; transition:transform 180ms cubic-bezier(0.22,1,0.36,1), opacity 140ms ease-out;}
+  .pick-wrap.on .pick{transform:none; opacity:1;}
+}
+.pick-year{font-family:var(--font-money); font-size:0.78rem; color:var(--muted); letter-spacing:0.06em;}
+.pick-big{font-size:1.55rem; font-weight:800; letter-spacing:-0.02em; margin-bottom:var(--sp-2);}
+.pick-band{display:flex; align-items:center; justify-content:space-between; gap:var(--sp-2); margin-bottom:var(--sp-2);}
+.pick-band-lbl{font-weight:700; font-size:0.94rem;}
+.pick-dow{
+  display:grid; grid-template-columns:repeat(7,1fr); text-align:center;
+  font-size:0.7rem; font-weight:600; letter-spacing:0.08em; color:var(--muted); margin-bottom:2px;
+}
+.pick-grid{display:grid; grid-template-columns:repeat(7,1fr);}
+.pick-day{
+  min-height:48px; background:none; border:none; cursor:pointer; padding:0;
+  display:flex; align-items:center; justify-content:center;
+  font-family:var(--font-money); font-size:0.92rem; color:var(--ink);
+}
+.pick-day .n{
+  width:38px; height:38px; border-radius:50%; position:relative;
+  display:flex; align-items:center; justify-content:center;
+}
+.pick-day.out{color:var(--muted); opacity:0.45;}
+.pick-day.today .n{background:var(--accent-bg); color:var(--accent-ink); font-weight:600;}
+.pick-day.sel .n{box-shadow:0 0 0 2.5px var(--accent-bg);}
+.pick-day.today.sel .n{box-shadow:0 0 0 2.5px var(--accent-bg), inset 0 0 0 2px var(--surface);}
+.pick-day.dot .n::after{
+  content:""; position:absolute; bottom:1px; left:50%; transform:translateX(-50%);
+  width:5px; height:5px; border-radius:50%; background:var(--acc-amber);
+}
+.pick-day.today .n::after{background:var(--accent-ink);}
+.pick-legend{font-size:0.78rem; color:var(--muted); margin-top:var(--sp-2);}
+.pick-foot{display:flex; align-items:center; gap:var(--sp-2); margin-top:var(--sp-3);}
+.pick-foot .grow{flex:1;}
+.pick-foot .btn{margin-bottom:0; width:auto;}
+.pick-leg-btn{
+  min-height:48px; padding:0 10px; background:none; border:none; cursor:pointer;
+  font-size:0.72rem; font-weight:700; letter-spacing:0.1em; color:var(--muted);
+}
+.pick-leg-btn:hover{color:var(--ink);}
+
 /* ============ SHEET (in-app dialogs) ============ */
 .sheet-wrap{position:fixed; inset:0; z-index:45; display:none;}
 .sheet-wrap.on{display:block;}
@@ -717,7 +798,10 @@ details .body li{margin-bottom:var(--sp-2); max-width:55ch;}
   <circle cx="16" cy="18" r="2" /></symbol><symbol id="i-car" viewBox="0 0 24 24"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2" />
   <circle cx="7" cy="17" r="2" />
   <path d="M9 17h6" />
-  <circle cx="17" cy="17" r="2" /></symbol><symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5" /></symbol><symbol id="i-chevron-left" viewBox="0 0 24 24"><path d="m15 18-6-6 6-6" /></symbol><symbol id="i-chevron-right" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6" /></symbol><symbol id="i-circle-user" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" />
+  <circle cx="17" cy="17" r="2" /></symbol><symbol id="i-calendar" viewBox="0 0 24 24"><path d="M8 2v4" />
+  <path d="M16 2v4" />
+  <rect width="18" height="18" x="3" y="4" rx="2" />
+  <path d="M3 10h18" /></symbol><symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5" /></symbol><symbol id="i-chevron-left" viewBox="0 0 24 24"><path d="m15 18-6-6 6-6" /></symbol><symbol id="i-chevron-right" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6" /></symbol><symbol id="i-circle-user" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" />
   <circle cx="12" cy="10" r="3" />
   <path d="M7 20.662V19a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v1.662" /></symbol><symbol id="i-credit-card" viewBox="0 0 24 24"><rect width="20" height="14" x="2" y="5" rx="2" />
   <line x1="2" x2="22" y1="10" y2="10" /></symbol><symbol id="i-download" viewBox="0 0 24 24"><path d="M12 15V3" />
@@ -778,6 +862,23 @@ details .body li{margin-bottom:var(--sp-2); max-width:55ch;}
     </div>
   </div>
 </header>
+
+<div class="weekbar" id="weekbar" hidden>
+  <button type="button" class="wk-arrow" id="wk-prev">
+    <svg class="icon" aria-hidden="true"><use href="#i-chevron-left"/></svg>
+  </button>
+  <button type="button" class="wk-chip" id="wk-chip" aria-haspopup="dialog">
+    <svg class="icon" aria-hidden="true"><use href="#i-calendar"/></svg>
+    <span id="wk-chip-txt">This week</span>
+  </button>
+  <button type="button" class="wk-arrow" id="wk-next">
+    <svg class="icon" aria-hidden="true"><use href="#i-chevron-right"/></svg>
+  </button>
+</div>
+<div class="wk-banner" id="wk-banner" hidden>
+  <span id="wk-banner-txt"></span>
+  <button type="button" class="wk-pill" id="wk-today" data-i18n="wkToday">Back to today</button>
+</div>
 
 <noscript><p class="note" style="margin-bottom:24px">Turn on JavaScript to use this tool. After the page loads once, it works without internet.</p></noscript>
 
@@ -1344,6 +1445,32 @@ details .body li{margin-bottom:var(--sp-2); max-width:55ch;}
   </button>
 </nav>
 
+<div class="pick-wrap" id="pick-wrap" hidden>
+  <div class="pick-scrim" id="pick-scrim"></div>
+  <div class="pick" role="dialog" aria-modal="true" aria-labelledby="pick-big">
+    <p class="pick-year" id="pick-year"></p>
+    <p class="pick-big" id="pick-big"></p>
+    <div class="pick-band">
+      <button type="button" class="wk-arrow" id="pick-prevm">
+        <svg class="icon" aria-hidden="true"><use href="#i-chevron-left"/></svg>
+      </button>
+      <span class="pick-band-lbl" id="pick-band-lbl" aria-live="polite"></span>
+      <button type="button" class="wk-arrow" id="pick-nextm">
+        <svg class="icon" aria-hidden="true"><use href="#i-chevron-right"/></svg>
+      </button>
+    </div>
+    <div class="pick-dow" id="pick-dow" aria-hidden="true"></div>
+    <div class="pick-grid" id="pick-grid"></div>
+    <p class="pick-legend" id="pick-legend" hidden></p>
+    <div class="pick-foot">
+      <button type="button" class="pick-leg-btn" id="pick-leg-btn" aria-expanded="false"></button>
+      <span class="grow"></span>
+      <button type="button" class="btn small" id="pick-cancel"></button>
+      <button type="button" class="btn small primary" id="pick-ok"></button>
+    </div>
+  </div>
+</div>
+
 <div class="sheet-wrap" id="sheet-wrap" hidden>
   <div class="sheet-scrim" id="sheet-scrim"></div>
   <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="sheet-title">
@@ -1590,6 +1717,17 @@ en:{
     if (next) s+=" Open Bills to decide what to pay first.";
     return s;
   },
+  wkThis:"This week",
+  wkPrevA:"Previous week", wkNextA:"Next week",
+  wkPast:"You're viewing a past week.", wkFuture:"You're viewing a future week.",
+  wkToday:"Back to today",
+  legend:"LEGEND",
+  legendKey:"Filled: today · Ring: your pick · Dot: week with saved changes",
+  pickOk:"OK", pickPrevM:"Previous month", pickNextM:"Next month",
+  monthsS:["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],
+  monthsF:["January","February","March","April","May","June","July","August","September","October","November","December"],
+  daysS:["Sun","Mon","Tue","Wed","Thu","Fri","Sat"],
+  dayLetters:["S","M","T","W","T","F","S"],
   days:["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],
   daysPl:["Sundays","Mondays","Tuesdays","Wednesdays","Thursdays","Fridays","Saturdays"],
   defaultProfile:"Me"
@@ -1813,6 +1951,17 @@ es:{
     if (next) s+=" Abra Cuentas para decidir qué pagar primero.";
     return s;
   },
+  wkThis:"Esta semana",
+  wkPrevA:"Semana anterior", wkNextA:"Semana siguiente",
+  wkPast:"Está viendo una semana pasada.", wkFuture:"Está viendo una semana futura.",
+  wkToday:"Volver a hoy",
+  legend:"LEYENDA",
+  legendKey:"Relleno: hoy · Aro: su elección · Punto: semana con cambios guardados",
+  pickOk:"OK", pickPrevM:"Mes anterior", pickNextM:"Mes siguiente",
+  monthsS:["ene","feb","mar","abr","may","jun","jul","ago","sep","oct","nov","dic"],
+  monthsF:["enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"],
+  daysS:["dom","lun","mar","mié","jue","vie","sáb"],
+  dayLetters:["D","L","M","M","J","V","S"],
   days:["domingo","lunes","martes","miércoles","jueves","viernes","sábado"],
   daysPl:["domingos","lunes","martes","miércoles","jueves","viernes","sábados"],
   defaultProfile:"Yo"
@@ -1841,6 +1990,54 @@ function fmt(n){
 function esc(s){
   return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
 }
+function deepCopy(o){ return JSON.parse(JSON.stringify(o)); }
+
+/* ================= WEEKS ================= */
+var WEEK_FIELDS = ["inc-steady","w1","w2","w3","w4",
+  "ess-housing","ess-food","ess-transport","ess-phone","ess-health","ess-other"];
+var FEE_FIELDS = ["chk-amt","chk-times","chk-pct","mo-times","mo-fee","od-times","od-fee","pp-fee","atm-times","atm-fee"];
+function ymd(d){return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");}
+function weekKey(d){var x=new Date(d.getFullYear(),d.getMonth(),d.getDate(),12);x.setDate(x.getDate()-x.getDay());return ymd(x);}
+var todayKey = weekKey(new Date()), viewKey = todayKey;
+function keyToDate(key){ var p = key.split("-"); return new Date(+p[0], +p[1]-1, +p[2], 12); }
+function blankWeek(){
+  return { mode:"steady", f:{}, bills:{checked:[], owed:{}, paid:{}, override:"", overrideOn:false} };
+}
+function nearestKeyBelow(key){
+  var best = null;
+  for (var k in prof.weeks) if (prof.weeks.hasOwnProperty(k) && k < key && (best === null || k > best)) best = k;
+  return best;
+}
+/* seed = copy the plan, reset the week: PAID flags and the week-specific override */
+function seedFrom(src){
+  var w = deepCopy(src);
+  w.bills.paid = {};
+  w.bills.override = ""; w.bills.overrideOn = false;
+  return w;
+}
+function getWeekData(key){
+  if (prof.weeks[key]) return prof.weeks[key];
+  var src = nearestKeyBelow(key);
+  return src ? seedFrom(prof.weeks[src]) : blankWeek();
+}
+function getWeek(){ return getWeekData(viewKey); }
+/* write gate: seeds materialize into storage on first edit, never on view */
+function W(){
+  if (!prof.weeks[viewKey]) prof.weeks[viewKey] = getWeek();
+  return prof.weeks[viewKey];
+}
+function weekIncome(wk){
+  if (wk.mode !== "varies") return parseAmt(wk.f["inc-steady"]);
+  var arr = [parseAmt(wk.f["w1"]), parseAmt(wk.f["w2"]), parseAmt(wk.f["w3"]), parseAmt(wk.f["w4"])]
+    .filter(function(v){ return v > 0; });
+  return arr.length ? Math.min.apply(null, arr) : 0;
+}
+function weekEssTotal(wk){
+  var s = 0;
+  for (var i=0;i<WEEK_FIELDS.length;i++)
+    if (WEEK_FIELDS[i].indexOf("ess-") === 0) s += parseAmt(wk.f[WEEK_FIELDS[i]]);
+  return s;
+}
 
 /* ================= STORAGE ================= */
 var DKEY = "mb2.device";
@@ -1849,9 +2046,56 @@ function lsGet(k){ try { return JSON.parse(localStorage.getItem(k)); } catch(e){
 function lsSet(k,v){ try { localStorage.setItem(k, JSON.stringify(v)); return true; } catch(e){ return false; } }
 
 function freshProfileData(){
-  return { f:{}, mode:"steady", bills:{checked:[], owed:{}, paid:{}, override:"", overrideOn:false},
+  return { v:2, weeks:{}, fees:{},
     goals:[], presets:[], reminder:{on:false, day:5, lastAck:0}, lastTab:"budget",
-    since: new Date().toISOString().slice(0,7) };
+    since: new Date().toISOString().slice(0,7),
+    f:{}, mode:"steady", bills:{checked:[], owed:{}, paid:{}, override:"", overrideOn:false},
+    legacyStamp:"" };
+}
+function legacyOf(pd){ return JSON.stringify([pd.f, pd.mode, pd.bills]); }
+function weekFromLegacy(pd){
+  var f = {};
+  for (var i=0;i<WEEK_FIELDS.length;i++){
+    var v = (pd.f || {})[WEEK_FIELDS[i]];
+    if (v !== undefined && v !== null && v !== "") f[WEEK_FIELDS[i]] = v;
+  }
+  return deepCopy({ mode: pd.mode || "steady", f: f, bills: pd.bills });
+}
+function legacyHasContent(pd){
+  var f = pd.f || {}, b = pd.bills, k;
+  for (var i=0;i<WEEK_FIELDS.length;i++){
+    var v = f[WEEK_FIELDS[i]];
+    if (v !== undefined && v !== null && String(v).trim() !== "") return true;
+  }
+  if (b.checked.length || b.overrideOn || String(b.override||"").trim() !== "") return true;
+  for (k in b.owed) if (b.owed.hasOwnProperty(k) && String(b.owed[k]||"").trim() !== "") return true;
+  for (k in b.paid) if (b.paid.hasOwnProperty(k)) return true;
+  return false;
+}
+function migrateProfile(pd){
+  if (!pd) return pd;
+  migrateBills(pd);
+  if (!pd.v){
+    /* 3.2.0: the one budget becomes this week's entry; blank budgets stay unrecorded */
+    pd.v = 2;
+    pd.weeks = {};
+    pd.fees = {};
+    for (var i=0;i<FEE_FIELDS.length;i++){
+      var v = (pd.f || {})[FEE_FIELDS[i]];
+      if (v !== undefined && v !== null) pd.fees[FEE_FIELDS[i]] = v;
+    }
+    if (legacyHasContent(pd)) pd.weeks[todayKey] = weekFromLegacy(pd);
+    pd.legacyStamp = legacyOf(pd);
+  } else {
+    if (!pd.weeks) pd.weeks = {};
+    if (!pd.fees) pd.fees = {};
+    /* a stale pre-3.2 session edits only the legacy mirror; adopt its work as this week */
+    if (pd.legacyStamp && legacyOf(pd) !== pd.legacyStamp){
+      pd.weeks[todayKey] = weekFromLegacy(pd);
+      pd.legacyStamp = legacyOf(pd);
+    }
+  }
+  return pd;
 }
 function loadDevice(){
   device = lsGet(DKEY);
@@ -1862,7 +2106,9 @@ function loadDevice(){
     var v1 = lsGet("moneyBasics.v1");
     var pd = freshProfileData();
     if (v1 && v1.f){
-      pd.f = v1.f; pd.mode = v1.mode || "steady";
+      pd = migrateProfile({ f:v1.f, mode:v1.mode || "steady", bills:null,
+        goals:[], presets:[], reminder:{on:false, day:5, lastAck:0}, lastTab:"budget",
+        since: new Date().toISOString().slice(0,7) });
       if (v1.lang) device.lang = v1.lang;
     }
     lsSet(pkey("p1"), pd);
@@ -1870,8 +2116,16 @@ function loadDevice(){
   }
   if (!device.profiles.some(function(p){ return p.id === device.active; }))
     device.active = device.profiles[0].id;
-  prof = lsGet(pkey(device.active)) || freshProfileData();
-  migrateBills(prof);
+  /* 3.2.0: migrate every profile once, eagerly, so all histories start the same day;
+     persist right away (covers v1 records AND stale-session adoption) */
+  for (var i=0;i<device.profiles.length;i++){
+    var id = device.profiles[i].id, rec = lsGet(pkey(id));
+    if (!rec) continue;
+    var before = JSON.stringify(rec);
+    migrateProfile(rec);
+    if (JSON.stringify(rec) !== before) lsSet(pkey(id), rec);
+  }
+  prof = migrateProfile(lsGet(pkey(device.active)) || freshProfileData());
 }
 function migrateBills(pd){
   if (!pd.bills) pd.bills = {checked:[], owed:{}, paid:{}, override:"", overrideOn:false};
@@ -1884,8 +2138,17 @@ function migrateBills(pd){
 }
 var saveTimer = null, erasing = false, lastSavedStr = "";
 function snapshot(){ return JSON.stringify([device, prof]); }
+/* keep the legacy mirror current so a stale pre-3.2 session still sees this week */
+function syncLegacy(){
+  var wk = getWeekData(todayKey), f = {}, i;
+  for (i=0;i<WEEK_FIELDS.length;i++) f[WEEK_FIELDS[i]] = wk.f[WEEK_FIELDS[i]] !== undefined ? wk.f[WEEK_FIELDS[i]] : "";
+  for (i=0;i<FEE_FIELDS.length;i++) f[FEE_FIELDS[i]] = prof.fees[FEE_FIELDS[i]] !== undefined ? prof.fees[FEE_FIELDS[i]] : "";
+  prof.f = f; prof.mode = wk.mode; prof.bills = deepCopy(wk.bills);
+  prof.legacyStamp = legacyOf(prof);
+}
 function persist(showFlash){
   if (erasing) return;
+  syncLegacy();
   var str = snapshot();
   if (str === lastSavedStr) return; /* nothing changed: no write, no flash */
   lsSet(DKEY, device);
@@ -2023,17 +2286,17 @@ if (window.visualViewport){
 }
 
 /* ================= FIELDS ================= */
-var FIELDS = ["inc-steady","w1","w2","w3","w4",
-  "ess-housing","ess-food","ess-transport","ess-phone","ess-health","ess-other",
-  "chk-amt","chk-times","chk-pct","mo-times","mo-fee","od-times","od-fee","pp-fee","atm-times","atm-fee"];
+/* the DOM inputs are the working copy of the VIEWED week; fee fields are per-profile */
 var FEE_DEFAULTS = {"chk-pct":"2","mo-fee":"1.75","od-fee":"27","atm-fee":"3"};
-function fieldsToProf(){
-  for (var i=0;i<FIELDS.length;i++) prof.f[FIELDS[i]] = $(FIELDS[i]).value;
-}
 function profToFields(){
-  for (var i=0;i<FIELDS.length;i++){
-    var v = prof.f[FIELDS[i]];
-    $(FIELDS[i]).value = (v === undefined || v === null) ? (FEE_DEFAULTS[FIELDS[i]] || "") : v;
+  var wk = getWeek(), i, v;
+  for (i=0;i<WEEK_FIELDS.length;i++){
+    v = wk.f[WEEK_FIELDS[i]];
+    $(WEEK_FIELDS[i]).value = (v === undefined || v === null) ? "" : v;
+  }
+  for (i=0;i<FEE_FIELDS.length;i++){
+    v = prof.fees[FEE_FIELDS[i]];
+    $(FEE_FIELDS[i]).value = (v === undefined || v === null) ? (FEE_DEFAULTS[FEE_FIELDS[i]] || "") : v;
   }
 }
 
@@ -2073,6 +2336,7 @@ function applyLang(){
 var TABS = ["budget","bills","goals","learn","you"];
 var activeTab = "budget";
 function showTab(name, focusPanel){
+  refreshToday();
   activeTab = name;
   for (var i=0;i<TABS.length;i++){
     var sel = TABS[i] === name;
@@ -2084,6 +2348,7 @@ function showTab(name, focusPanel){
   prof.lastTab = name; persist(false);
   if (name === "you"){ clearBadge(); renderYou(); }
   if (name === "bills") renderBills();
+  renderWeekBar();
   closeTape();
   renderReceipt();
   updateTape();
@@ -2102,16 +2367,160 @@ $("tabbar").addEventListener("keydown", function(e){
   e.preventDefault();
 });
 
+/* ================= WEEK BAR + PICKER ================= */
+function weeklyTab(){ return activeTab === "budget" || activeTab === "bills"; }
+function fmtRange(key){
+  var s = keyToDate(key), e = keyToDate(key); e.setDate(e.getDate()+6);
+  var mS = t("monthsS")[s.getMonth()], mE = t("monthsS")[e.getMonth()];
+  if (device.lang === "es")
+    return s.getMonth() === e.getMonth()
+      ? s.getDate()+" – "+e.getDate()+" "+mS
+      : s.getDate()+" "+mS+" – "+e.getDate()+" "+mE;
+  return s.getMonth() === e.getMonth()
+    ? mS+" "+s.getDate()+" – "+e.getDate()
+    : mS+" "+s.getDate()+" – "+mE+" "+e.getDate();
+}
+function renderWeekBar(){
+  var on = weeklyTab();
+  $("weekbar").hidden = !on;
+  var away = viewKey !== todayKey;
+  $("wk-banner").hidden = !(on && away);
+  if (!on) return;
+  $("wk-prev").setAttribute("aria-label", t("wkPrevA"));
+  $("wk-next").setAttribute("aria-label", t("wkNextA"));
+  $("wk-chip-txt").textContent = away ? fmtRange(viewKey) : t("wkThis");
+  if (away) $("wk-banner-txt").textContent = viewKey < todayKey ? t("wkPast") : t("wkFuture");
+}
+function paintWeek(){
+  profToFields(); setModeUI(getWeek().mode);
+  renderBills(); calcAll(); renderWeekBar();
+}
+function setView(key){
+  if (key === viewKey){ renderWeekBar(); return; }
+  viewKey = key;
+  clearTimeout(refreshBillChips.t); clearTimeout(renderGoals.t);
+  paintWeek();
+}
+function shiftWeek(n){
+  var d = keyToDate(viewKey); d.setDate(d.getDate() + n*7);
+  setView(weekKey(d));
+}
+function refreshToday(){
+  var nk = weekKey(new Date());
+  if (nk === todayKey) return;
+  var followed = viewKey === todayKey;
+  todayKey = nk;
+  if (followed){ viewKey = todayKey; paintWeek(); } else renderWeekBar();
+}
+document.addEventListener("visibilitychange", function(){ if (!document.hidden) refreshToday(); });
+$("wk-prev").addEventListener("click", function(){ shiftWeek(-1); });
+$("wk-next").addEventListener("click", function(){ shiftWeek(1); });
+$("wk-today").addEventListener("click", function(){ setView(todayKey); });
+
+/* ---- date picker: always opens on today; OK jumps to that day's week ---- */
+var pickDate = null, pickShown = null, pickReturnFocus = null;
+function pickerOpen(){ return !$("pick-wrap").hidden; }
+function openPicker(){
+  refreshToday();
+  pickReturnFocus = document.activeElement;
+  var now = new Date();
+  pickDate = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 12);
+  pickShown = new Date(pickDate.getFullYear(), pickDate.getMonth(), 1, 12);
+  $("pick-legend").hidden = true;
+  $("pick-leg-btn").setAttribute("aria-expanded", "false");
+  renderPicker();
+  var wrap = $("pick-wrap");
+  wrap.hidden = false;
+  document.body.classList.add("sheet-open");
+  setTimeout(function(){ wrap.className = "pick-wrap on"; }, 10);
+  setTimeout(function(){ $("pick-ok").focus(); }, 80);
+}
+function closePicker(){
+  if (!pickerOpen()) return;
+  var wrap = $("pick-wrap");
+  wrap.className = "pick-wrap";
+  document.body.classList.remove("sheet-open");
+  setTimeout(function(){ wrap.hidden = true; }, 220);
+  if (pickReturnFocus && pickReturnFocus.focus) pickReturnFocus.focus();
+}
+function fmtBig(d){
+  if (device.lang === "es") return t("daysS")[d.getDay()]+", "+d.getDate()+" "+t("monthsS")[d.getMonth()];
+  return t("daysS")[d.getDay()]+", "+t("monthsS")[d.getMonth()]+" "+d.getDate();
+}
+function fmtFull(d){
+  if (device.lang === "es") return t("days")[d.getDay()]+", "+d.getDate()+" de "+t("monthsF")[d.getMonth()];
+  return t("days")[d.getDay()]+", "+t("monthsF")[d.getMonth()]+" "+d.getDate();
+}
+function renderPicker(){
+  var y = pickShown.getFullYear(), m = pickShown.getMonth();
+  $("pick-year").textContent = String(pickDate.getFullYear());
+  $("pick-big").textContent = fmtBig(pickDate);
+  $("pick-band-lbl").textContent = t("monthsF")[m]+" "+y;
+  $("pick-prevm").setAttribute("aria-label", t("pickPrevM"));
+  $("pick-nextm").setAttribute("aria-label", t("pickNextM"));
+  var dow = "";
+  for (var i=0;i<7;i++) dow += "<span>"+t("dayLetters")[i]+"</span>";
+  $("pick-dow").innerHTML = dow;
+  var todayYmd = ymd(new Date()), selYmd = ymd(pickDate);
+  var d = new Date(y, m, 1, 12);
+  d.setDate(1 - d.getDay());
+  var html = "";
+  for (var c=0;c<42;c++){
+    var cy = ymd(d), cls = "pick-day";
+    if (d.getMonth() !== m) cls += " out";
+    if (cy === todayYmd) cls += " today";
+    if (cy === selYmd) cls += " sel";
+    if (prof.weeks[weekKey(d)]) cls += " dot";
+    html += '<button type="button" class="'+cls+'" data-day="'+cy+'"'
+      + (cy === selYmd ? ' aria-current="date"' : '')
+      + ' aria-label="'+esc(fmtFull(d))+'"><span class="n">'+d.getDate()+"</span></button>";
+    d.setDate(d.getDate()+1);
+  }
+  $("pick-grid").innerHTML = html;
+  $("pick-leg-btn").textContent = t("legend");
+  $("pick-legend").textContent = t("legendKey");
+  $("pick-cancel").textContent = t("btnCancel");
+  $("pick-ok").textContent = t("pickOk");
+}
+$("wk-chip").addEventListener("click", openPicker);
+$("pick-grid").addEventListener("click", function(e){
+  var b = e.target.closest("[data-day]");
+  if (!b) return;
+  pickDate = keyToDate(b.getAttribute("data-day"));
+  pickShown = new Date(pickDate.getFullYear(), pickDate.getMonth(), 1, 12);
+  renderPicker();
+});
+$("pick-prevm").addEventListener("click", function(){ pickShown.setMonth(pickShown.getMonth()-1); renderPicker(); });
+$("pick-nextm").addEventListener("click", function(){ pickShown.setMonth(pickShown.getMonth()+1); renderPicker(); });
+$("pick-leg-btn").addEventListener("click", function(){
+  var lg = $("pick-legend");
+  lg.hidden = !lg.hidden;
+  this.setAttribute("aria-expanded", lg.hidden ? "false" : "true");
+});
+$("pick-cancel").addEventListener("click", closePicker);
+$("pick-scrim").addEventListener("click", closePicker);
+$("pick-ok").addEventListener("click", function(){
+  var k = weekKey(pickDate);
+  closePicker();
+  setView(k);
+});
+$("pick-wrap").addEventListener("keydown", function(e){
+  if (e.key !== "Tab") return;
+  var btns = $("pick-wrap").querySelectorAll("button");
+  var first = btns[0], last = btns[btns.length-1];
+  if (e.shiftKey && document.activeElement === first){ e.preventDefault(); last.focus(); }
+  else if (!e.shiftKey && document.activeElement === last){ e.preventDefault(); first.focus(); }
+});
+
 /* ================= BUDGET ================= */
-function setMode(m){
-  prof.mode = m;
+function setModeUI(m){
   $("mode-steady").setAttribute("aria-pressed", m==="steady" ? "true":"false");
   $("mode-varies").setAttribute("aria-pressed", m==="varies" ? "true":"false");
   if (m==="steady"){ $("steady-box").removeAttribute("hidden"); $("varies-box").setAttribute("hidden",""); }
   else { $("varies-box").removeAttribute("hidden"); $("steady-box").setAttribute("hidden",""); }
 }
-$("mode-steady").addEventListener("click", function(){ setMode("steady"); calcAll(); queueSave(); });
-$("mode-varies").addEventListener("click", function(){ setMode("varies"); calcAll(); queueSave(); });
+$("mode-steady").addEventListener("click", function(){ W().mode = "steady"; setModeUI("steady"); calcAll(); queueSave(); });
+$("mode-varies").addEventListener("click", function(){ W().mode = "varies"; setModeUI("varies"); calcAll(); queueSave(); });
 
 var ESS = [
   {id:"ess-housing", key:"essHousing"},
@@ -2125,7 +2534,7 @@ function shortLabel(key){
   return t(key).split("(")[0].split(":")[0].trim();
 }
 function planIncome(){
-  if (prof.mode === "steady") return num("inc-steady");
+  if (getWeek().mode !== "varies") return num("inc-steady");
   var weeks = [num("w1"),num("w2"),num("w3"),num("w4")].filter(function(w){ return w>0; });
   return weeks.length ? Math.min.apply(null, weeks) : 0;
 }
@@ -2154,9 +2563,10 @@ $("preset-chips").addEventListener("click", function(e){
   var load = e.target.closest("[data-load]"), del = e.target.closest("[data-delp]");
   if (load){
     var p = prof.presets[+load.getAttribute("data-load")];
-    for (var k in p.data) if ($(k)) $(k).value = p.data[k];
-    if (p.mode) setMode(p.mode);
-    fieldsToProf(); calcAll(); queueSave();
+    var wk = W();
+    for (var k in p.data) if (p.data.hasOwnProperty(k) && WEEK_FIELDS.indexOf(k) !== -1) wk.f[k] = p.data[k];
+    if (p.mode) wk.mode = p.mode;
+    profToFields(); setModeUI(wk.mode); calcAll(); queueSave();
     toast(t("presetLoaded"));
   } else if (del){
     var i = +del.getAttribute("data-delp");
@@ -2174,27 +2584,28 @@ $("btn-save-preset").addEventListener("click", function(){
     var data = {};
     var ids = ["inc-steady","w1","w2","w3","w4"].concat(ESS.map(function(e){ return e.id; }));
     for (var i=0;i<ids.length;i++) data[ids[i]] = $(ids[i]).value;
-    prof.presets.push({name:name.slice(0,30), mode:prof.mode, data:data});
+    prof.presets.push({name:name.slice(0,30), mode:getWeek().mode, data:data});
     renderPresets(); persist(true);
     toast(t("presetSaved"));
   }});
 });
 
 /* ================= BILLS ALLOCATOR ================= */
-function billOwedAmt(i){ return parseAmt(prof.bills.owed[i]); }
+function billOwedAmt(i){ return parseAmt(getWeek().bills.owed[i]); }
 function availAmount(){
-  if (prof.bills.overrideOn) return parseAmt(prof.bills.override);
+  var wb = getWeek().bills;
+  if (wb.overrideOn) return parseAmt(wb.override);
   return planIncome();
 }
 function allocate(){
-  var bills = L().bills, out = [];
+  var bills = L().bills, out = [], wb = getWeek().bills;
   /* money already handed over comes off the top; the rest flows down the priority order */
   var money = availAmount();
-  for (var pk in prof.bills.paid) if (prof.bills.paid.hasOwnProperty(pk)) money -= prof.bills.paid[pk];
+  for (var pk in wb.paid) if (wb.paid.hasOwnProperty(pk)) money -= wb.paid[pk];
   if (money < 0) money = 0;
   for (var i=0;i<bills.length;i++){
-    if (prof.bills.checked.indexOf(i) === -1){ out.push(null); continue; }
-    if (prof.bills.paid[i] !== undefined){ out.push({state:"done", pay:prof.bills.paid[i]}); continue; }
+    if (wb.checked.indexOf(i) === -1){ out.push(null); continue; }
+    if (wb.paid[i] !== undefined){ out.push({state:"done", pay:wb.paid[i]}); continue; }
     var owed = billOwedAmt(i);
     if (owed <= 0){ out.push({state:"none"}); continue; }
     if (money >= owed){ out.push({state:"pay", pay:owed}); money -= owed; }
@@ -2205,16 +2616,18 @@ function allocate(){
   return out;
 }
 function paidSum(){
-  var s = 0;
-  for (var k in prof.bills.paid) if (prof.bills.paid.hasOwnProperty(k)) s += prof.bills.paid[k];
+  var s = 0, wb = getWeek().bills;
+  for (var k in wb.paid) if (wb.paid.hasOwnProperty(k)) s += wb.paid[k];
   return s;
 }
 function renderAvail(){
+  var wb = getWeek().bills;
   var avail = Math.max(0, availAmount() - paidSum());
   $("avail-fig").textContent = fmt(avail);
-  $("avail-note").textContent = prof.bills.overrideOn ? t("yourNumber") : (avail > 0 ? t("fromBudget") : t("noIncomeHint"));
-  $("btn-override-label").textContent = prof.bills.overrideOn ? t("overrideOff") : t("overrideBtn");
-  $("override-row").hidden = !prof.bills.overrideOn;
+  $("avail-note").textContent = wb.overrideOn ? t("yourNumber") : (avail > 0 ? t("fromBudget") : t("noIncomeHint"));
+  $("btn-override-label").textContent = wb.overrideOn ? t("overrideOff") : t("overrideBtn");
+  $("override-row").hidden = !wb.overrideOn;
+  if (document.activeElement !== $("avail-override")) $("avail-override").value = wb.override;
 }
 var BILL_LOOK = [
   {icon:"house", tone:"green"}, {icon:"zap", tone:"amber"}, {icon:"utensils", tone:"green"},
@@ -2223,9 +2636,9 @@ var BILL_LOOK = [
 ];
 function renderBills(){
   renderAvail();
-  var bills = L().bills, alloc = allocate(), html = "";
+  var bills = L().bills, alloc = allocate(), html = "", wb = getWeek().bills;
   for (var i=0;i<bills.length;i++){
-    var checked = prof.bills.checked.indexOf(i) !== -1;
+    var checked = wb.checked.indexOf(i) !== -1;
     var a = alloc[i];
     var chipHtml = "";
     if (a && a.state === "done") chipHtml = '<button type="button" class="verdict-chip done" data-pay="'+i+'">'+t("stDone")(fmt(a.pay))+'</button>';
@@ -2244,7 +2657,7 @@ function renderBills(){
       var ph = BUDGET_MAP[i] ? (num(BUDGET_MAP[i]) || 0) : 0;
       html += '<div class="owed-row"><label for="owed-'+i+'">'+t("owedL")+'</label>'
         + '<div class="field"><span class="cur" aria-hidden="true">$</span>'
-        + '<input type="text" inputmode="decimal" autocomplete="off" id="owed-'+i+'" data-owed="'+i+'" value="'+esc(prof.bills.owed[i]||"")+'" placeholder="'+(ph>0?ph:"0")+'"></div></div>';
+        + '<input type="text" inputmode="decimal" autocomplete="off" id="owed-'+i+'" data-owed="'+i+'" value="'+esc(wb.owed[i]||"")+'" placeholder="'+(ph>0?ph:"0")+'"></div></div>';
       if (a && a.state === "part") html += '<p class="script">'+t("scriptPart")(fmt(a.pay))+'</p>';
       else if (a && a.state === "waits") html += '<p class="script">'+t("scriptWaits")+'</p>';
     }
@@ -2256,15 +2669,16 @@ $("bill-list").addEventListener("change", function(e){
   var cb = e.target.closest("[data-bill]");
   if (!cb) return;
   var i = +cb.getAttribute("data-bill");
-  var pos = prof.bills.checked.indexOf(i);
-  if (cb.checked && pos === -1) prof.bills.checked.push(i);
-  if (!cb.checked && pos !== -1) prof.bills.checked.splice(pos,1);
+  var wb = W().bills;
+  var pos = wb.checked.indexOf(i);
+  if (cb.checked && pos === -1) wb.checked.push(i);
+  if (!cb.checked && pos !== -1) wb.checked.splice(pos,1);
   renderBills(); updateTape(); queueSave();
 });
 $("bill-list").addEventListener("input", function(e){
   var inp = e.target.closest("[data-owed]");
   if (!inp) return;
-  prof.bills.owed[+inp.getAttribute("data-owed")] = inp.value;
+  W().bills.owed[+inp.getAttribute("data-owed")] = inp.value;
   // re-render chips without rebuilding inputs mid-typing: update chips only
   refreshBillChips(); updateTape(); queueSave();
 });
@@ -2287,19 +2701,21 @@ $("bill-list").addEventListener("click", function(e){
   var b = e.target.closest("[data-pay]");
   if (!b) return;
   var i = +b.getAttribute("data-pay");
-  if (prof.bills.paid[i] !== undefined) delete prof.bills.paid[i];
-  else prof.bills.paid[i] = parseFloat(b.getAttribute("data-amt")) || 0;
+  var wb = W().bills;
+  if (wb.paid[i] !== undefined) delete wb.paid[i];
+  else wb.paid[i] = parseFloat(b.getAttribute("data-amt")) || 0;
   renderBills(); calcAll(); queueSave();
 });
 $("btn-override").addEventListener("click", function(){
-  prof.bills.overrideOn = !prof.bills.overrideOn;
-  if (prof.bills.overrideOn && !prof.bills.override) prof.bills.override = String(planIncome() || "");
-  $("avail-override").value = prof.bills.override;
+  var wb = W().bills;
+  wb.overrideOn = !wb.overrideOn;
+  if (wb.overrideOn && !wb.override) wb.override = String(planIncome() || "");
+  $("avail-override").value = wb.override;
   renderBills(); calcAll(); queueSave();
-  if (prof.bills.overrideOn) $("avail-override").focus();
+  if (wb.overrideOn) $("avail-override").focus();
 });
 $("avail-override").addEventListener("input", function(){
-  prof.bills.override = this.value;
+  W().bills.override = this.value;
   renderAvail(); refreshBillChips(); calcAll(); queueSave();
 });
 function billsSummary(){
@@ -2322,7 +2738,9 @@ function goalPct(g){
 }
 function renderGoals(){
   var list = $("goal-list"), html = "";
-  var leftOver = Math.max(0, planIncome() - essTotal());
+  /* goals are continuous, not weekly: the pace estimate always uses TODAY's week */
+  var todayWk = getWeekData(todayKey);
+  var leftOver = Math.max(0, weekIncome(todayWk) - weekEssTotal(todayWk));
   for (var i=0;i<prof.goals.length;i++){
     var g = prof.goals[i], pct = goalPct(g), left = Math.max(0, g.target-g.saved);
     html += '<div class="card goal-card" data-goal="'+i+'">'
@@ -2552,9 +2970,10 @@ $("profile-list").addEventListener("click", function(e){
     if (p.id !== device.active){
       persist(false);
       device.active = p.id;
-      prof = lsGet(pkey(p.id)) || freshProfileData();
+      prof = migrateProfile(lsGet(pkey(p.id)) || freshProfileData());
+      viewKey = todayKey; /* a different person's timeline opens on today */
       persist(false);
-      profToFields(); setMode(prof.mode); applyLang();
+      profToFields(); setModeUI(getWeek().mode); applyLang();
       toast(t("profileSwitched")(profileName(p)));
     }
     renderProfiles(); renderYou();
@@ -2570,8 +2989,9 @@ $("profile-list").addEventListener("click", function(e){
       device.profiles.splice(i,1);
       if (device.active === pd.id){
         device.active = device.profiles[0].id;
-        prof = lsGet(pkey(device.active)) || freshProfileData();
-        profToFields(); setMode(prof.mode); applyLang();
+        prof = migrateProfile(lsGet(pkey(device.active)) || freshProfileData());
+        viewKey = todayKey;
+        profToFields(); setModeUI(getWeek().mode); applyLang();
       }
       persist(false); renderProfiles(); renderYou();
       toast(t("profileDeleted"));
@@ -2698,7 +3118,7 @@ $("tape-bar").addEventListener("click", function(){
   $("tape-car").textContent = tapeOpen ? t("tapeClose") : t("tapeOpen");
 });
 $("scrim").addEventListener("click", closeTape);
-document.addEventListener("keydown", function(e){ if (e.key === "Escape"){ if (sheetCfg) closeSheet(); else closeTape(); } });
+document.addEventListener("keydown", function(e){ if (e.key === "Escape"){ if (pickerOpen()) closePicker(); else if (sheetCfg) closeSheet(); else closeTape(); } });
 
 var feesCache = 0;
 function tapeVisible(){
@@ -2862,13 +3282,13 @@ function renderHero(){
 /* ================= MASTER ================= */
 function calcAll(){
   feesCache = feesTotal();
-  if (prof.mode === "varies") $("low-fig").textContent = fmt(planIncome());
+  if (getWeek().mode === "varies") $("low-fig").textContent = fmt(planIncome());
   renderHero();
   renderReceipt();
   updateTape();
 }
 function renderAll(){
-  renderPresets(); renderBills(); renderGoals(); renderYou();
+  renderPresets(); renderBills(); renderGoals(); renderYou(); renderWeekBar();
   $("set-motion").setAttribute("aria-checked", device.motion ? "true" : "false");
   $("set-reminder").setAttribute("aria-checked", prof.reminder.on ? "true" : "false");
   $("rem-day-row").hidden = !prof.reminder.on;
@@ -2876,12 +3296,20 @@ function renderAll(){
 }
 
 /* ================= WIRING ================= */
-for (var fi=0;fi<FIELDS.length;fi++){
-  $(FIELDS[fi]).addEventListener("input", function(){
-    fieldsToProf();
+/* each edit writes its own field at event time — a debounced save can never
+   scrape the DOM after the user has moved to a different week */
+for (var wfi=0;wfi<WEEK_FIELDS.length;wfi++)(function(id){
+  $(id).addEventListener("input", function(){
+    W().f[id] = this.value;
     calcAll(); queueSave();
   });
-}
+})(WEEK_FIELDS[wfi]);
+for (var ffi=0;ffi<FEE_FIELDS.length;ffi++)(function(id){
+  $(id).addEventListener("input", function(){
+    prof.fees[id] = this.value; /* Learn is not weekly: no week materializes */
+    calcAll(); queueSave();
+  });
+})(FEE_FIELDS[ffi]);
 $("btn-print").addEventListener("click", function(){ window.print(); });
 
 /* ================= PWA ================= */
@@ -2907,7 +3335,7 @@ $("btn-install").addEventListener("click", function(){
 loadDevice();
 lastSavedStr = snapshot();
 profToFields();
-setMode(prof.mode);
+setModeUI(getWeek().mode);
 applyLang();
 if (prof.lastTab && TABS.indexOf(prof.lastTab) !== -1 && prof.lastTab !== "budget") showTab(prof.lastTab);
 checkReminder();
