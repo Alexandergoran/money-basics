@@ -8,8 +8,13 @@
 <meta name="theme-color" media="(prefers-color-scheme: light)" content="#F6F7F6">
 <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#15181D">
 <link rel="manifest" href="./manifest.webmanifest">
-<link rel="apple-touch-icon" href="./icon-v3-512.png">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%238FE3AE'/%3E%3Ctext x='16' y='21.5' text-anchor='middle' font-family='Menlo,monospace' font-size='13' font-weight='700' fill='%230E1013'%3Emb%3C/text%3E%3C/svg%3E">
+<link rel="apple-touch-icon" href="./icon-v3-512.png" id="touch-icon">
+<script>
+/* iOS reads this once, at Add-to-Home-Screen time; changing the icon later needs delete + re-add */
+if (window.matchMedia && matchMedia("(prefers-color-scheme: dark)").matches)
+  document.getElementById("touch-icon").setAttribute("href", "./icon-v3-dark-512.png");
+</script>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cstyle%3E@media (prefers-color-scheme:dark)%7Brect%7Bfill:%23212328%7Dtext%7Bfill:%238FE3AE%7D%7D%3C/style%3E%3Crect width='32' height='32' rx='8' fill='%238FE3AE'/%3E%3Ctext x='16' y='21.5' text-anchor='middle' font-family='Menlo,monospace' font-size='13' font-weight='700' fill='%230E1013'%3Emb%3C/text%3E%3C/svg%3E">
 <style>
 /* ============ FONTS (embedded: zero network calls) ============ */
 @font-face{
@@ -60,7 +65,7 @@
   --r-card:20px; --r-tile:14px; --r-ctl:12px;
   --font-ui:"Archivo", -apple-system, "Segoe UI", sans-serif;
   --font-money:"Plex Mono", ui-monospace, "SF Mono", "Roboto Mono", Menlo, monospace;
-  --z-rail:10; --z-scrim:25; --z-tape:30; --z-tabbar:32; --z-toast:40;
+  --z-rail:10; --z-scrim:25; --z-tape:30; --z-tabbar:32; --z-fab:35; --z-toast:40;
   --tabbar-h:64px;
 }
 /* dark: design-exact Charcoal Ledger values */
@@ -103,7 +108,12 @@ html[data-theme="dark"]{
 
 /* ============ BASE ============ */
 *{box-sizing:border-box; margin:0; padding:0;}
-html{-webkit-text-size-adjust:100%; font-size:17px; scroll-padding-bottom:140px;}
+html{
+  -webkit-text-size-adjust:100%; font-size:17px; scroll-padding-bottom:140px;
+  /* app shell: no text selection, no long-press callout; inputs opt back in below */
+  -webkit-user-select:none; user-select:none; -webkit-touch-callout:none;
+}
+input, textarea{-webkit-user-select:text; user-select:text;}
 html[data-ts="lg"]{font-size:19px;}
 html[data-ts="xl"]{font-size:21px;}
 body{
@@ -615,17 +625,41 @@ details .body li{margin-bottom:var(--sp-2); max-width:55ch;}
   cursor:pointer; font-weight:700; font-size:0.94rem;
 }
 .wk-chip .icon{width:18px; height:18px; color:var(--muted);}
-.wk-banner{
-  display:flex; align-items:center; gap:var(--sp-3);
-  background:var(--surface); border:1px solid var(--line); border-left:3px solid var(--acc-amber);
-  border-radius:12px; padding:4px 4px 4px var(--sp-3);
-  margin-bottom:var(--sp-3); font-size:0.88rem; color:var(--muted);
-}
-.wk-banner span{flex:1;}
-.wk-pill{
-  min-height:48px; padding:0 16px; border:none; border-radius:999px;
+.wk-chip.away{box-shadow:0 0 0 2px var(--accent-bg);}
+
+/* ============ ADD (+) ============ */
+.fab{
+  position:fixed; left:50%; margin-left:-28px;
+  bottom:calc(var(--tabbar-h) + 16px + env(safe-area-inset-bottom, 0px));
+  width:56px; height:56px; border-radius:50%; z-index:var(--z-fab);
   background:var(--accent-bg); color:var(--accent-ink);
-  font-weight:700; font-size:0.85rem; cursor:pointer; white-space:nowrap;
+  border:none; cursor:pointer;
+  display:flex; align-items:center; justify-content:center;
+  box-shadow:0 4px 16px rgba(0,0,0,0.35);
+  touch-action:manipulation;
+}
+.fab .icon{width:26px; height:26px; stroke-width:2.5;}
+.fab:active{transform:scale(0.94);}
+body.tape-on .fab{bottom:calc(var(--tabbar-h) + 68px + env(safe-area-inset-bottom, 0px));}
+body.kb-open .fab, body.tape-expanded .fab{display:none;}
+.add-rows{display:flex; flex-direction:column;}
+.add-row{
+  display:flex; align-items:center; gap:var(--sp-3);
+  min-height:56px; padding:4px 2px; width:100%;
+  background:none; border:none; border-top:1px solid var(--line); border-radius:0;
+  cursor:pointer; font-size:1rem; font-weight:600; text-align:left;
+  touch-action:manipulation;
+}
+.add-row:first-child{border-top:none;}
+.tabbar button[data-controls], .tape-bar, .wk-arrow, .wk-chip{touch-action:manipulation;}
+@media (min-width: 900px){
+  .fab{bottom:32px;}
+  body.tape-on .fab{bottom:92px;}
+}
+@media (min-width: 1160px){
+  /* centered over the tape rail (right:24px, 392px wide) */
+  .fab{left:auto; margin-left:0; right:192px; bottom:32px;}
+  body.tape-on .fab{bottom:68px;}
 }
 
 /* ============ WEEK PICKER ============ */
@@ -875,11 +909,6 @@ details .body li{margin-bottom:var(--sp-2); max-width:55ch;}
     <svg class="icon" aria-hidden="true"><use href="#i-chevron-right"/></svg>
   </button>
 </div>
-<div class="wk-banner" id="wk-banner" hidden>
-  <span id="wk-banner-txt"></span>
-  <button type="button" class="wk-pill" id="wk-today" data-i18n="wkToday">Back to today</button>
-</div>
-
 <noscript><p class="note" style="margin-bottom:24px">Turn on JavaScript to use this tool. After the page loads once, it works without internet.</p></noscript>
 
 <div class="card due-card" id="reminder-banner" hidden>
@@ -1020,16 +1049,8 @@ details .body li{margin-bottom:var(--sp-2); max-width:55ch;}
   <div id="goal-list"></div>
 
   <div class="empty" id="goals-empty" hidden>
-    <p data-i18n="goalsEmpty">No goals yet.</p>
-    <button type="button" class="btn small primary" id="btn-add-goal-empty">
-      <svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg>
-      <span data-i18n="addGoal">Add a goal</span>
-    </button>
+    <p data-i18n="goalsEmpty">No goals yet. Tap + to add your first goal.</p>
   </div>
-  <button type="button" class="btn" id="btn-add-goal">
-    <svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg>
-    <span data-i18n="addGoal">Add a goal</span>
-  </button>
 
   <div class="card">
     <p class="q" data-i18n="goalWhereH">Where to keep savings</p>
@@ -1283,10 +1304,6 @@ details .body li{margin-bottom:var(--sp-2); max-width:55ch;}
     </div>
     <p class="lede" data-i18n="profilesLede">For shared phones. Each profile keeps its own budget, goals, and bills. Profiles live on this phone only.</p>
     <div class="rows" id="profile-list"></div>
-    <button type="button" class="btn" id="btn-add-profile">
-      <svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg>
-      <span data-i18n="addProfile">Add a profile</span>
-    </button>
   </div>
 
   <div id="you-settings" hidden>
@@ -1445,6 +1462,35 @@ details .body li{margin-bottom:var(--sp-2); max-width:55ch;}
   </button>
 </nav>
 
+<button type="button" class="fab" id="fab" aria-label="Add">
+  <svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg>
+</button>
+
+<div class="sheet-wrap" id="add-wrap" hidden>
+  <div class="sheet-scrim" id="add-scrim"></div>
+  <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="add-title">
+    <h3 id="add-title" data-i18n="addSheetTitle">Add</h3>
+    <div class="add-rows">
+      <button type="button" class="add-row" data-add="money">
+        <span class="cat-tile tone-green" aria-hidden="true"><svg class="icon"><use href="#i-banknote"/></svg></span>
+        <span data-i18n="addMoney">Money coming in</span>
+      </button>
+      <button type="button" class="add-row" data-add="bill">
+        <span class="cat-tile tone-amber" aria-hidden="true"><svg class="icon"><use href="#i-list-ordered"/></svg></span>
+        <span data-i18n="addBill">A bill</span>
+      </button>
+      <button type="button" class="add-row" data-add="goal">
+        <span class="cat-tile tone-blue" aria-hidden="true"><svg class="icon"><use href="#i-target"/></svg></span>
+        <span data-i18n="addGoalRow">A goal</span>
+      </button>
+      <button type="button" class="add-row" data-add="person">
+        <span class="cat-tile tone-purple" aria-hidden="true"><svg class="icon"><use href="#i-circle-user"/></svg></span>
+        <span data-i18n="addPerson">A person</span>
+      </button>
+    </div>
+  </div>
+</div>
+
 <div class="pick-wrap" id="pick-wrap" hidden>
   <div class="pick-scrim" id="pick-scrim"></div>
   <div class="pick" role="dialog" aria-modal="true" aria-labelledby="pick-big">
@@ -1546,8 +1592,8 @@ en:{
     {b:"Credit cards, medical bills, old debts", w:"These wait last. No one can take your home over them. Ask hospitals about financial assistance."}
   ],
   goalsH:"Your goals",
-  goalsLede:"Pick something to save for. Set an amount you can add each week.",
-  goalsEmpty:"No goals yet.",
+  goalsLede:"Pick something to save for. Set an amount you can add each week. Tap + to add a goal.",
+  goalsEmpty:"No goals yet. Tap + to add your first goal.",
   addGoal:"Add a goal", goalFull:"You can keep 5 goals. Delete one first.",
   goalNameQ:"What are you saving for? (example: Work boots)",
   goalTargetQ:"How much do you need? (numbers only)",
@@ -1645,7 +1691,7 @@ en:{
   youSince:function(d){ return "Using Money Basics since "+d; },
   youStats:function(b,g){ return b+" saved budget"+(b===1?"":"s")+" · "+g+" goal"+(g===1?"":"s"); },
   profilesH:"Profiles",
-  profilesLede:"For shared phones. Each profile keeps its own budget, goals, and bills. Profiles live on this phone only.",
+  profilesLede:"For shared phones. Each profile keeps its own budget, goals, and bills. Profiles live on this phone only. Tap + to add a person.",
   addProfile:"Add a profile", profileFull:"This phone can hold 4 profiles. Delete one first.",
   profileNameQ:"Name for this profile:",
   profileRenameQ:"New name:",
@@ -1719,8 +1765,13 @@ en:{
   },
   wkThis:"This week",
   wkPrevA:"Previous week", wkNextA:"Next week",
-  wkPast:"You're viewing a past week.", wkFuture:"You're viewing a future week.",
-  wkToday:"Back to today",
+  addSheetTitle:"Add",
+  addMoney:"Money coming in", addBill:"A bill", addGoalRow:"A goal", addPerson:"A person",
+  addBillT:"Add a bill",
+  billAdded:"Bill added", billDeleted:"Bill deleted",
+  billDelQ:function(n){ return 'Delete the bill "'+n+'"?'; },
+  moneyAdded:function(a){ return "Added "+a+" to money in"; },
+  customFull:"You can keep 6 extra bills. Delete one first.",
   legend:"LEGEND",
   legendKey:"Filled: today · Ring: your pick · Dot: week with saved changes",
   pickOk:"OK", pickPrevM:"Previous month", pickNextM:"Next month",
@@ -1780,8 +1831,8 @@ es:{
     {b:"Tarjetas, cuentas médicas, deudas viejas", w:"Esperan al final. Nadie puede quitarle la casa por ellas. Pregunte al hospital por asistencia financiera."}
   ],
   goalsH:"Sus metas",
-  goalsLede:"Elija algo para ahorrar. Fije una cantidad que pueda agregar cada semana.",
-  goalsEmpty:"Todavía no hay metas.",
+  goalsLede:"Elija algo para ahorrar. Fije una cantidad que pueda agregar cada semana. Toque + para agregar una meta.",
+  goalsEmpty:"Todavía no hay metas. Toque + para agregar su primera meta.",
   addGoal:"Agregar una meta", goalFull:"Puede tener 5 metas. Borre una primero.",
   goalNameQ:"¿Para qué está ahorrando? (ejemplo: Botas de trabajo)",
   goalTargetQ:"¿Cuánto necesita? (solo números)",
@@ -1879,7 +1930,7 @@ es:{
   youSince:function(d){ return "Usa Money Basics desde "+d; },
   youStats:function(b,g){ return b+" presupuesto"+(b===1?"":"s")+" guardado"+(b===1?"":"s")+" · "+g+" meta"+(g===1?"":"s"); },
   profilesH:"Perfiles",
-  profilesLede:"Para teléfonos compartidos. Cada perfil guarda su propio presupuesto, metas y cuentas. Los perfiles viven solo en este teléfono.",
+  profilesLede:"Para teléfonos compartidos. Cada perfil guarda su propio presupuesto, metas y cuentas. Los perfiles viven solo en este teléfono. Toque + para agregar una persona.",
   addProfile:"Agregar un perfil", profileFull:"Este teléfono puede tener 4 perfiles. Borre uno primero.",
   profileNameQ:"Nombre para este perfil:",
   profileRenameQ:"Nuevo nombre:",
@@ -1953,8 +2004,13 @@ es:{
   },
   wkThis:"Esta semana",
   wkPrevA:"Semana anterior", wkNextA:"Semana siguiente",
-  wkPast:"Está viendo una semana pasada.", wkFuture:"Está viendo una semana futura.",
-  wkToday:"Volver a hoy",
+  addSheetTitle:"Agregar",
+  addMoney:"Dinero que entra", addBill:"Una cuenta", addGoalRow:"Una meta", addPerson:"Una persona",
+  addBillT:"Agregar una cuenta",
+  billAdded:"Cuenta agregada", billDeleted:"Cuenta borrada",
+  billDelQ:function(n){ return '¿Borrar la cuenta "'+n+'"?'; },
+  moneyAdded:function(a){ return "Agregó "+a+" a lo que entra"; },
+  customFull:"Puede tener 6 cuentas extra. Borre una primero.",
   legend:"LEYENDA",
   legendKey:"Relleno: hoy · Aro: su elección · Punto: semana con cambios guardados",
   pickOk:"OK", pickPrevM:"Mes anterior", pickNextM:"Mes siguiente",
@@ -1992,6 +2048,43 @@ function esc(s){
 }
 function deepCopy(o){ return JSON.parse(JSON.stringify(o)); }
 
+/* fixed chrome activates on pointerdown, so the first tap works during iOS
+   momentum scroll; the ghost click that follows is swallowed. Keyboard and
+   assistive tech come in through the plain click path (no pointerdown first).
+   FIXED CHROME ONLY — inside scrolling content a tap must still be able to
+   just stop the scroll. */
+function fastTap(el, handler){
+  var lastPD = 0;
+  el.addEventListener("pointerdown", function(e){
+    if (e.pointerType === "mouse" && e.button !== 0) return;
+    lastPD = Date.now();
+    handler.call(el, e);
+  });
+  el.addEventListener("click", function(e){
+    if (Date.now() - lastPD < 650){ e.preventDefault(); e.stopPropagation(); return; }
+    handler.call(el, e);
+  });
+}
+
+/* every decimal field, typed or pasted: digits plus one decimal point.
+   "$1,234.56" -> 1234.56 · "12,50" (es) -> 12.50 · letters never land. */
+function cleanAmount(s){
+  s = String(s).replace(/[^0-9.,]/g, "");
+  if (s.indexOf(".") !== -1) s = s.replace(/,/g, "");
+  else if ((s.match(/,/g) || []).length > 1) s = s.replace(/,/g, "");
+  else if (/,\d{3}$/.test(s)) s = s.replace(",", "");
+  else s = s.replace(",", ".");
+  var firstDot = s.indexOf(".");
+  if (firstDot !== -1) s = s.slice(0, firstDot + 1) + s.slice(firstDot + 1).replace(/\./g, "");
+  return s;
+}
+document.addEventListener("input", function(e){
+  var el = e.target;
+  if (!el || el.tagName !== "INPUT" || el.getAttribute("inputmode") !== "decimal") return;
+  var clean = cleanAmount(el.value);
+  if (clean !== el.value) el.value = clean;
+}, true);
+
 /* ================= WEEKS ================= */
 var WEEK_FIELDS = ["inc-steady","w1","w2","w3","w4",
   "ess-housing","ess-food","ess-transport","ess-phone","ess-health","ess-other"];
@@ -2001,7 +2094,7 @@ function weekKey(d){var x=new Date(d.getFullYear(),d.getMonth(),d.getDate(),12);
 var todayKey = weekKey(new Date()), viewKey = todayKey;
 function keyToDate(key){ var p = key.split("-"); return new Date(+p[0], +p[1]-1, +p[2], 12); }
 function blankWeek(){
-  return { mode:"steady", f:{}, bills:{checked:[], owed:{}, paid:{}, override:"", overrideOn:false} };
+  return { mode:"steady", f:{}, bills:{checked:[], owed:{}, paid:{}, override:"", overrideOn:false, custom:[]} };
 }
 function nearestKeyBelow(key){
   var best = null;
@@ -2049,7 +2142,7 @@ function freshProfileData(){
   return { v:2, weeks:{}, fees:{},
     goals:[], presets:[], reminder:{on:false, day:5, lastAck:0}, lastTab:"budget",
     since: new Date().toISOString().slice(0,7),
-    f:{}, mode:"steady", bills:{checked:[], owed:{}, paid:{}, override:"", overrideOn:false},
+    f:{}, mode:"steady", bills:{checked:[], owed:{}, paid:{}, override:"", overrideOn:false, custom:[]},
     legacyStamp:"" };
 }
 function legacyOf(pd){ return JSON.stringify([pd.f, pd.mode, pd.bills]); }
@@ -2067,7 +2160,7 @@ function legacyHasContent(pd){
     var v = f[WEEK_FIELDS[i]];
     if (v !== undefined && v !== null && String(v).trim() !== "") return true;
   }
-  if (b.checked.length || b.overrideOn || String(b.override||"").trim() !== "") return true;
+  if (b.checked.length || (b.custom || []).length || b.overrideOn || String(b.override||"").trim() !== "") return true;
   for (k in b.owed) if (b.owed.hasOwnProperty(k) && String(b.owed[k]||"").trim() !== "") return true;
   for (k in b.paid) if (b.paid.hasOwnProperty(k)) return true;
   return false;
@@ -2095,6 +2188,9 @@ function migrateProfile(pd){
       pd.legacyStamp = legacyOf(pd);
     }
   }
+  /* 3.3.0: stored weeks predate custom bills */
+  for (var wk3 in pd.weeks)
+    if (pd.weeks.hasOwnProperty(wk3) && !pd.weeks[wk3].bills.custom) pd.weeks[wk3].bills.custom = [];
   return pd;
 }
 function loadDevice(){
@@ -2128,8 +2224,9 @@ function loadDevice(){
   prof = migrateProfile(lsGet(pkey(device.active)) || freshProfileData());
 }
 function migrateBills(pd){
-  if (!pd.bills) pd.bills = {checked:[], owed:{}, paid:{}, override:"", overrideOn:false};
+  if (!pd.bills) pd.bills = {checked:[], owed:{}, paid:{}, override:"", overrideOn:false, custom:[]};
   if (!pd.bills.paid) pd.bills.paid = {};
+  if (!pd.bills.custom) pd.bills.custom = [];
   if (pd.bills.override === undefined){ pd.bills.override = ""; pd.bills.overrideOn = false; }
   if (pd.bills.cash !== undefined){
     if (parseAmt(pd.bills.cash) > 0){ pd.bills.override = String(pd.bills.cash); pd.bills.overrideOn = true; }
@@ -2324,6 +2421,7 @@ function applyLang(){
   $("tape-foot").textContent = t("rcpFoot");
   $("tape").setAttribute("aria-label", t("tapeAria"));
   $("val-lang").textContent = t("langName");
+  $("fab").setAttribute("aria-label", t("addSheetTitle"));
   $("pill-en").setAttribute("aria-pressed", device.lang === "en" ? "true" : "false");
   $("pill-es").setAttribute("aria-pressed", device.lang === "es" ? "true" : "false");
   $("val-theme").textContent = t(device.theme === "light" ? "themeLight" : device.theme === "dark" ? "themeDark" : "themeAuto");
@@ -2356,7 +2454,7 @@ function showTab(name, focusPanel){
   window.scrollTo(0,0);
 }
 for (var ti=0;ti<TABS.length;ti++)(function(name){
-  $("tab-"+name).addEventListener("click", function(){ showTab(name); });
+  fastTap($("tab-"+name), function(){ showTab(name); });
 })(TABS[ti]);
 $("tabbar").addEventListener("keydown", function(e){
   if (e.key !== "ArrowRight" && e.key !== "ArrowLeft") return;
@@ -2383,13 +2481,12 @@ function fmtRange(key){
 function renderWeekBar(){
   var on = weeklyTab();
   $("weekbar").hidden = !on;
-  var away = viewKey !== todayKey;
-  $("wk-banner").hidden = !(on && away);
   if (!on) return;
+  var away = viewKey !== todayKey;
   $("wk-prev").setAttribute("aria-label", t("wkPrevA"));
   $("wk-next").setAttribute("aria-label", t("wkNextA"));
   $("wk-chip-txt").textContent = away ? fmtRange(viewKey) : t("wkThis");
-  if (away) $("wk-banner-txt").textContent = viewKey < todayKey ? t("wkPast") : t("wkFuture");
+  $("wk-chip").className = "wk-chip" + (away ? " away" : "");
 }
 function paintWeek(){
   profToFields(); setModeUI(getWeek().mode);
@@ -2413,9 +2510,9 @@ function refreshToday(){
   if (followed){ viewKey = todayKey; paintWeek(); } else renderWeekBar();
 }
 document.addEventListener("visibilitychange", function(){ if (!document.hidden) refreshToday(); });
-$("wk-prev").addEventListener("click", function(){ shiftWeek(-1); });
-$("wk-next").addEventListener("click", function(){ shiftWeek(1); });
-$("wk-today").addEventListener("click", function(){ setView(todayKey); });
+fastTap($("wk-prev"), function(){ shiftWeek(-1); });
+fastTap($("wk-next"), function(){ shiftWeek(1); });
+fastTap($("wk-chip"), openPicker);
 
 /* ---- date picker: always opens on today; OK jumps to that day's week ---- */
 var pickDate = null, pickShown = null, pickReturnFocus = null;
@@ -2510,6 +2607,75 @@ $("pick-wrap").addEventListener("keydown", function(e){
   var first = btns[0], last = btns[btns.length-1];
   if (e.shiftKey && document.activeElement === first){ e.preventDefault(); last.focus(); }
   else if (!e.shiftKey && document.activeElement === last){ e.preventDefault(); first.focus(); }
+});
+
+/* ================= ADD (+) ================= */
+var addReturnFocus = null;
+function addMenuOpen(){ return !$("add-wrap").hidden; }
+function openAddMenu(){
+  addReturnFocus = document.activeElement;
+  var wrap = $("add-wrap");
+  wrap.hidden = false;
+  document.body.classList.add("sheet-open");
+  setTimeout(function(){ wrap.className = "sheet-wrap on"; }, 10);
+  setTimeout(function(){ $("add-wrap").querySelector(".add-row").focus(); }, 70);
+}
+function closeAddMenu(restoreFocus){
+  if (!addMenuOpen()) return;
+  var wrap = $("add-wrap");
+  wrap.className = "sheet-wrap";
+  document.body.classList.remove("sheet-open");
+  setTimeout(function(){ wrap.hidden = true; }, 220);
+  if (restoreFocus && addReturnFocus && addReturnFocus.focus) addReturnFocus.focus();
+}
+fastTap($("fab"), openAddMenu);
+$("add-scrim").addEventListener("click", function(){ closeAddMenu(true); });
+$("add-wrap").addEventListener("keydown", function(e){
+  if (e.key !== "Tab") return;
+  var rows = $("add-wrap").querySelectorAll(".add-row");
+  var first = rows[0], last = rows[rows.length-1];
+  if (e.shiftKey && document.activeElement === first){ e.preventDefault(); last.focus(); }
+  else if (!e.shiftKey && document.activeElement === last){ e.preventDefault(); first.focus(); }
+});
+$("add-wrap").addEventListener("click", function(e){
+  var row = e.target.closest("[data-add]");
+  if (!row) return;
+  var kind = row.getAttribute("data-add");
+  closeAddMenu(false);
+  if (kind === "money"){
+    openSheet({title:t("addMoney"), okLabel:t("btnAdd"), field2:{label:t("amountL")}, onOk:function(_, amt){
+      if (amt <= 0) return;
+      /* writes through W() into the VIEWED week, per the 3.2.0 contract */
+      var wk = W();
+      var fid = wk.mode === "varies" ? "w1" : "inc-steady";
+      wk.f[fid] = String(Math.round((parseAmt(wk.f[fid]) + amt) * 100) / 100);
+      profToFields(); showTab("budget"); calcAll(); persist(true);
+      toast(t("moneyAdded")(fmt(amt)));
+    }});
+  } else if (kind === "bill"){
+    if (getWeek().bills.custom.length >= 6){ toast(t("customFull")); return; }
+    openSheet({title:t("addBillT"), okLabel:t("btnAdd"), field1:{label:t("nameL")}, field2:{label:t("owedL")}, onOk:function(name, amt){
+      if (!name) return;
+      var wb = W().bills;
+      if (wb.custom.length >= 6){ toast(t("customFull")); return; }
+      wb.custom.push({id:"x"+Date.now().toString(36), name:name.slice(0,30), owed: amt > 0 ? String(amt) : ""});
+      renderBills(); showTab("bills"); calcAll(); persist(true);
+      toast(t("billAdded"));
+    }});
+  } else if (kind === "goal"){
+    addGoalFlow(true);
+  } else if (kind === "person"){
+    if (device.profiles.length >= 4){ toast(t("profileFull")); return; }
+    openSheet({title:t("addProfile"), okLabel:t("btnAdd"), field1:{label:t("nameL"), max:20}, onOk:function(name){
+      if (!name) return;
+      var pid = "p" + Date.now().toString(36);
+      device.profiles.push({id:pid, name:name.slice(0,20)});
+      lsSet(pkey(pid), freshProfileData());
+      persist(true); renderProfiles(); renderYou();
+      showTab("you"); showYou("you-profiles");
+      toast(t("profileAdded"));
+    }});
+  }
 });
 
 /* ================= BUDGET ================= */
@@ -2612,6 +2778,17 @@ function allocate(){
     else if (money > 0){ out.push({state:"part", pay:money, owed:owed}); money = 0; }
     else out.push({state:"waits", owed:owed});
   }
+  /* custom bills allocate after the fixed list: unknown priority waits last */
+  var custom = [];
+  for (var c=0;c<wb.custom.length;c++){
+    var cb = wb.custom[c], owedC = parseAmt(cb.owed);
+    if (wb.paid[cb.id] !== undefined){ custom.push({state:"done", pay:wb.paid[cb.id]}); continue; }
+    if (owedC <= 0){ custom.push({state:"none"}); continue; }
+    if (money >= owedC){ custom.push({state:"pay", pay:owedC}); money -= owedC; }
+    else if (money > 0){ custom.push({state:"part", pay:money, owed:owedC}); money = 0; }
+    else custom.push({state:"waits", owed:owedC});
+  }
+  allocate.custom = custom;
   allocate.remaining = money;
   return out;
 }
@@ -2663,6 +2840,27 @@ function renderBills(){
     }
     html += '</div>';
   }
+  var customAlloc = allocate.custom;
+  for (var c=0;c<wb.custom.length;c++){
+    var cb = wb.custom[c], ca = customAlloc[c], cchip = "";
+    if (ca && ca.state === "done") cchip = '<button type="button" class="verdict-chip done" data-pay="'+cb.id+'">'+t("stDone")(fmt(ca.pay))+'</button>';
+    else if (ca && ca.state === "pay") cchip = '<button type="button" class="verdict-chip pay" data-pay="'+cb.id+'" data-amt="'+ca.pay+'">'+t("stPaid")(fmt(ca.pay))+'</button>';
+    else if (ca && ca.state === "part") cchip = '<button type="button" class="verdict-chip part" data-pay="'+cb.id+'" data-amt="'+ca.pay+'">'+t("stPart")(fmt(ca.pay),fmt(ca.owed))+'</button>';
+    else if (ca && ca.state === "waits") cchip = '<span class="verdict-chip waits">'+t("stWaits")+'</span>';
+    html += '<div class="bill"><div class="toprow">'
+      + '<span class="tap">'
+      + '<span class="cat-tile tone-amber" aria-hidden="true"><svg class="icon"><use href="#i-banknote"/></svg></span>'
+      + '<span class="what"><b>'+esc(cb.name)+'</b></span>'
+      + '</span>' + cchip
+      + '<button type="button" class="iconbtn" data-cdel="'+c+'" aria-label="'+esc(t("billDelQ")(cb.name))+'"><svg class="icon" aria-hidden="true"><use href="#i-trash-2"/></svg></button>'
+      + '</div>'
+      + '<div class="owed-row"><label for="cowed-'+c+'">'+t("owedL")+'</label>'
+      + '<div class="field"><span class="cur" aria-hidden="true">$</span>'
+      + '<input type="text" inputmode="decimal" autocomplete="off" id="cowed-'+c+'" data-cowed="'+c+'" value="'+esc(cb.owed||"")+'" placeholder="0"></div></div>';
+    if (ca && ca.state === "part") html += '<p class="script">'+t("scriptPart")(fmt(ca.pay))+'</p>';
+    else if (ca && ca.state === "waits") html += '<p class="script">'+t("scriptWaits")+'</p>';
+    html += '</div>';
+  }
   $("bill-list").innerHTML = html;
 }
 $("bill-list").addEventListener("change", function(e){
@@ -2676,9 +2874,10 @@ $("bill-list").addEventListener("change", function(e){
   renderBills(); updateTape(); queueSave();
 });
 $("bill-list").addEventListener("input", function(e){
-  var inp = e.target.closest("[data-owed]");
-  if (!inp) return;
-  W().bills.owed[+inp.getAttribute("data-owed")] = inp.value;
+  var inp = e.target.closest("[data-owed]"), cinp = e.target.closest("[data-cowed]");
+  if (inp) W().bills.owed[+inp.getAttribute("data-owed")] = inp.value;
+  else if (cinp) W().bills.custom[+cinp.getAttribute("data-cowed")].owed = cinp.value;
+  else return;
   // re-render chips without rebuilding inputs mid-typing: update chips only
   refreshBillChips(); updateTape(); queueSave();
 });
@@ -2698,9 +2897,22 @@ function refreshBillChips(){
   }, 350);
 }
 $("bill-list").addEventListener("click", function(e){
+  var del = e.target.closest("[data-cdel]");
+  if (del){
+    var ci = +del.getAttribute("data-cdel");
+    var name = getWeek().bills.custom[ci].name;
+    openSheet({title:t("billDelQ")(name), okLabel:t("btnDelete"), danger:true, onOk:function(){
+      var wb2 = W().bills;
+      delete wb2.paid[wb2.custom[ci].id];
+      wb2.custom.splice(ci,1);
+      renderBills(); calcAll(); persist(true);
+      toast(t("billDeleted"));
+    }});
+    return;
+  }
   var b = e.target.closest("[data-pay]");
   if (!b) return;
-  var i = +b.getAttribute("data-pay");
+  var i = b.getAttribute("data-pay"); /* fixed bills: index string; custom: id */
   var wb = W().bills;
   if (wb.paid[i] !== undefined) delete wb.paid[i];
   else wb.paid[i] = parseFloat(b.getAttribute("data-amt")) || 0;
@@ -2719,10 +2931,10 @@ $("avail-override").addEventListener("input", function(){
   renderAvail(); refreshBillChips(); calcAll(); queueSave();
 });
 function billsSummary(){
-  var alloc = allocate(), done = 0, pay = 0, waits = 0, any = false;
+  var alloc = allocate().concat(allocate.custom), done = 0, pay = 0, waits = 0, any = false;
   for (var i=0;i<alloc.length;i++){
     var a = alloc[i];
-    if (!a) continue; /* every checked bill counts, amount or not */
+    if (!a) continue; /* every checked or added bill counts, amount or not */
     any = true;
     if (a.state === "done") done++;
     else if (a.state === "waits") waits++;
@@ -2775,7 +2987,6 @@ function renderGoals(){
   }
   list.innerHTML = html;
   $("goals-empty").hidden = prof.goals.length > 0;
-  $("btn-add-goal").hidden = prof.goals.length === 0 || prof.goals.length >= 5;
   renderGoalDue();
 }
 function essTotal(){
@@ -2783,7 +2994,7 @@ function essTotal(){
   for (var i=0;i<ESS.length;i++) total += num(ESS[i].id);
   return total;
 }
-function addGoalFlow(){
+function addGoalFlow(goTab){
   if (prof.goals.length >= 5){ toast(t("goalFull")); return; }
   openSheet({title:t("addGoal"), okLabel:t("btnAdd"),
     field1:{label:t("goalNameL"), placeholder:t("goalNamePH")},
@@ -2792,11 +3003,10 @@ function addGoalFlow(){
       if (!name) return;
       prof.goals.push({name:name.slice(0,30), target:target, saved:0, chip:0, plan:null});
       renderGoals(); persist(true); updateTape();
+      if (goTab) showTab("goals");
       toast(t("goalAdded"));
     }});
 }
-$("btn-add-goal").addEventListener("click", addGoalFlow);
-$("btn-add-goal-empty").addEventListener("click", addGoalFlow);
 $("goal-list").addEventListener("click", function(e){
   var b;
   if ((b = e.target.closest("[data-gadd]"))){
@@ -2961,7 +3171,6 @@ function renderProfiles(){
       + '</div>';
   }
   $("profile-list").innerHTML = html;
-  $("btn-add-profile").hidden = device.profiles.length >= 4;
 }
 $("profile-list").addEventListener("click", function(e){
   var b;
@@ -2998,18 +3207,6 @@ $("profile-list").addEventListener("click", function(e){
     }});
   }
 });
-$("btn-add-profile").addEventListener("click", function(){
-  if (device.profiles.length >= 4){ toast(t("profileFull")); return; }
-  openSheet({title:t("addProfile"), okLabel:t("btnAdd"), field1:{label:t("nameL"), max:20}, onOk:function(name){
-    if (!name) return;
-    var id = "p" + Date.now().toString(36);
-    device.profiles.push({id:id, name:name.slice(0,20)});
-    lsSet(pkey(id), freshProfileData());
-    persist(true); renderProfiles(); renderYou();
-    toast(t("profileAdded"));
-  }});
-});
-
 /* ---- settings ---- */
 function setLang(lang){
   device.lang = lang;
@@ -3109,7 +3306,7 @@ function closeTape(){
   document.body.classList.remove("tape-expanded");
   $("tape-car").textContent = t("tapeOpen");
 }
-$("tape-bar").addEventListener("click", function(){
+fastTap($("tape-bar"), function(){
   tapeOpen = !tapeOpen;
   $("tape").className = "tape" + (tapeOpen ? " open" : "");
   this.setAttribute("aria-expanded", tapeOpen ? "true" : "false");
@@ -3118,7 +3315,7 @@ $("tape-bar").addEventListener("click", function(){
   $("tape-car").textContent = tapeOpen ? t("tapeClose") : t("tapeOpen");
 });
 $("scrim").addEventListener("click", closeTape);
-document.addEventListener("keydown", function(e){ if (e.key === "Escape"){ if (pickerOpen()) closePicker(); else if (sheetCfg) closeSheet(); else closeTape(); } });
+document.addEventListener("keydown", function(e){ if (e.key === "Escape"){ if (pickerOpen()) closePicker(); else if (addMenuOpen()) closeAddMenu(true); else if (sheetCfg) closeSheet(); else closeTape(); } });
 
 var feesCache = 0;
 function tapeVisible(){
@@ -3168,16 +3365,23 @@ function renderBillsReceipt(){
   $("rcp-inc-l").parentNode.style.display = "";
   $("rcp-inc-l").textContent = t("rcpYouHave");
   $("rcp-inc").textContent = fmt(availAmount());
-  var bills = L().bills, alloc = allocate(), html = "";
-  for (var i=0;i<alloc.length;i++){
-    var a = alloc[i];
-    if (!a) continue;
-    var mark = a.state === "done" ? t("stDone")(fmt(a.pay))
+  var bills = L().bills, alloc = allocate(), html = "", wb = getWeek().bills;
+  function rcpMark(a){
+    return a.state === "done" ? t("stDone")(fmt(a.pay))
       : a.state === "pay" ? t("stPaid")(fmt(a.pay))
       : a.state === "part" ? t("stPart")(fmt(a.pay),fmt(a.owed))
       : a.state === "waits" ? t("stWaits")
       : t("stPaid")("").trim();
-    html += '<div class="line"><span class="lbl">'+esc(bills[i].b.toUpperCase())+'</span><span class="amt">'+mark+'</span></div>';
+  }
+  for (var i=0;i<alloc.length;i++){
+    var a = alloc[i];
+    if (!a) continue;
+    html += '<div class="line"><span class="lbl">'+esc(bills[i].b.toUpperCase())+'</span><span class="amt">'+rcpMark(a)+'</span></div>';
+  }
+  for (var c=0;c<wb.custom.length;c++){
+    var ca = allocate.custom[c];
+    if (!ca) continue;
+    html += '<div class="line"><span class="lbl">'+esc(wb.custom[c].name.toUpperCase())+'</span><span class="amt">'+rcpMark(ca)+'</span></div>';
   }
   $("rcp-items").innerHTML = html;
   $("rcp-tot-l").parentNode.style.display = "";
