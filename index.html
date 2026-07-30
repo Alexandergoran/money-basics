@@ -549,6 +549,17 @@ details .body li{margin-bottom:var(--sp-2); max-width:55ch;}
   border:none; cursor:pointer;
   font-family:var(--font-money); font-size:0.88rem; letter-spacing:0.04em;
 }
+/* F: salience tracks signal, dark theme only — an EMPTY collapsed tape recedes
+   to aged paper and drops 6px; any verdict (SHORT above all) and the open
+   sheet print at full cream, full size. Static, no animation. */
+@media screen{
+  html[data-theme="dark"] .tape.dim{--tape-bg:#E6E5E2;}
+  html[data-theme="dark"] .tape.dim .tape-bar{min-height:38px;}
+}
+@media screen and (prefers-color-scheme: dark){
+  html:not([data-theme="light"]):not([data-theme="dark"]) .tape.dim{--tape-bg:#E6E5E2;}
+  html:not([data-theme="light"]):not([data-theme="dark"]) .tape.dim .tape-bar{min-height:38px;}
+}
 .tape-bar .verdict-line{white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
 .tape-bar .amt{font-weight:600;}
 .tape-bar .amt.pos{color:#1E6B45;}
@@ -642,8 +653,14 @@ details .body li{margin-bottom:var(--sp-2); max-width:55ch;}
 }
 .fab .icon{width:26px; height:26px; stroke-width:2.5;}
 .fab:active{transform:scale(0.94);}
-/* the protruding circle owns the tape bar's center lane */
-#tape-lbl{max-width:calc(50% - 40px); overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+/* the protruding circle owns the tape bar's center lane
+   (inline-block: max-width is inert on a plain inline span) */
+#tape-lbl{
+  display:inline-block; vertical-align:bottom;
+  max-width:calc(50vw - 40px);
+  overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
+}
+@media (max-width: 355px){ #tape-lbl{max-width:calc(50vw - 56px);} }
 
 /* ============ MENU (⋯) ============ */
 .menu-btn{
@@ -805,6 +822,7 @@ h1.wordmark{overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
   body{background:#fff; padding:0;}
   body > *{display:none !important;}
   body > .tape{display:block !important; position:static; filter:none; max-width:none; width:auto;}
+  .tape.dim{--tape-bg:#FCFBF7 !important;} /* F never touches print */
   .tape-torn, .tape-bar, .tape-actions{display:none !important;}
   .tape-sheet{display:block !important; grid-template-rows:none;}
   .tape-inner{max-height:none !important; overflow:visible;}
@@ -3474,11 +3492,14 @@ $("reminder-dismiss").addEventListener("click", function(){
 });
 
 /* ================= TAPE ================= */
-var tapeOpen = false;
+var tapeOpen = false, tapeEmpty = false;
+function tapeClass(){
+  return "tape" + (tapeOpen ? " open" : "") + (!tapeOpen && tapeEmpty ? " dim" : "");
+}
 function closeTape(){
   if (!tapeOpen) return;
   tapeOpen = false;
-  $("tape").className = "tape";
+  $("tape").className = tapeClass();
   $("tape-bar").setAttribute("aria-expanded","false");
   $("scrim").className = "scrim";
   document.body.classList.remove("tape-expanded");
@@ -3486,7 +3507,7 @@ function closeTape(){
 }
 fastTap($("tape-bar"), function(){
   tapeOpen = !tapeOpen;
-  $("tape").className = "tape" + (tapeOpen ? " open" : "");
+  $("tape").className = tapeClass();
   this.setAttribute("aria-expanded", tapeOpen ? "true" : "false");
   $("scrim").className = "scrim" + (tapeOpen ? " on" : "");
   document.body.classList.toggle("tape-expanded", tapeOpen);
@@ -3504,7 +3525,9 @@ function updateTape(){
   document.body.classList.toggle("tape-on", vis);
   if (!vis){ closeTape(); return; }
   var lbl, amt = "", cls = "";
-  if (!budgetTouched()){
+  tapeEmpty = !budgetTouched();
+  $("tape").className = tapeClass();
+  if (tapeEmpty){
     lbl = t("tapeAdd");
   } else {
     var D = planLeftOver(viewKey), F = leftAfterPaying();
