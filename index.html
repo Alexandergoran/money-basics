@@ -65,7 +65,7 @@ if (window.matchMedia && matchMedia("(prefers-color-scheme: dark)").matches)
   --r-card:20px; --r-tile:14px; --r-ctl:12px;
   --font-ui:"Archivo", -apple-system, "Segoe UI", sans-serif;
   --font-money:"Plex Mono", ui-monospace, "SF Mono", "Roboto Mono", Menlo, monospace;
-  --z-rail:10; --z-scrim:25; --z-tape:30; --z-tabbar:32; --z-fab:35; --z-toast:40;
+  --z-rail:10; --z-scrim:25; --z-tape:30; --z-tabbar:32; --z-toast:40;
   --tabbar-h:64px;
 }
 /* dark: design-exact Charcoal Ledger values */
@@ -251,14 +251,6 @@ h3{font-size:1.02rem; margin:var(--sp-5) 0 var(--sp-3); font-weight:700;}
 .q .hint{margin-top:2px;}
 
 /* essentials: category cards with underline progress */
-.ess-card{
-  background:var(--surface); border:1px solid var(--line);
-  border-radius:var(--r-card); box-shadow:var(--shadow);
-  padding:var(--sp-3) var(--sp-4); margin-bottom:10px;
-}
-.ess-top{display:flex; align-items:center; gap:var(--sp-3);}
-.ess-top label{flex:1; min-width:0; margin:0; font-size:0.94rem; font-weight:700;}
-.ess-top .field{width:124px; flex:none;}
 .ess-top .field input[type="text"]{min-height:48px; text-align:right; padding-right:12px;}
 .btn.ghost{
   border:1.5px dashed var(--line-strong); background:none; color:var(--muted);
@@ -412,7 +404,6 @@ select{
 }
 .you-head .name{font-size:1.25rem; font-weight:800; letter-spacing:-0.02em;}
 .you-head .since{color:var(--muted); font-size:0.82rem;}
-.you-stats{color:var(--muted); font-size:0.85rem; margin-bottom:var(--sp-4); font-family:var(--font-money);}
 .subhead{display:flex; align-items:center; gap:var(--sp-2); margin-bottom:var(--sp-3);}
 .subhead .back{
   display:flex; align-items:center; justify-content:center;
@@ -547,8 +538,8 @@ details .body li{margin-bottom:var(--sp-2); max-width:55ch;}
 .tape-torn{
   height:9px;
   background:
-    linear-gradient(135deg, var(--tape-bg) 5px, transparent 0) 0 0 / 9px 9px repeat-x,
-    linear-gradient(-135deg, var(--tape-bg) 5px, transparent 0) 0 0 / 9px 9px repeat-x;
+    linear-gradient(45deg, var(--tape-bg) 5px, transparent 0) 0 100% / 9px 9px repeat-x,
+    linear-gradient(-45deg, var(--tape-bg) 5px, transparent 0) 0 100% / 9px 9px repeat-x;
 }
 .tape-bar{
   display:flex; align-items:center; justify-content:space-between; gap:var(--sp-3);
@@ -591,6 +582,14 @@ details .body li{margin-bottom:var(--sp-2); max-width:55ch;}
   border-top:1.5px dashed var(--tape-rule);
   color:var(--tape-muted); font-size:0.7rem; letter-spacing:0.14em;
 }
+.receipt .line.subh{margin-top:6px; color:var(--tape-muted); font-size:0.68rem; letter-spacing:0.12em;}
+.receipt .line.sub{padding-left:14px; font-size:0.72rem; color:var(--tape-muted);}
+.receipt .amt.neg{color:#9E3226;}
+.linky{
+  background:none; border:none; cursor:pointer; font:inherit;
+  color:var(--money); font-weight:700; text-decoration:underline;
+  display:inline-block; padding:12px 4px; margin:-10px 0;
+}
 .stamp{
   display:inline-block; margin-top:var(--sp-4);
   padding:var(--sp-2) var(--sp-4);
@@ -627,21 +626,48 @@ details .body li{margin-bottom:var(--sp-2); max-width:55ch;}
 .wk-chip .icon{width:18px; height:18px; color:var(--muted);}
 .wk-chip.away{box-shadow:0 0 0 2px var(--accent-bg);}
 
-/* ============ ADD (+) ============ */
+/* ============ ADD (+): notched into the nav bar, dead center ============ */
+.bar-plus{
+  flex:1; max-width:110px;
+  display:flex; align-items:flex-start; justify-content:center;
+}
 .fab{
-  position:fixed; left:50%; margin-left:-28px;
-  bottom:calc(var(--tabbar-h) + 16px + env(safe-area-inset-bottom, 0px));
-  width:56px; height:56px; border-radius:50%; z-index:var(--z-fab);
+  width:62px; height:62px; border-radius:50%; margin-top:-18px;
   background:var(--accent-bg); color:var(--accent-ink);
-  border:none; cursor:pointer;
+  border:3px solid var(--bg); /* the notch ring: reads as cut into the bar */
+  cursor:pointer;
   display:flex; align-items:center; justify-content:center;
-  box-shadow:0 4px 16px rgba(0,0,0,0.35);
+  box-shadow:0 4px 14px rgba(0,0,0,0.3);
   touch-action:manipulation;
 }
 .fab .icon{width:26px; height:26px; stroke-width:2.5;}
 .fab:active{transform:scale(0.94);}
-body.tape-on .fab{bottom:calc(var(--tabbar-h) + 68px + env(safe-area-inset-bottom, 0px));}
-body.kb-open .fab, body.tape-expanded .fab{display:none;}
+/* the protruding circle owns the tape bar's center lane */
+#tape-lbl{max-width:calc(50% - 40px); overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+
+/* ============ MENU (⋯) ============ */
+.menu-btn{
+  min-width:44px; min-height:44px; padding:0 6px;
+  display:flex; align-items:center; justify-content:center;
+  background:var(--track); border:none; border-radius:999px;
+  font-size:1.3rem; font-weight:700; color:var(--ink); line-height:1;
+  cursor:pointer; position:relative;
+}
+.menu-btn .badge{
+  position:absolute; top:3px; right:3px;
+  width:9px; height:9px; border-radius:50%;
+  background:var(--acc-amber); display:none;
+}
+.menu-btn .badge.on{display:block;}
+.brand{min-width:0;}
+h1.wordmark{overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+.head-right{flex:none;}
+.menu-version{
+  margin-top:var(--sp-3); text-align:center;
+  font-family:var(--font-money); font-size:0.7rem; letter-spacing:0.12em; color:var(--muted);
+}
+.add-row.caution{color:var(--caution);}
+.add-row.armed{color:var(--caution); font-weight:800;}
 .add-rows{display:flex; flex-direction:column;}
 .add-row{
   display:flex; align-items:center; gap:var(--sp-3);
@@ -653,13 +679,9 @@ body.kb-open .fab, body.tape-expanded .fab{display:none;}
 .add-row:first-child{border-top:none;}
 .tabbar button[data-controls], .tape-bar, .wk-arrow, .wk-chip{touch-action:manipulation;}
 @media (min-width: 900px){
-  .fab{bottom:32px;}
-  body.tape-on .fab{bottom:92px;}
-}
-@media (min-width: 1160px){
-  /* centered over the tape rail (right:24px, 392px wide) */
-  .fab{left:auto; margin-left:0; right:192px; bottom:32px;}
-  body.tape-on .fab{bottom:68px;}
+  .bar-plus{flex:none; max-width:none; align-items:center; padding:0 var(--sp-2);}
+  .fab{width:44px; height:44px; margin-top:0; border-width:0;}
+  .fab .icon{width:22px; height:22px;}
 }
 
 /* ============ WEEK PICKER ============ */
@@ -832,7 +854,8 @@ body.kb-open .fab, body.tape-expanded .fab{display:none;}
   <circle cx="16" cy="18" r="2" /></symbol><symbol id="i-car" viewBox="0 0 24 24"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2" />
   <circle cx="7" cy="17" r="2" />
   <path d="M9 17h6" />
-  <circle cx="17" cy="17" r="2" /></symbol><symbol id="i-calendar" viewBox="0 0 24 24"><path d="M8 2v4" />
+  <circle cx="17" cy="17" r="2" /></symbol><symbol id="i-rotate-ccw" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
+  <path d="M3 3v5h5" /></symbol><symbol id="i-calendar" viewBox="0 0 24 24"><path d="M8 2v4" />
   <path d="M16 2v4" />
   <rect width="18" height="18" x="3" y="4" rx="2" />
   <path d="M3 10h18" /></symbol><symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5" /></symbol><symbol id="i-chevron-left" viewBox="0 0 24 24"><path d="m15 18-6-6 6-6" /></symbol><symbol id="i-chevron-right" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6" /></symbol><symbol id="i-circle-user" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" />
@@ -894,6 +917,10 @@ body.kb-open .fab, body.tape-expanded .fab{display:none;}
       <button type="button" id="pill-en" aria-pressed="true">EN</button>
       <button type="button" id="pill-es" aria-pressed="false">ES</button>
     </div>
+    <button type="button" class="menu-btn" id="menu-btn" aria-haspopup="dialog" aria-label="Menu">
+      <span aria-hidden="true">⋯</span>
+      <span class="badge" id="you-badge"></span>
+    </button>
   </div>
 </header>
 
@@ -941,72 +968,36 @@ body.kb-open .fab, body.tape-expanded .fab{display:none;}
       <button type="button" id="mode-steady" aria-pressed="true" data-i18n="modeSteady">Same most weeks</button>
       <button type="button" id="mode-varies" aria-pressed="false" data-i18n="modeVaries">It changes</button>
     </div>
-    <div id="steady-box">
-      <div class="row">
-        <label for="inc-steady"><span data-i18n="incSteadyL">Money in for one week</span>
-          <span class="hint" data-i18n="incSteadyHint">Paid monthly? Divide by 4.</span></label>
-        <div class="field"><span class="cur" aria-hidden="true">$</span><input type="text" inputmode="decimal" autocomplete="off" id="inc-steady" placeholder="0"></div>
-      </div>
+    <div class="row">
+      <label for="money-in"><span data-i18n="moneyInL">Money in this week</span>
+        <span class="hint" data-i18n="incSteadyHint">Paid monthly? Divide by 4.</span></label>
+      <div class="field"><span class="cur" aria-hidden="true">$</span><input type="text" inputmode="decimal" autocomplete="off" id="money-in" placeholder="0"></div>
     </div>
     <div id="varies-box" hidden>
       <div class="grid2">
-        <div class="row"><label for="w1" data-i18n="w1L">Last week</label>
-          <div class="field"><span class="cur" aria-hidden="true">$</span><input type="text" inputmode="decimal" autocomplete="off" id="w1" placeholder="0"></div></div>
-        <div class="row"><label for="w2" data-i18n="w2L">2 weeks ago</label>
-          <div class="field"><span class="cur" aria-hidden="true">$</span><input type="text" inputmode="decimal" autocomplete="off" id="w2" placeholder="0"></div></div>
+        <div class="row"><label for="inc-low" data-i18n="incLowL">A low week for you</label>
+          <div class="field"><span class="cur" aria-hidden="true">$</span><input type="text" inputmode="decimal" autocomplete="off" id="inc-low" placeholder="0"></div></div>
+        <div class="row"><label for="inc-normal" data-i18n="incNormalL">A normal week</label>
+          <div class="field"><span class="cur" aria-hidden="true">$</span><input type="text" inputmode="decimal" autocomplete="off" id="inc-normal" placeholder="0"></div></div>
       </div>
-      <div class="grid2">
-        <div class="row"><label for="w3" data-i18n="w3L">3 weeks ago</label>
-          <div class="field"><span class="cur" aria-hidden="true">$</span><input type="text" inputmode="decimal" autocomplete="off" id="w3" placeholder="0"></div></div>
-        <div class="row"><label for="w4" data-i18n="w4L">4 weeks ago</label>
-          <div class="field"><span class="cur" aria-hidden="true">$</span><input type="text" inputmode="decimal" autocomplete="off" id="w4" placeholder="0"></div></div>
-      </div>
-      <p class="note"><span data-i18n="lowNote1">Plan with your lowest week:</span> <span class="fig" id="low-fig">$0</span><span data-i18n="lowNote2">. Money above that is backup, not spending.</span></p>
+      <p class="note" id="plan-note"></p>
     </div>
   </div>
 
-  <p class="group-h" data-i18n="qEss">What you pay each week</p>
-  <div class="ess-card">
-    <div class="ess-top">
-      <span class="cat-tile tone-green" aria-hidden="true"><svg class="icon"><use href="#i-house"/></svg></span>
-      <label for="ess-housing" data-i18n="essHousing">Housing: rent or program fee</label>
-      <div class="field"><span class="cur" aria-hidden="true">$</span><input type="text" inputmode="decimal" autocomplete="off" id="ess-housing" placeholder="0"></div>
-    </div>
-  </div>
-  <div class="ess-card">
-    <div class="ess-top">
-      <span class="cat-tile tone-amber" aria-hidden="true"><svg class="icon"><use href="#i-utensils"/></svg></span>
-      <label for="ess-food" data-i18n="essFood">Food</label>
-      <div class="field"><span class="cur" aria-hidden="true">$</span><input type="text" inputmode="decimal" autocomplete="off" id="ess-food" placeholder="0"></div>
-    </div>
-  </div>
-  <div class="ess-card">
-    <div class="ess-top">
-      <span class="cat-tile tone-blue" aria-hidden="true"><svg class="icon"><use href="#i-bus"/></svg></span>
-      <label for="ess-transport" data-i18n="essTransport">Getting to work: bus, PATH, gas</label>
-      <div class="field"><span class="cur" aria-hidden="true">$</span><input type="text" inputmode="decimal" autocomplete="off" id="ess-transport" placeholder="0"></div>
-    </div>
-  </div>
-  <div class="ess-card">
-    <div class="ess-top">
-      <span class="cat-tile tone-purple" aria-hidden="true"><svg class="icon"><use href="#i-phone"/></svg></span>
-      <label for="ess-phone" data-i18n="essPhone">Phone</label>
-      <div class="field"><span class="cur" aria-hidden="true">$</span><input type="text" inputmode="decimal" autocomplete="off" id="ess-phone" placeholder="0"></div>
-    </div>
-  </div>
-  <div class="ess-card">
-    <div class="ess-top">
-      <span class="cat-tile tone-green" aria-hidden="true"><svg class="icon"><use href="#i-pill"/></svg></span>
-      <label for="ess-health" data-i18n="essHealth">Medicine and health</label>
-      <div class="field"><span class="cur" aria-hidden="true">$</span><input type="text" inputmode="decimal" autocomplete="off" id="ess-health" placeholder="0"></div>
-    </div>
-  </div>
-  <div class="ess-card">
-    <div class="ess-top">
-      <span class="cat-tile tone-amber" aria-hidden="true"><svg class="icon"><use href="#i-shirt"/></svg></span>
-      <label for="ess-other" data-i18n="essOther">Everything else: laundry, clothes, the rest</label>
-      <div class="field"><span class="cur" aria-hidden="true">$</span><input type="text" inputmode="decimal" autocomplete="off" id="ess-other" placeholder="0"></div>
-    </div>
+  <p class="group-h" data-i18n="planSumH">Your plan</p>
+  <div class="card" id="plan-summary">
+    <button type="button" class="rowitem" id="sum-bills">
+      <span class="cat-tile tone-amber" aria-hidden="true"><svg class="icon"><use href="#i-list-ordered"/></svg></span>
+      <span class="grow" data-i18n="tabBills">Bills</span>
+      <span class="val" id="sum-bills-val"></span>
+      <svg class="icon chev" aria-hidden="true"><use href="#i-chevron-right"/></svg>
+    </button>
+    <button type="button" class="rowitem" id="sum-goals">
+      <span class="cat-tile tone-blue" aria-hidden="true"><svg class="icon"><use href="#i-target"/></svg></span>
+      <span class="grow" data-i18n="tabGoals">Goals</span>
+      <span class="val" id="sum-goals-val"></span>
+      <svg class="icon chev" aria-hidden="true"><use href="#i-chevron-right"/></svg>
+    </button>
   </div>
 
   <button type="button" class="btn ghost" id="btn-save-preset">
@@ -1261,41 +1252,7 @@ body.kb-open .fab, body.tape-expanded .fab{display:none;}
 </section>
 
 <!-- ================= YOU ================= -->
-<section id="panel-you" aria-labelledby="tab-you" tabindex="-1" hidden>
-
-  <div id="you-root">
-    <div class="you-head">
-      <div class="avatar" id="you-avatar">M</div>
-      <div>
-        <div class="name" id="you-name">Me</div>
-        <div class="since" id="you-since"></div>
-      </div>
-    </div>
-    <p class="you-stats" id="you-stats"></p>
-    <div class="rows">
-      <button type="button" class="rowitem" id="row-profiles">
-        <span class="cat-tile tone-blue" aria-hidden="true"><svg class="icon"><use href="#i-users"/></svg></span>
-        <span class="grow" data-i18n="rowProfiles">Profiles</span>
-        <span class="val" id="profiles-count"></span>
-        <svg class="icon chev" aria-hidden="true"><use href="#i-chevron-right"/></svg>
-      </button>
-      <button type="button" class="rowitem" id="row-settings">
-        <span class="cat-tile tone-green" aria-hidden="true"><svg class="icon"><use href="#i-settings"/></svg></span>
-        <span class="grow" data-i18n="rowSettings">Settings</span>
-        <svg class="icon chev" aria-hidden="true"><use href="#i-chevron-right"/></svg>
-      </button>
-      <button type="button" class="rowitem" id="row-about">
-        <span class="cat-tile tone-purple" aria-hidden="true"><svg class="icon"><use href="#i-info"/></svg></span>
-        <span class="grow" data-i18n="rowAbout">About and privacy</span>
-        <svg class="icon chev" aria-hidden="true"><use href="#i-chevron-right"/></svg>
-      </button>
-      <button type="button" class="rowitem" id="row-help">
-        <span class="cat-tile tone-amber" aria-hidden="true"><svg class="icon"><use href="#i-life-buoy"/></svg></span>
-        <span class="grow" data-i18n="rowHelp">Get help</span>
-        <svg class="icon chev" aria-hidden="true"><use href="#i-chevron-right"/></svg>
-      </button>
-    </div>
-  </div>
+<section id="panel-you" tabindex="-1" hidden>
 
   <div id="you-profiles" hidden>
     <div class="subhead">
@@ -1425,9 +1382,7 @@ body.kb-open .fab, body.tape-expanded .fab{display:none;}
     <div class="tape-inner">
       <div class="receipt" id="receipt">
         <h3 id="rcp-title">YOUR WEEK · MONEY BASICS</h3>
-        <div class="line"><span class="lbl" id="rcp-inc-l">MONEY IN (PLANNED)</span><span class="amt" id="rcp-inc">$0</span></div>
-        <div id="rcp-items"></div>
-        <div class="line total"><span class="lbl" id="rcp-tot-l">BILLS TOTAL</span><span class="amt" id="rcp-tot">−$0</span></div>
+        <div id="rcp-body"></div>
         <span class="stamp" id="rcp-stamp">LEFT OVER $0</span>
         <p class="after" id="rcp-after"></p>
         <div id="rcp-extra"></div>
@@ -1450,21 +1405,51 @@ body.kb-open .fab, body.tape-expanded .fab{display:none;}
   <button type="button" id="tab-bills" data-controls="panel-bills">
     <svg class="icon" aria-hidden="true"><use href="#i-list-ordered"/></svg><span data-i18n="tabBills">Bills</span>
   </button>
+  <div class="bar-plus"><button type="button" class="fab" id="fab" aria-label="Add">
+    <svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg>
+  </button></div>
   <button type="button" id="tab-goals" data-controls="panel-goals">
     <svg class="icon" aria-hidden="true"><use href="#i-target"/></svg><span data-i18n="tabGoals">Goals</span>
   </button>
   <button type="button" id="tab-learn" data-controls="panel-learn">
     <svg class="icon" aria-hidden="true"><use href="#i-book-open"/></svg><span data-i18n="tabLearn">Learn</span>
   </button>
-  <button type="button" id="tab-you" data-controls="panel-you">
-    <svg class="icon" aria-hidden="true"><use href="#i-circle-user"/></svg><span data-i18n="tabYou">You</span>
-    <span class="badge" id="you-badge"></span>
-  </button>
 </nav>
 
-<button type="button" class="fab" id="fab" aria-label="Add">
-  <svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg>
-</button>
+<div class="sheet-wrap" id="menu-wrap" hidden>
+  <div class="sheet-scrim" id="menu-scrim"></div>
+  <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="menu-title">
+    <h3 id="menu-title" data-i18n="menuTitle">Menu</h3>
+    <div class="add-rows">
+      <button type="button" class="add-row" id="menu-people">
+        <span class="cat-tile tone-green" aria-hidden="true"><svg class="icon"><use href="#i-users"/></svg></span>
+        <span class="grow" data-i18n="rowProfiles">People</span>
+        <span class="val" id="profiles-count"></span>
+      </button>
+      <button type="button" class="add-row" id="menu-settings">
+        <span class="cat-tile tone-blue" aria-hidden="true"><svg class="icon"><use href="#i-settings"/></svg></span>
+        <span data-i18n="rowSettings">Settings</span>
+      </button>
+      <button type="button" class="add-row" id="menu-about">
+        <span class="cat-tile tone-purple" aria-hidden="true"><svg class="icon"><use href="#i-shield"/></svg></span>
+        <span data-i18n="rowAbout">About and privacy</span>
+      </button>
+      <button type="button" class="add-row" id="menu-help">
+        <span class="cat-tile tone-amber" aria-hidden="true"><svg class="icon"><use href="#i-life-buoy"/></svg></span>
+        <span data-i18n="rowHelp">Get help</span>
+      </button>
+      <button type="button" class="add-row" id="menu-restart">
+        <span class="cat-tile tone-blue" aria-hidden="true"><svg class="icon"><use href="#i-rotate-ccw"/></svg></span>
+        <span data-i18n="menuRestart">Start over (this week)</span>
+      </button>
+      <button type="button" class="add-row caution" id="menu-erase">
+        <span class="cat-tile tone-amber" aria-hidden="true"><svg class="icon"><use href="#i-trash-2"/></svg></span>
+        <span id="menu-erase-label" data-i18n="setErase">Erase everything on this phone</span>
+      </button>
+    </div>
+    <p class="menu-version">Money Basics v3.4.0</p>
+  </div>
+</div>
 
 <div class="sheet-wrap" id="add-wrap" hidden>
   <div class="sheet-scrim" id="add-scrim"></div>
@@ -1545,7 +1530,7 @@ body.kb-open .fab, body.tape-expanded .fab{display:none;}
 /* ================= STRINGS ================= */
 var STR = {
 en:{
-  tabBudget:"Budget", tabBills:"Bills", tabGoals:"Goals", tabLearn:"Learn", tabYou:"You",
+  tabBudget:"Budget", tabBills:"Bills", tabGoals:"Goals", tabLearn:"Learn",
   budgetH:"Plan your week",
   heroInL:"IN", heroOutL:"PLANNED OUT",
   heroLineLeft:function(a){ return a+" left over"; },
@@ -1555,14 +1540,13 @@ en:{
   budgetLede:"Enter what comes in and what you pay. The tape at the bottom shows what's left.",
   qPay:"How do you get paid?",
   modeSteady:"Same most weeks", modeVaries:"It changes",
-  incSteadyL:"Money in for one week", incSteadyHint:"Paid monthly? Divide by 4.",
-  w1L:"Last week", w2L:"2 weeks ago", w3L:"3 weeks ago", w4L:"4 weeks ago",
-  lowNote1:"Plan with your lowest week:",
+  moneyInL:"Money in this week", incSteadyHint:"Paid monthly? Divide by 4.",
+  incLowL:"A low week for you", incNormalL:"A normal week",
+  lowNote1:"Plan with your low week:",
   lowNote2:". Money above that is backup, not spending.",
-  qEss:"What you pay each week",
-  essHousing:"Housing: rent or program fee", essFood:"Food",
-  essTransport:"Getting to work: bus, PATH, gas", essPhone:"Phone",
-  essHealth:"Medicine and health", essOther:"Everything else: laundry, clothes, the rest",
+  latelyNote:"Your lowest real week lately:",
+  planSumH:"Your plan",
+  weeksPlan:function(w,amt){ return "At "+amt+" a week, about "+w+" week"+(w===1?"":"s")+" to go."; },
   savePreset:"Save this budget", presetName:"Name this budget (example: Normal week)",
   presetSaved:"Budget saved", presetLoaded:"Budget loaded", presetDeleted:"Budget deleted",
   presetDelQ:function(n){ return 'Delete the saved budget "'+n+'"?'; },
@@ -1592,8 +1576,8 @@ en:{
     {b:"Credit cards, medical bills, old debts", w:"These wait last. No one can take your home over them. Ask hospitals about financial assistance."}
   ],
   goalsH:"Your goals",
-  goalsLede:"Pick something to save for. Set an amount you can add each week. Tap + to add a goal.",
-  goalsEmpty:"No goals yet. Tap + to add your first goal.",
+  goalsLede:"Pick something to save for. Set an amount you can add each week. Tap + below to add a goal.",
+  goalsEmpty:"No goals yet. Tap + below to add your first goal.",
   addGoal:"Add a goal", goalFull:"You can keep 5 goals. Delete one first.",
   goalNameQ:"What are you saving for? (example: Work boots)",
   goalTargetQ:"How much do you need? (numbers only)",
@@ -1687,11 +1671,14 @@ en:{
   ready3:"Proof of income from the last 30 days, like pay stubs",
   ready4:"Proof of address: a lease, a bill, or a letter with your name on it",
   ready5:"The bill you need help with",
-  rowProfiles:"Profiles", rowSettings:"Settings", rowAbout:"About and privacy", rowHelp:"Get help",
-  youSince:function(d){ return "Using Money Basics since "+d; },
-  youStats:function(b,g){ return b+" saved budget"+(b===1?"":"s")+" · "+g+" goal"+(g===1?"":"s"); },
-  profilesH:"Profiles",
-  profilesLede:"For shared phones. Each profile keeps its own budget, goals, and bills. Profiles live on this phone only. Tap + to add a person.",
+  rowProfiles:"People", rowSettings:"Settings", rowAbout:"About and privacy", rowHelp:"Get help",
+  menuTitle:"Menu",
+  menuRestart:"Start over (this week)",
+  restartQ:"This clears what you entered for this week. Other weeks stay the same. Start over?",
+  restartOk:"Start over", restartDone:"This week starts fresh",
+  eraseArm:"Tap again to erase everything",
+  profilesH:"People",
+  profilesLede:"For shared phones. Each profile keeps its own budget, goals, and bills. Profiles live on this phone only. Tap + below to add a person.",
   addProfile:"Add a profile", profileFull:"This phone can hold 4 profiles. Delete one first.",
   profileNameQ:"Name for this profile:",
   profileRenameQ:"New name:",
@@ -1717,7 +1704,7 @@ en:{
   abWhatH:"What this is",
   abWhat:"Money Basics helps you plan a week of money, sort bills when cash is short, and save toward a goal. Alexander G., a student volunteer, built it for guests of the Hoboken Shelter.",
   abPrivH:"Privacy",
-  abPriv:"This app has no accounts and no tracking. It doesn't connect to the internet. What you type stays on this phone. To erase it all, open Settings and tap \"Erase everything on this phone.\"",
+  abPriv:"This app has no accounts and no tracking. It doesn't connect to the internet. What you type stays on this phone. To erase it all, tap ⋯ at the top and then \"Erase everything on this phone.\"",
   abDiscH:"Not financial advice",
   abDisc:"This app teaches general money skills. It's not financial advice. For help with your own situation, use the free services under Get help.",
   abInstH:"Add this app to your phone",
@@ -1737,32 +1724,17 @@ en:{
   goalNameL:"What are you saving for?", goalNamePH:"Work boots",
   renameGoalT:"Rename this goal", renameProfT:"Rename this profile",
   tapeAdd:"ADD YOUR NUMBERS", tapeLeft:"LEFT OVER", tapeShort:"SHORT",
-  tapeFees:"FEES COST", tapeFeesYr:"/YR",
-  tapeGoalTo:"TO GO", tapeGoalMet:"GOAL MET",
-  tapeBills:function(d,p,w){
-    var parts = [];
-    if (d) parts.push("PAID "+d);
-    if (p) parts.push("PAY "+p);
-    if (w) parts.push(w+" CAN WAIT");
-    return parts.join(" · ");
-  },
-  tapeYouHave:"YOU HAVE",
   tapeOpen:"▲ OPEN", tapeClose:"▼ CLOSE", tapeAria:"Running total",
-  rcpTitle:"YOUR WEEK · MONEY BASICS", rcpInc:"MONEY IN (PLANNED)", rcpTot:"BILLS TOTAL",
-  rcpGoal:"GOAL",
-  rcpPlanTitle:"PAYMENT PLAN · MONEY BASICS", rcpYouHave:"YOU HAVE", rcpLeftAfter:"LEFT AFTER PAYING",
-  rcpGoalsTitle:"GOALS · MONEY BASICS",
+  rcpTitle:"YOUR WEEK · MONEY BASICS", rcpInc:"MONEY IN",
+  rcpPlanH:"THE PLAN", rcpNowH:"RIGHT NOW",
+  rcpBills:"BILLS", rcpGoal:"GOALS",
+  rcpPayingH:"PAYING NOW", rcpWaitH:"CAN WAIT", stillOwedL:"STILL OWED",
+  rcpYouHave:"YOU HAVE", rcpLeftAfter:"LEFT AFTER PAYING",
   planAfter:"Call anything that waits before its due date. 211 can connect you to bill help.",
   rcpFoot:"✂ NOTHING SENT · SAVED ON THIS PHONE ONLY",
   stampLeft:"LEFT OVER", stampShort:"SHORT",
   afterEven:"Money in equals money out. One surprise breaks even weeks. The fees section under Learn can find slack.",
   afterPos:"You can add some of this to a goal.",
-  afterShort:function(short,covered,next){
-    var s="You're "+short+" short.";
-    if (covered) s+=" The plan covers "+covered+".";
-    if (next) s+=" Open Bills to decide what to pay first.";
-    return s;
-  },
   wkThis:"This week",
   wkPrevA:"Previous week", wkNextA:"Next week",
   addSheetTitle:"Add",
@@ -1784,7 +1756,7 @@ en:{
   defaultProfile:"Me"
 },
 es:{
-  tabBudget:"Presupuesto", tabBills:"Cuentas", tabGoals:"Metas", tabLearn:"Aprender", tabYou:"Usted",
+  tabBudget:"Presupuesto", tabBills:"Cuentas", tabGoals:"Metas", tabLearn:"Aprender",
   budgetH:"Planee su semana",
   heroInL:"ENTRA", heroOutL:"SALE (PLAN)",
   heroLineLeft:function(a){ return "le quedan "+a; },
@@ -1794,14 +1766,13 @@ es:{
   budgetLede:"Escriba lo que entra y lo que paga. La cinta de abajo muestra lo que queda.",
   qPay:"¿Cómo le pagan?",
   modeSteady:"Casi igual cada semana", modeVaries:"Cambia",
-  incSteadyL:"Lo que entra en una semana", incSteadyHint:"¿Le pagan por mes? Divida entre 4.",
-  w1L:"La semana pasada", w2L:"Hace 2 semanas", w3L:"Hace 3 semanas", w4L:"Hace 4 semanas",
-  lowNote1:"Planee con su semana más baja:",
+  moneyInL:"Dinero que entra esta semana", incSteadyHint:"¿Le pagan por mes? Divida entre 4.",
+  incLowL:"Una semana baja para usted", incNormalL:"Una semana normal",
+  lowNote1:"Planee con su semana baja:",
   lowNote2:". Lo que pase de ahí es respaldo, no gasto.",
-  qEss:"Lo que paga cada semana",
-  essHousing:"Vivienda: renta o cuota del programa", essFood:"Comida",
-  essTransport:"Ir al trabajo: bus, PATH, gasolina", essPhone:"Teléfono",
-  essHealth:"Medicinas y salud", essOther:"Todo lo demás: lavandería, ropa, el resto",
+  latelyNote:"Su semana real más baja últimamente:",
+  planSumH:"Su plan",
+  weeksPlan:function(w,amt){ return "Con "+amt+" a la semana, faltan unas "+w+" semana"+(w===1?"":"s")+"."; },
   savePreset:"Guardar este presupuesto", presetName:"Nombre para este presupuesto (ejemplo: Semana normal)",
   presetSaved:"Presupuesto guardado", presetLoaded:"Presupuesto cargado", presetDeleted:"Presupuesto borrado",
   presetDelQ:function(n){ return '¿Borrar el presupuesto "'+n+'"?'; },
@@ -1831,8 +1802,8 @@ es:{
     {b:"Tarjetas, cuentas médicas, deudas viejas", w:"Esperan al final. Nadie puede quitarle la casa por ellas. Pregunte al hospital por asistencia financiera."}
   ],
   goalsH:"Sus metas",
-  goalsLede:"Elija algo para ahorrar. Fije una cantidad que pueda agregar cada semana. Toque + para agregar una meta.",
-  goalsEmpty:"Todavía no hay metas. Toque + para agregar su primera meta.",
+  goalsLede:"Elija algo para ahorrar. Fije una cantidad que pueda agregar cada semana. Toque + abajo para agregar una meta.",
+  goalsEmpty:"Todavía no hay metas. Toque + abajo para agregar su primera meta.",
   addGoal:"Agregar una meta", goalFull:"Puede tener 5 metas. Borre una primero.",
   goalNameQ:"¿Para qué está ahorrando? (ejemplo: Botas de trabajo)",
   goalTargetQ:"¿Cuánto necesita? (solo números)",
@@ -1926,11 +1897,14 @@ es:{
   ready3:"Prueba de ingresos de los últimos 30 días, como talones de pago",
   ready4:"Prueba de dirección: contrato de renta, una cuenta o una carta con su nombre",
   ready5:"La cuenta con la que necesita ayuda",
-  rowProfiles:"Perfiles", rowSettings:"Ajustes", rowAbout:"Acerca de y privacidad", rowHelp:"Buscar ayuda",
-  youSince:function(d){ return "Usa Money Basics desde "+d; },
-  youStats:function(b,g){ return b+" presupuesto"+(b===1?"":"s")+" guardado"+(b===1?"":"s")+" · "+g+" meta"+(g===1?"":"s"); },
-  profilesH:"Perfiles",
-  profilesLede:"Para teléfonos compartidos. Cada perfil guarda su propio presupuesto, metas y cuentas. Los perfiles viven solo en este teléfono. Toque + para agregar una persona.",
+  rowProfiles:"Personas", rowSettings:"Ajustes", rowAbout:"Acerca de y privacidad", rowHelp:"Buscar ayuda",
+  menuTitle:"Menú",
+  menuRestart:"Empezar de nuevo (esta semana)",
+  restartQ:"Esto borra lo que escribió para esta semana. Las otras semanas no cambian. ¿Empezar de nuevo?",
+  restartOk:"Empezar de nuevo", restartDone:"Esta semana empieza de nuevo",
+  eraseArm:"Toque otra vez para borrar todo",
+  profilesH:"Personas",
+  profilesLede:"Para teléfonos compartidos. Cada perfil guarda su propio presupuesto, metas y cuentas. Los perfiles viven solo en este teléfono. Toque + abajo para agregar una persona.",
   addProfile:"Agregar un perfil", profileFull:"Este teléfono puede tener 4 perfiles. Borre uno primero.",
   profileNameQ:"Nombre para este perfil:",
   profileRenameQ:"Nuevo nombre:",
@@ -1956,7 +1930,7 @@ es:{
   abWhatH:"Qué es esto",
   abWhat:"Money Basics le ayuda a planear una semana de dinero, ordenar cuentas cuando falta efectivo y ahorrar para una meta. Alexander G., estudiante voluntario, lo hizo para los huéspedes del Hoboken Shelter.",
   abPrivH:"Privacidad",
-  abPriv:"Esta app no tiene cuentas ni rastreo. No se conecta a internet. Lo que escribe se queda en este teléfono. Para borrarlo todo, abra Ajustes y toque \"Borrar todo en este teléfono\".",
+  abPriv:"Esta app no tiene cuentas ni rastreo. No se conecta a internet. Lo que escribe se queda en este teléfono. Para borrarlo todo, toque ⋯ arriba y luego \"Borrar todo en este teléfono\".",
   abDiscH:"No es asesoría financiera",
   abDisc:"Esta app enseña destrezas generales de dinero. No es asesoría financiera. Para su situación personal, use los servicios gratis en Buscar ayuda.",
   abInstH:"Agregue esta app a su teléfono",
@@ -1976,32 +1950,17 @@ es:{
   goalNameL:"¿Para qué está ahorrando?", goalNamePH:"Botas de trabajo",
   renameGoalT:"Cambiar el nombre de la meta", renameProfT:"Cambiar el nombre del perfil",
   tapeAdd:"PONGA SUS NÚMEROS", tapeLeft:"LE QUEDA", tapeShort:"FALTA",
-  tapeFees:"COBROS", tapeFeesYr:"/AÑO",
-  tapeGoalTo:"FALTAN", tapeGoalMet:"META CUMPLIDA",
-  tapeBills:function(d,p,w){
-    var parts = [];
-    if (d) parts.push("PAGÓ "+d);
-    if (p) parts.push("PAGUE "+p);
-    if (w) parts.push(w+(w===1?" PUEDE ESPERAR":" PUEDEN ESPERAR"));
-    return parts.join(" · ");
-  },
-  tapeYouHave:"TIENE",
   tapeOpen:"▲ ABRIR", tapeClose:"▼ CERRAR", tapeAria:"Su total",
-  rcpTitle:"SU SEMANA · MONEY BASICS", rcpInc:"ENTRA (PLANEADO)", rcpTot:"TOTAL DE PAGOS",
-  rcpGoal:"META",
-  rcpPlanTitle:"PLAN DE PAGO · MONEY BASICS", rcpYouHave:"TIENE", rcpLeftAfter:"QUEDA DESPUÉS DE PAGAR",
-  rcpGoalsTitle:"METAS · MONEY BASICS",
+  rcpTitle:"SU SEMANA · MONEY BASICS", rcpInc:"ENTRA",
+  rcpPlanH:"EL PLAN", rcpNowH:"AHORA MISMO",
+  rcpBills:"CUENTAS", rcpGoal:"METAS",
+  rcpPayingH:"PAGANDO AHORA", rcpWaitH:"PUEDE ESPERAR", stillOwedL:"AÚN DEBE",
+  rcpYouHave:"TIENE", rcpLeftAfter:"QUEDA DESPUÉS DE PAGAR",
   planAfter:"Llame por lo que espera antes de la fecha de pago. El 211 lo conecta con ayuda para cuentas.",
   rcpFoot:"✂ NADA ENVIADO · GUARDADO SOLO EN ESTE TELÉFONO",
   stampLeft:"LE QUEDA", stampShort:"FALTA",
   afterEven:"Entra lo mismo que sale. Una sorpresa rompe las semanas parejas. La sección de cobros en Aprender puede encontrar espacio.",
   afterPos:"Puede agregar una parte a una meta.",
-  afterShort:function(short,covered,next){
-    var s="Le faltan "+short+".";
-    if (covered) s+=" El plan cubre "+covered+".";
-    if (next) s+=" Abra Cuentas para decidir qué pagar primero.";
-    return s;
-  },
   wkThis:"Esta semana",
   wkPrevA:"Semana anterior", wkNextA:"Semana siguiente",
   addSheetTitle:"Agregar",
@@ -2048,21 +2007,48 @@ function esc(s){
 }
 function deepCopy(o){ return JSON.parse(JSON.stringify(o)); }
 
-/* fixed chrome activates on pointerdown, so the first tap works during iOS
-   momentum scroll; the ghost click that follows is swallowed. Keyboard and
-   assistive tech come in through the plain click path (no pointerdown first).
-   FIXED CHROME ONLY — inside scrolling content a tap must still be able to
-   just stop the scroll. */
+/* fixed chrome activates on the FIRST of touchstart/pointerdown to arrive, so
+   the first tap works during iOS momentum scroll; whichever events follow
+   within 650ms are swallowed. Keyboard and assistive tech come in through the
+   plain click path (no touch/pointer first). FIXED CHROME ONLY — inside
+   scrolling content a tap must still be able to just stop the scroll.
+   ?debug=taps paints every arrival on-screen so a phone screenshot shows
+   exactly what iOS delivers mid-scroll. */
+var tapsDebug = null;
+if (/[?&]debug=taps\b/.test(location.search)){
+  (function(){
+    var box = document.createElement("div");
+    box.setAttribute("aria-hidden", "true");
+    box.style.cssText = "position:fixed;top:0;left:0;right:0;z-index:99;background:rgba(0,0,0,0.78);color:#8FE3AE;font:11px/1.5 Menlo,monospace;padding:4px 8px;pointer-events:none;white-space:pre;";
+    document.body.appendChild(box);
+    var lines = [];
+    tapsDebug = function(msg){
+      lines.push(msg);
+      if (lines.length > 9) lines.shift();
+      box.textContent = lines.join("\n");
+    };
+  })();
+}
 function fastTap(el, handler){
-  var lastPD = 0;
+  var lastFire = 0;
+  function fire(e){
+    var dup = Date.now() - lastFire < 650;
+    if (tapsDebug) tapsDebug(Math.round(performance.now()) + "ms  " + e.type + "  " + (el.id || el.className) + (dup ? "  (swallowed)" : "  (fired)"));
+    if (dup) return;
+    lastFire = Date.now();
+    handler.call(el, e);
+  }
+  el.addEventListener("touchstart", function(e){ fire(e); }, {passive:true});
   el.addEventListener("pointerdown", function(e){
     if (e.pointerType === "mouse" && e.button !== 0) return;
-    lastPD = Date.now();
-    handler.call(el, e);
+    fire(e);
   });
   el.addEventListener("click", function(e){
-    if (Date.now() - lastPD < 650){ e.preventDefault(); e.stopPropagation(); return; }
-    handler.call(el, e);
+    if (Date.now() - lastFire < 650){
+      if (tapsDebug) tapsDebug(Math.round(performance.now()) + "ms  click  " + (el.id || el.className) + "  (swallowed)");
+      e.preventDefault(); e.stopPropagation(); return;
+    }
+    fire(e);
   });
 }
 
@@ -2086,7 +2072,9 @@ document.addEventListener("input", function(e){
 }, true);
 
 /* ================= WEEKS ================= */
-var WEEK_FIELDS = ["inc-steady","w1","w2","w3","w4",
+/* v3: a week stores ONE income number; the old field list survives only for
+   migration and the stale-session legacy mirror */
+var LEGACY_WEEK_FIELDS = ["inc-steady","w1","w2","w3","w4",
   "ess-housing","ess-food","ess-transport","ess-phone","ess-health","ess-other"];
 var FEE_FIELDS = ["chk-amt","chk-times","chk-pct","mo-times","mo-fee","od-times","od-fee","pp-fee","atm-times","atm-fee"];
 function ymd(d){return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");}
@@ -2094,18 +2082,20 @@ function weekKey(d){var x=new Date(d.getFullYear(),d.getMonth(),d.getDate(),12);
 var todayKey = weekKey(new Date()), viewKey = todayKey;
 function keyToDate(key){ var p = key.split("-"); return new Date(+p[0], +p[1]-1, +p[2], 12); }
 function blankWeek(){
-  return { mode:"steady", f:{}, bills:{checked:[], owed:{}, paid:{}, override:"", overrideOn:false, custom:[]} };
+  return { f:{}, inSet:false, bills:{checked:[], owed:{}, paid:{}, override:"", overrideOn:false, custom:[]} };
 }
 function nearestKeyBelow(key){
   var best = null;
   for (var k in prof.weeks) if (prof.weeks.hasOwnProperty(k) && k < key && (best === null || k > best)) best = k;
   return best;
 }
-/* seed = copy the plan, reset the week: PAID flags and the week-specific override */
+/* seed = copy the plan, reset the week: PAID flags, the week-specific override,
+   and the money-in ENTERED flag — a seed can never mint a "real" income week */
 function seedFrom(src){
   var w = deepCopy(src);
   w.bills.paid = {};
   w.bills.override = ""; w.bills.overrideOn = false;
+  w.inSet = false;
   return w;
 }
 function getWeekData(key){
@@ -2114,22 +2104,72 @@ function getWeekData(key){
   return src ? seedFrom(prof.weeks[src]) : blankWeek();
 }
 function getWeek(){ return getWeekData(viewKey); }
-/* write gate: seeds materialize into storage on first edit, never on view */
+/* write gate: seeds materialize into storage on first edit, never on view.
+   If a today/future week materializes with blank money-in, the prospective
+   fallback the user was LOOKING AT gets stamped in (inSet stays false), so a
+   week's numbers and receipt freeze the moment it becomes history. */
 function W(){
-  if (!prof.weeks[viewKey]) prof.weeks[viewKey] = getWeek();
+  if (!prof.weeks[viewKey]){
+    var wk = getWeek();
+    if (viewKey >= todayKey && parseAmt(wk.f["money-in"]) === 0){
+      var p = planningIncome();
+      if (p > 0) wk.f["money-in"] = String(p);
+    }
+    prof.weeks[viewKey] = wk;
+  }
   return prof.weeks[viewKey];
 }
-function weekIncome(wk){
-  if (wk.mode !== "varies") return parseAmt(wk.f["inc-steady"]);
-  var arr = [parseAmt(wk.f["w1"]), parseAmt(wk.f["w2"]), parseAmt(wk.f["w3"]), parseAmt(wk.f["w4"])]
-    .filter(function(v){ return v > 0; });
-  return arr.length ? Math.min.apply(null, arr) : 0;
+/* real weeks: money-in ENTERED by hand, at or before today, within 10 weeks */
+function savedRealWeeks(){
+  var cd = keyToDate(todayKey); cd.setDate(cd.getDate() - 70);
+  var cutoff = weekKey(cd), arr = [];
+  for (var k in prof.weeks){
+    if (!prof.weeks.hasOwnProperty(k)) continue;
+    var wk = prof.weeks[k];
+    if (wk.inSet && parseAmt(wk.f["money-in"]) > 0 && k <= todayKey && k >= cutoff) arr.push(k);
+  }
+  return arr.sort();
 }
-function weekEssTotal(wk){
-  var s = 0;
-  for (var i=0;i<WEEK_FIELDS.length;i++)
-    if (WEEK_FIELDS[i].indexOf("ess-") === 0) s += parseAmt(wk.f[WEEK_FIELDS[i]]);
+/* the number the plan runs on; .src names the computed minimum's week */
+function planningIncome(){
+  planningIncome.src = null;
+  if (prof.income.mode !== "varies") return parseAmt(getWeekData(todayKey).f["money-in"]);
+  var real = savedRealWeeks();
+  if (real.length >= 3){
+    var last4 = real.slice(-4), min = Infinity, src = null;
+    for (var i=0;i<last4.length;i++){
+      var v = parseAmt(prof.weeks[last4[i]].f["money-in"]);
+      if (v < min){ min = v; src = last4[i]; }
+    }
+    planningIncome.src = src;
+    return min;
+  }
+  return parseAmt(prof.income.low);
+}
+/* a week's money: its own entry; the override wins for that week; the planning
+   fallback applies only prospectively (today/future, not yet saved) */
+function effectiveIncome(key){
+  var wk = getWeekData(key);
+  if (wk.bills.overrideOn) return parseAmt(wk.bills.override);
+  var v = parseAmt(wk.f["money-in"]);
+  if (v > 0) return v;
+  if (key >= todayKey && !prof.weeks[key]) return planningIncome();
+  return 0;
+}
+function billsPlannedTotal(key){
+  var wb = getWeekData(key).bills, s = 0, i;
+  for (i=0;i<wb.checked.length;i++) s += parseAmt(wb.owed[wb.checked[i]]);
+  for (i=0;i<wb.custom.length;i++) s += parseAmt(wb.custom[i].owed);
   return s;
+}
+function goalWeeklyTotal(){
+  var s = 0;
+  for (var i=0;i<prof.goals.length;i++)
+    if (prof.goals[i].plan && prof.goals[i].plan.amt > 0) s += prof.goals[i].plan.amt;
+  return s;
+}
+function planLeftOver(key){
+  return effectiveIncome(key) - billsPlannedTotal(key) - goalWeeklyTotal();
 }
 
 /* ================= STORAGE ================= */
@@ -2139,25 +2179,63 @@ function lsGet(k){ try { return JSON.parse(localStorage.getItem(k)); } catch(e){
 function lsSet(k,v){ try { localStorage.setItem(k, JSON.stringify(v)); return true; } catch(e){ return false; } }
 
 function freshProfileData(){
-  return { v:2, weeks:{}, fees:{},
+  return { v:3, weeks:{}, fees:{},
+    income:{ mode:"steady", low:"", normal:"" },
     goals:[], presets:[], reminder:{on:false, day:5, lastAck:0}, lastTab:"budget",
     since: new Date().toISOString().slice(0,7),
     f:{}, mode:"steady", bills:{checked:[], owed:{}, paid:{}, override:"", overrideOn:false, custom:[]},
     legacyStamp:"" };
 }
 function legacyOf(pd){ return JSON.stringify([pd.f, pd.mode, pd.bills]); }
+function minMaxNonzeroW(f){
+  var arr = [];
+  for (var n=1;n<=4;n++){
+    var v = parseAmt((f || {})["w"+n]);
+    if (v > 0) arr.push(v);
+  }
+  return arr.length ? {min:Math.min.apply(null,arr), max:Math.max.apply(null,arr)} : null;
+}
+function legacyIncomeOf(f, mode){
+  if (mode === "varies"){ var mm = minMaxNonzeroW(f); return mm ? mm.min : 0; }
+  return parseAmt((f || {})["inc-steady"]);
+}
+/* old ess amounts fold into Bills; where a Bills owed already exists it WINS
+   (summing would double-count the same rent) */
+function essToBills(wk, f){
+  var MAP = [["ess-housing",0], ["ess-transport",3], ["ess-phone",6]];
+  function put(bi, amt){
+    if (amt <= 0) return;
+    if (String(wk.bills.owed[bi] === undefined ? "" : wk.bills.owed[bi]).trim() === "") wk.bills.owed[bi] = String(amt);
+    if (wk.bills.checked.indexOf(bi) === -1) wk.bills.checked.push(bi);
+  }
+  for (var m=0;m<MAP.length;m++) put(MAP[m][1], parseAmt((f||{})[MAP[m][0]]));
+  put(2, parseAmt((f||{})["ess-food"]) + parseAmt((f||{})["ess-health"]));
+  var other = parseAmt((f||{})["ess-other"]);
+  if (other > 0) wk.bills.custom.push({id:"mig-other",
+    name: device && device.lang === "es" ? "Todo lo demás" : "Everything else",
+    owed: String(other)});
+}
 function weekFromLegacy(pd){
   var f = {};
-  for (var i=0;i<WEEK_FIELDS.length;i++){
-    var v = (pd.f || {})[WEEK_FIELDS[i]];
-    if (v !== undefined && v !== null && v !== "") f[WEEK_FIELDS[i]] = v;
+  for (var i=0;i<LEGACY_WEEK_FIELDS.length;i++){
+    var v = (pd.f || {})[LEGACY_WEEK_FIELDS[i]];
+    if (v !== undefined && v !== null && v !== "") f[LEGACY_WEEK_FIELDS[i]] = v;
   }
   return deepCopy({ mode: pd.mode || "steady", f: f, bills: pd.bills });
 }
+/* a stale 3.3 session edited the old-shape mirror: map its work through the
+   same income + ess rules into a v3 week */
+function weekFromLegacyV3(pd){
+  var mi = legacyIncomeOf(pd.f, pd.mode || "steady");
+  var wk = { f: mi > 0 ? {"money-in": String(mi)} : {}, inSet:false, bills: deepCopy(pd.bills) };
+  if (!wk.bills.custom) wk.bills.custom = [];
+  essToBills(wk, pd.f);
+  return wk;
+}
 function legacyHasContent(pd){
   var f = pd.f || {}, b = pd.bills, k;
-  for (var i=0;i<WEEK_FIELDS.length;i++){
-    var v = f[WEEK_FIELDS[i]];
+  for (var i=0;i<LEGACY_WEEK_FIELDS.length;i++){
+    var v = f[LEGACY_WEEK_FIELDS[i]];
     if (v !== undefined && v !== null && String(v).trim() !== "") return true;
   }
   if (b.checked.length || (b.custom || []).length || b.overrideOn || String(b.override||"").trim() !== "") return true;
@@ -2168,27 +2246,76 @@ function legacyHasContent(pd){
 function migrateProfile(pd){
   if (!pd) return pd;
   migrateBills(pd);
+  var i, v, keys, ki;
   if (!pd.v){
     /* 3.2.0: the one budget becomes this week's entry; blank budgets stay unrecorded */
     pd.v = 2;
     pd.weeks = {};
     pd.fees = {};
-    for (var i=0;i<FEE_FIELDS.length;i++){
-      var v = (pd.f || {})[FEE_FIELDS[i]];
+    for (i=0;i<FEE_FIELDS.length;i++){
+      v = (pd.f || {})[FEE_FIELDS[i]];
       if (v !== undefined && v !== null) pd.fees[FEE_FIELDS[i]] = v;
     }
     if (legacyHasContent(pd)) pd.weeks[todayKey] = weekFromLegacy(pd);
     pd.legacyStamp = legacyOf(pd);
-  } else {
+  }
+  if (pd.v === 2){
     if (!pd.weeks) pd.weeks = {};
     if (!pd.fees) pd.fees = {};
-    /* a stale pre-3.2 session edits only the legacy mirror; adopt its work as this week */
-    if (pd.legacyStamp && legacyOf(pd) !== pd.legacyStamp){
+    /* adopt any stale pre-3.2/3.3 mirror edit FIRST, in the old shape */
+    if (pd.legacyStamp && legacyOf(pd) !== pd.legacyStamp)
       pd.weeks[todayKey] = weekFromLegacy(pd);
+    /* 3.4.0: one income number per week; posture + estimates move to the profile */
+    keys = Object.keys(pd.weeks).sort();
+    var newest = keys.length ? pd.weeks[keys[keys.length-1]] : null;
+    var srcF = newest ? newest.f : (pd.f || {});
+    var mm = minMaxNonzeroW(srcF);
+    pd.income = {
+      mode: (newest ? newest.mode : pd.mode) || "steady",
+      low: mm ? String(mm.min) : "",
+      normal: mm ? String(mm.max) : "" };
+    for (ki=0;ki<keys.length;ki++){
+      var wk2 = pd.weeks[keys[ki]];
+      if (!wk2.bills.custom) wk2.bills.custom = [];
+      var mi = legacyIncomeOf(wk2.f, wk2.mode || "steady");
+      essToBills(wk2, wk2.f);
+      wk2.f = mi > 0 ? {"money-in": String(mi)} : {};
+      wk2.inSet = false;
+      delete wk2.mode;
+    }
+    /* only the newest saved week counts as a real income datum */
+    if (keys.length && parseAmt(pd.weeks[keys[keys.length-1]].f["money-in"]) > 0)
+      pd.weeks[keys[keys.length-1]].inSet = true;
+    /* presets: income + ess fold into the new shape */
+    for (i=0;i<(pd.presets||[]).length;i++){
+      var p = pd.presets[i];
+      if (!p.data || p.data["money-in"] !== undefined) continue;
+      var pmi = legacyIncomeOf(p.data, p.mode || "steady");
+      var np = { "money-in": pmi > 0 ? String(pmi) : "", owed:{}, other:"" };
+      var pf = p.data;
+      function pput(bi, amt){ if (amt > 0) np.owed[bi] = String(amt); }
+      pput(0, parseAmt(pf["ess-housing"]));
+      pput(2, parseAmt(pf["ess-food"]) + parseAmt(pf["ess-health"]));
+      pput(3, parseAmt(pf["ess-transport"]));
+      pput(6, parseAmt(pf["ess-phone"]));
+      var po = parseAmt(pf["ess-other"]);
+      if (po > 0) np.other = String(po);
+      p.data = np;
+      delete p.mode;
+    }
+    pd.v = 3;
+    pd.legacyStamp = legacyOf(pd);
+  } else if (pd.v >= 3){
+    if (!pd.weeks) pd.weeks = {};
+    if (!pd.fees) pd.fees = {};
+    if (!pd.income) pd.income = { mode:"steady", low:"", normal:"" };
+    /* a stale pre-3.4 session edits only the legacy mirror; adopt via v3 mapping */
+    if (pd.legacyStamp && legacyOf(pd) !== pd.legacyStamp){
+      pd.weeks[todayKey] = weekFromLegacyV3(pd);
       pd.legacyStamp = legacyOf(pd);
     }
   }
-  /* 3.3.0: stored weeks predate custom bills */
+  /* stored weeks may predate custom bills */
   for (var wk3 in pd.weeks)
     if (pd.weeks.hasOwnProperty(wk3) && !pd.weeks[wk3].bills.custom) pd.weeks[wk3].bills.custom = [];
   return pd;
@@ -2235,12 +2362,16 @@ function migrateBills(pd){
 }
 var saveTimer = null, erasing = false, lastSavedStr = "";
 function snapshot(){ return JSON.stringify([device, prof]); }
-/* keep the legacy mirror current so a stale pre-3.2 session still sees this week */
+/* keep the legacy mirror current so a stale pre-3.4 session still sees this
+   week. The mirror is SYNTHESIZED STEADY: old varies would misread blank w1-w4
+   as $0, so inc-steady carries the effective number and mode reads steady. */
 function syncLegacy(){
   var wk = getWeekData(todayKey), f = {}, i;
-  for (i=0;i<WEEK_FIELDS.length;i++) f[WEEK_FIELDS[i]] = wk.f[WEEK_FIELDS[i]] !== undefined ? wk.f[WEEK_FIELDS[i]] : "";
+  for (i=0;i<LEGACY_WEEK_FIELDS.length;i++) f[LEGACY_WEEK_FIELDS[i]] = "";
+  var mi = parseAmt(wk.f["money-in"]) || planningIncome();
+  f["inc-steady"] = mi > 0 ? String(mi) : "";
   for (i=0;i<FEE_FIELDS.length;i++) f[FEE_FIELDS[i]] = prof.fees[FEE_FIELDS[i]] !== undefined ? prof.fees[FEE_FIELDS[i]] : "";
-  prof.f = f; prof.mode = wk.mode; prof.bills = deepCopy(wk.bills);
+  prof.f = f; prof.mode = "steady"; prof.bills = deepCopy(wk.bills);
   prof.legacyStamp = legacyOf(prof);
 }
 function persist(showFlash){
@@ -2383,14 +2514,15 @@ if (window.visualViewport){
 }
 
 /* ================= FIELDS ================= */
-/* the DOM inputs are the working copy of the VIEWED week; fee fields are per-profile */
+/* the DOM money-in input is the working copy of the VIEWED week; the low/normal
+   estimates and fee fields are per-profile */
 var FEE_DEFAULTS = {"chk-pct":"2","mo-fee":"1.75","od-fee":"27","atm-fee":"3"};
 function profToFields(){
   var wk = getWeek(), i, v;
-  for (i=0;i<WEEK_FIELDS.length;i++){
-    v = wk.f[WEEK_FIELDS[i]];
-    $(WEEK_FIELDS[i]).value = (v === undefined || v === null) ? "" : v;
-  }
+  v = wk.f["money-in"];
+  $("money-in").value = (v === undefined || v === null) ? "" : v;
+  $("inc-low").value = prof.income.low || "";
+  $("inc-normal").value = prof.income.normal || "";
   for (i=0;i<FEE_FIELDS.length;i++){
     v = prof.fees[FEE_FIELDS[i]];
     $(FEE_FIELDS[i]).value = (v === undefined || v === null) ? (FEE_DEFAULTS[FEE_FIELDS[i]] || "") : v;
@@ -2415,9 +2547,6 @@ function applyLang(){
     var k = nodes[i].getAttribute("data-i18n");
     if (typeof L()[k] === "string") nodes[i].textContent = L()[k];
   }
-  $("rcp-title").textContent = t("rcpTitle");
-  $("rcp-inc-l").textContent = t("rcpInc");
-  $("rcp-tot-l").textContent = t("rcpTot");
   $("tape-foot").textContent = t("rcpFoot");
   $("tape").setAttribute("aria-label", t("tapeAria"));
   $("val-lang").textContent = t("langName");
@@ -2431,25 +2560,27 @@ function applyLang(){
 }
 
 /* ================= TABS ================= */
-var TABS = ["budget","bills","goals","learn","you"];
-var activeTab = "budget";
+var TABS = ["budget","bills","goals","learn"];
+var PANELS = TABS.concat(["you"]); /* "you" hosts the menu screens; it has no bar slot */
+var activeTab = "budget", backTab = "budget";
 function showTab(name, focusPanel){
   refreshToday();
   activeTab = name;
-  for (var i=0;i<TABS.length;i++){
-    var sel = TABS[i] === name;
-    if (sel) $("tab-"+TABS[i]).setAttribute("aria-current", "page");
-    else $("tab-"+TABS[i]).removeAttribute("aria-current");
-    if (sel) $("panel-"+TABS[i]).removeAttribute("hidden");
-    else $("panel-"+TABS[i]).setAttribute("hidden","");
+  if (TABS.indexOf(name) !== -1) backTab = name;
+  for (var i=0;i<PANELS.length;i++){
+    if (PANELS[i] === name) $("panel-"+PANELS[i]).removeAttribute("hidden");
+    else $("panel-"+PANELS[i]).setAttribute("hidden","");
+  }
+  for (var bi=0;bi<TABS.length;bi++){
+    if (TABS[bi] === name) $("tab-"+TABS[bi]).setAttribute("aria-current", "page");
+    else $("tab-"+TABS[bi]).removeAttribute("aria-current");
   }
   prof.lastTab = name; persist(false);
   if (name === "you"){ clearBadge(); renderYou(); }
   if (name === "bills") renderBills();
   renderWeekBar();
   closeTape();
-  renderReceipt();
-  updateTape();
+  calcAll();
   if (focusPanel) $("panel-"+name).focus();
   window.scrollTo(0,0);
 }
@@ -2489,7 +2620,7 @@ function renderWeekBar(){
   $("wk-chip").className = "wk-chip" + (away ? " away" : "");
 }
 function paintWeek(){
-  profToFields(); setModeUI(getWeek().mode);
+  profToFields(); setModeUI(prof.income.mode);
   renderBills(); calcAll(); renderWeekBar();
 }
 function setView(key){
@@ -2647,8 +2778,8 @@ $("add-wrap").addEventListener("click", function(e){
       if (amt <= 0) return;
       /* writes through W() into the VIEWED week, per the 3.2.0 contract */
       var wk = W();
-      var fid = wk.mode === "varies" ? "w1" : "inc-steady";
-      wk.f[fid] = String(Math.round((parseAmt(wk.f[fid]) + amt) * 100) / 100);
+      wk.f["money-in"] = String(Math.round((parseAmt(wk.f["money-in"]) + amt) * 100) / 100);
+      wk.inSet = true; /* an explicit money entry mints a real week */
       profToFields(); showTab("budget"); calcAll(); persist(true);
       toast(t("moneyAdded")(fmt(amt)));
     }});
@@ -2682,34 +2813,44 @@ $("add-wrap").addEventListener("click", function(e){
 function setModeUI(m){
   $("mode-steady").setAttribute("aria-pressed", m==="steady" ? "true":"false");
   $("mode-varies").setAttribute("aria-pressed", m==="varies" ? "true":"false");
-  if (m==="steady"){ $("steady-box").removeAttribute("hidden"); $("varies-box").setAttribute("hidden",""); }
-  else { $("varies-box").removeAttribute("hidden"); $("steady-box").setAttribute("hidden",""); }
+  if (m==="varies") $("varies-box").removeAttribute("hidden");
+  else $("varies-box").setAttribute("hidden","");
 }
-$("mode-steady").addEventListener("click", function(){ W().mode = "steady"; setModeUI("steady"); calcAll(); queueSave(); });
-$("mode-varies").addEventListener("click", function(){ W().mode = "varies"; setModeUI("varies"); calcAll(); queueSave(); });
+/* posture is a profile setting, not history: the toggle never touches a week */
+$("mode-steady").addEventListener("click", function(){ prof.income.mode = "steady"; setModeUI("steady"); calcAll(); queueSave(); });
+$("mode-varies").addEventListener("click", function(){ prof.income.mode = "varies"; setModeUI("varies"); calcAll(); queueSave(); });
 
-var ESS = [
-  {id:"ess-housing", key:"essHousing"},
-  {id:"ess-food", key:"essFood"},
-  {id:"ess-transport", key:"essTransport"},
-  {id:"ess-phone", key:"essPhone"},
-  {id:"ess-health", key:"essHealth"},
-  {id:"ess-other", key:"essOther"}
-];
-function shortLabel(key){
-  return t(key).split("(")[0].split(":")[0].trim();
-}
-function planIncome(){
-  if (getWeek().mode !== "varies") return num("inc-steady");
-  var weeks = [num("w1"),num("w2"),num("w3"),num("w4")].filter(function(w){ return w>0; });
-  return weeks.length ? Math.min.apply(null, weeks) : 0;
-}
 function budgetTouched(){
-  if (num("inc-steady")>0) return true;
-  if (num("w1")>0||num("w2")>0||num("w3")>0||num("w4")>0) return true;
-  for (var i=0;i<ESS.length;i++) if (num(ESS[i].id)>0) return true;
+  var wk = getWeekData(viewKey);
+  if (parseAmt(wk.f["money-in"]) > 0 || wk.bills.overrideOn) return true;
+  if (wk.bills.checked.length || wk.bills.custom.length) return true;
+  if (goalWeeklyTotal() > 0) return true;
   return false;
 }
+function fmtDayKey(key){
+  var d = keyToDate(key);
+  return device.lang === "es" ? d.getDate()+" "+t("monthsS")[d.getMonth()] : t("monthsS")[d.getMonth()]+" "+d.getDate();
+}
+function renderIncomeNote(){
+  if (prof.income.mode !== "varies") return;
+  var p = planningIncome(), el = $("plan-note");
+  if (planningIncome.src){
+    el.innerHTML = '<span>'+esc(t("latelyNote"))+' </span>'
+      + '<button type="button" class="linky" id="plan-src">'+fmt(p)+' ('+esc(fmtDayKey(planningIncome.src))+')</button>'
+      + '<span>'+esc(t("lowNote2"))+'</span>';
+  } else {
+    el.innerHTML = '<span>'+esc(t("lowNote1"))+' </span><span class="fig">'+fmt(p)+'</span><span>'+esc(t("lowNote2"))+'</span>';
+  }
+}
+$("plan-note").addEventListener("click", function(e){
+  if (e.target.closest("#plan-src") && planningIncome.src) setView(planningIncome.src);
+});
+function renderPlanSummary(){
+  $("sum-bills-val").textContent = fmt(billsPlannedTotal(viewKey));
+  $("sum-goals-val").textContent = fmt(goalWeeklyTotal());
+}
+$("sum-bills").addEventListener("click", function(){ showTab("bills"); });
+$("sum-goals").addEventListener("click", function(){ showTab("goals"); });
 
 /* ---- presets ---- */
 function renderPresets(){
@@ -2730,9 +2871,21 @@ $("preset-chips").addEventListener("click", function(e){
   if (load){
     var p = prof.presets[+load.getAttribute("data-load")];
     var wk = W();
-    for (var k in p.data) if (p.data.hasOwnProperty(k) && WEEK_FIELDS.indexOf(k) !== -1) wk.f[k] = p.data[k];
-    if (p.mode) wk.mode = p.mode;
-    profToFields(); setModeUI(wk.mode); calcAll(); queueSave();
+    if (p.data["money-in"] !== undefined && String(p.data["money-in"]).trim() !== "") wk.f["money-in"] = p.data["money-in"];
+    var ow = p.data.owed || {};
+    for (var k in ow) if (ow.hasOwnProperty(k)){
+      wk.bills.owed[k] = ow[k];
+      if (wk.bills.checked.indexOf(+k) === -1) wk.bills.checked.push(+k);
+    }
+    if (p.data.other && parseAmt(p.data.other) > 0){
+      var ex = null;
+      for (var c=0;c<wk.bills.custom.length;c++) if (wk.bills.custom[c].id === "mig-other") ex = wk.bills.custom[c];
+      if (ex) ex.owed = String(parseAmt(p.data.other));
+      else wk.bills.custom.push({id:"mig-other",
+        name: device.lang === "es" ? "Todo lo demás" : "Everything else",
+        owed: String(parseAmt(p.data.other))});
+    }
+    profToFields(); renderBills(); calcAll(); queueSave();
     toast(t("presetLoaded"));
   } else if (del){
     var i = +del.getAttribute("data-delp");
@@ -2747,10 +2900,12 @@ $("btn-save-preset").addEventListener("click", function(){
   if (prof.presets.length >= 6){ toast(t("presetFull")); return; }
   openSheet({title:t("savePreset"), field1:{label:t("nameL"), placeholder:t("presetPH")}, onOk:function(name){
     if (!name) return;
-    var data = {};
-    var ids = ["inc-steady","w1","w2","w3","w4"].concat(ESS.map(function(e){ return e.id; }));
-    for (var i=0;i<ids.length;i++) data[ids[i]] = $(ids[i]).value;
-    prof.presets.push({name:name.slice(0,30), mode:getWeek().mode, data:data});
+    var wb = getWeek().bills, data = { "money-in": $("money-in").value, owed:{}, other:"" };
+    for (var i=0;i<wb.checked.length;i++){
+      var bi = wb.checked[i];
+      if (String(wb.owed[bi] === undefined ? "" : wb.owed[bi]).trim() !== "") data.owed[bi] = wb.owed[bi];
+    }
+    prof.presets.push({name:name.slice(0,30), data:data});
     renderPresets(); persist(true);
     toast(t("presetSaved"));
   }});
@@ -2758,11 +2913,7 @@ $("btn-save-preset").addEventListener("click", function(){
 
 /* ================= BILLS ALLOCATOR ================= */
 function billOwedAmt(i){ return parseAmt(getWeek().bills.owed[i]); }
-function availAmount(){
-  var wb = getWeek().bills;
-  if (wb.overrideOn) return parseAmt(wb.override);
-  return planIncome();
-}
+function availAmount(){ return effectiveIncome(viewKey); }
 function allocate(){
   var bills = L().bills, out = [], wb = getWeek().bills;
   /* money already handed over comes off the top; the rest flows down the priority order */
@@ -2830,11 +2981,9 @@ function renderBills(){
       + '<span class="what"><b>'+esc(bills[i].b)+'</b><span class="why">'+esc(bills[i].w)+'</span></span>'
       + '</label>' + chipHtml + '</div>';
     if (checked){
-      var BUDGET_MAP = {0:"ess-housing", 2:"ess-food", 3:"ess-transport", 6:"ess-phone"};
-      var ph = BUDGET_MAP[i] ? (num(BUDGET_MAP[i]) || 0) : 0;
       html += '<div class="owed-row"><label for="owed-'+i+'">'+t("owedL")+'</label>'
         + '<div class="field"><span class="cur" aria-hidden="true">$</span>'
-        + '<input type="text" inputmode="decimal" autocomplete="off" id="owed-'+i+'" data-owed="'+i+'" value="'+esc(wb.owed[i]||"")+'" placeholder="'+(ph>0?ph:"0")+'"></div></div>';
+        + '<input type="text" inputmode="decimal" autocomplete="off" id="owed-'+i+'" data-owed="'+i+'" value="'+esc(wb.owed[i]||"")+'" placeholder="0"></div></div>';
       if (a && a.state === "part") html += '<p class="script">'+t("scriptPart")(fmt(a.pay))+'</p>';
       else if (a && a.state === "waits") html += '<p class="script">'+t("scriptWaits")+'</p>';
     }
@@ -2871,7 +3020,7 @@ $("bill-list").addEventListener("change", function(e){
   var pos = wb.checked.indexOf(i);
   if (cb.checked && pos === -1) wb.checked.push(i);
   if (!cb.checked && pos !== -1) wb.checked.splice(pos,1);
-  renderBills(); updateTape(); queueSave();
+  renderBills(); calcAll(); queueSave();
 });
 $("bill-list").addEventListener("input", function(e){
   var inp = e.target.closest("[data-owed]"), cinp = e.target.closest("[data-cowed]");
@@ -2879,7 +3028,7 @@ $("bill-list").addEventListener("input", function(e){
   else if (cinp) W().bills.custom[+cinp.getAttribute("data-cowed")].owed = cinp.value;
   else return;
   // re-render chips without rebuilding inputs mid-typing: update chips only
-  refreshBillChips(); updateTape(); queueSave();
+  refreshBillChips(); calcAll(); queueSave();
 });
 function refreshBillChips(){
   // cheap path: recompute allocation and redraw chips + scripts by full render on blur;
@@ -2919,9 +3068,10 @@ $("bill-list").addEventListener("click", function(e){
   renderBills(); calcAll(); queueSave();
 });
 $("btn-override").addEventListener("click", function(){
+  var def = effectiveIncome(viewKey); /* the number on screen, before the flip */
   var wb = W().bills;
   wb.overrideOn = !wb.overrideOn;
-  if (wb.overrideOn && !wb.override) wb.override = String(planIncome() || "");
+  if (wb.overrideOn && !wb.override) wb.override = String(def || "");
   $("avail-override").value = wb.override;
   renderBills(); calcAll(); queueSave();
   if (wb.overrideOn) $("avail-override").focus();
@@ -2930,19 +3080,17 @@ $("avail-override").addEventListener("input", function(){
   W().bills.override = this.value;
   renderAvail(); refreshBillChips(); calcAll(); queueSave();
 });
-function billsSummary(){
-  var alloc = allocate().concat(allocate.custom), done = 0, pay = 0, waits = 0, any = false;
-  for (var i=0;i<alloc.length;i++){
-    var a = alloc[i];
-    if (!a) continue; /* every checked or added bill counts, amount or not */
-    any = true;
-    if (a.state === "done") done++;
-    else if (a.state === "waits") waits++;
-    else pay++;
-    if (a.state === "part") waits++; /* a partial also needs a call */
-  }
-  return any ? {done:done, pay:pay, waits:waits, remaining:allocate.remaining} : null;
+/* what is still owed on every checked or added bill that isn't marked paid */
+function owedRemaining(){
+  var wb = getWeek().bills, s = 0, i;
+  for (i=0;i<wb.checked.length;i++)
+    if (wb.paid[wb.checked[i]] === undefined) s += parseAmt(wb.owed[wb.checked[i]]);
+  for (i=0;i<wb.custom.length;i++)
+    if (wb.paid[wb.custom[i].id] === undefined) s += parseAmt(wb.custom[i].owed);
+  return s;
 }
+/* LEFT AFTER PAYING: negative exactly when the week cannot cover what is owed */
+function leftAfterPaying(){ return availAmount() - paidSum() - owedRemaining(); }
 
 /* ================= GOALS ================= */
 function goalPct(g){
@@ -2950,9 +3098,8 @@ function goalPct(g){
 }
 function renderGoals(){
   var list = $("goal-list"), html = "";
-  /* goals are continuous, not weekly: the pace estimate always uses TODAY's week */
-  var todayWk = getWeekData(todayKey);
-  var leftOver = Math.max(0, weekIncome(todayWk) - weekEssTotal(todayWk));
+  /* goals are continuous, not weekly: spare money always reads TODAY's plan */
+  var spare = Math.max(0, planLeftOver(todayKey));
   for (var i=0;i<prof.goals.length;i++){
     var g = prof.goals[i], pct = goalPct(g), left = Math.max(0, g.target-g.saved);
     html += '<div class="card goal-card" data-goal="'+i+'">'
@@ -2973,9 +3120,15 @@ function renderGoals(){
       + '<div class="goal-bar" role="img" aria-label="'+pct+'%"><div class="goal-fill" style="transform:scaleX('+(pct/100)+')"></div></div>'
       + '<div class="goal-read"><span class="pct">'+pct+'%</span><span>'
       + (g.target>0 ? (pct>=100 ? t("goalMet") : fmt(left)+" "+t("goalTo")) : "") + '</span></div>';
-    if (g.target>0 && left>0 && leftOver>0){
-      var weeks = Math.ceil(left/leftOver);
-      if (weeks <= 104) html += '<div class="goal-weeks">'+t("weeksAway")(weeks, fmt(leftOver))+'</div>';
+    if (g.target>0 && left>0){
+      /* a goal with a weekly set-aside paces on the COMMITTED amount, never on leftover */
+      if (g.plan && g.plan.amt > 0){
+        var weeks = Math.ceil(left/g.plan.amt);
+        if (weeks <= 104) html += '<div class="goal-weeks">'+t("weeksPlan")(weeks, fmt(g.plan.amt))+'</div>';
+      } else if (spare > 0){
+        var weeks2 = Math.ceil(left/spare);
+        if (weeks2 <= 104) html += '<div class="goal-weeks">'+t("weeksAway")(weeks2, fmt(spare))+'</div>';
+      }
     }
     html += '<div class="plan-line">'
       + '<span class="grow">'+t("planL")
@@ -2989,11 +3142,6 @@ function renderGoals(){
   $("goals-empty").hidden = prof.goals.length > 0;
   renderGoalDue();
 }
-function essTotal(){
-  var total = 0;
-  for (var i=0;i<ESS.length;i++) total += num(ESS[i].id);
-  return total;
-}
 function addGoalFlow(goTab){
   if (prof.goals.length >= 5){ toast(t("goalFull")); return; }
   openSheet({title:t("addGoal"), okLabel:t("btnAdd"),
@@ -3002,7 +3150,7 @@ function addGoalFlow(goTab){
     onOk:function(name, target){
       if (!name) return;
       prof.goals.push({name:name.slice(0,30), target:target, saved:0, chip:0, plan:null});
-      renderGoals(); persist(true); updateTape();
+      renderGoals(); persist(true); calcAll();
       if (goTab) showTab("goals");
       toast(t("goalAdded"));
     }});
@@ -3013,7 +3161,7 @@ $("goal-list").addEventListener("click", function(e){
     var g = prof.goals[+b.getAttribute("data-gadd")];
     var amt = parseFloat(b.getAttribute("data-amt"));
     g.saved = Math.round((g.saved + amt)*100)/100;
-    renderGoals(); persist(true); updateTape();
+    renderGoals(); persist(true); calcAll();
     toast(t("addedTo")(fmt(amt), g.name));
   } else if ((b = e.target.closest("[data-gchip]"))){
     var gi = +b.getAttribute("data-gchip");
@@ -3029,16 +3177,16 @@ $("goal-list").addEventListener("click", function(e){
     var gd = +b.getAttribute("data-gdel");
     openSheet({title:t("goalDelQ")(prof.goals[gd].name), okLabel:t("btnDelete"), danger:true, onOk:function(){
       prof.goals.splice(gd,1);
-      renderGoals(); persist(true); updateTape();
+      renderGoals(); persist(true); calcAll();
       toast(t("goalDeleted"));
     }});
   } else if ((b = e.target.closest("[data-gplan]"))){
     var gp = +b.getAttribute("data-gplan");
-    if (prof.goals[gp].plan){ prof.goals[gp].plan = null; renderGoals(); persist(true); }
+    if (prof.goals[gp].plan){ prof.goals[gp].plan = null; renderGoals(); persist(true); calcAll(); }
     else openSheet({title:t("planL"), field2:{label:t("amountL")}, onOk:function(_, amt2){
       if (amt2 <= 0) return;
       prof.goals[gp].plan = {amt:amt2, day:5, last:Date.now()};
-      renderGoals(); persist(true);
+      renderGoals(); persist(true); calcAll();
     }});
   }
 });
@@ -3053,7 +3201,7 @@ $("goal-list").addEventListener("input", function(e){
     renderGoals();
     if (focused && $(focused)) $(focused).focus();
   }, 700);
-  updateTape(); queueSave();
+  calcAll(); queueSave();
 });
 /* missed scheduled adds */
 function weeksMissed(plan){
@@ -3088,7 +3236,7 @@ $("goal-due-box").addEventListener("click", function(e){
     var g = prof.goals[+b.getAttribute("data-dueadd")];
     g.saved = Math.round((g.saved + parseFloat(b.getAttribute("data-dueamt")))*100)/100;
     g.plan.last = Date.now();
-    renderGoals(); persist(true); updateTape();
+    renderGoals(); persist(true); calcAll();
     toast(t("addedTo")(fmt(parseFloat(b.getAttribute("data-dueamt"))), g.name));
   } else if ((b = e.target.closest("[data-dueskip]"))){
     var g2 = prof.goals[+b.getAttribute("data-dueskip")];
@@ -3096,23 +3244,6 @@ $("goal-due-box").addEventListener("click", function(e){
     renderGoals(); persist(true);
   }
 });
-function tapeGoal(){
-  var best = null;
-  for (var i=0;i<prof.goals.length;i++){
-    var g = prof.goals[i];
-    if (g.target <= 0) continue;
-    var pct = goalPct(g);
-    if (!best || (pct < 100 && (goalPct(best) >= 100 || pct > goalPct(best))) ||
-        (pct >= 100 && goalPct(best) >= 100)) {
-      if (!best || (goalPct(best) >= 100 && pct < 100) || (pct < 100 && pct > goalPct(best)) ) best = g;
-      else if (!best) best = g;
-    }
-  }
-  if (!best){
-    for (var j=0;j<prof.goals.length;j++) if (prof.goals[j].target>0){ best = prof.goals[j]; break; }
-  }
-  return best;
-}
 
 /* ================= FEES ================= */
 function feesTotal(){
@@ -3128,36 +3259,83 @@ function feesTotal(){
 }
 
 /* ================= YOU ================= */
-var youViews = ["you-root","you-profiles","you-settings","you-about"];
+var youViews = ["you-profiles","you-settings","you-about"];
 function showYou(view){
   for (var i=0;i<youViews.length;i++) $(youViews[i]).hidden = youViews[i] !== view;
   window.scrollTo(0,0);
 }
 document.querySelectorAll("[data-back]").forEach(function(b){
-  b.addEventListener("click", function(){ showYou("you-root"); renderYou(); });
-});
-$("row-profiles").addEventListener("click", function(){ renderProfiles(); showYou("you-profiles"); });
-$("row-settings").addEventListener("click", function(){ showYou("you-settings"); });
-$("row-about").addEventListener("click", function(){ showYou("you-about"); });
-$("row-help").addEventListener("click", function(){
-  showTab("learn");
-  var anchor = $("help-anchor");
-  if (anchor) setTimeout(function(){ anchor.scrollIntoView(); }, 50);
+  b.addEventListener("click", function(){ showTab(backTab); });
 });
 function profileName(p){ return p.name || t("defaultProfile"); }
 function renderYou(){
   var active = device.profiles.filter(function(p){ return p.id === device.active; })[0];
-  var name = profileName(active);
-  $("you-name").textContent = name;
-  $("you-avatar").textContent = name.charAt(0).toUpperCase();
-  var d = new Date((prof.since || "2026-07") + "-02");
-  var mon = d.toLocaleDateString(device.lang === "es" ? "es-US" : "en-US", {month:"long", year:"numeric"});
-  $("you-since").textContent = t("youSince")(mon);
-  $("you-stats").textContent = t("youStats")(prof.presets.length, prof.goals.length);
   $("profiles-count").textContent = String(device.profiles.length);
   // greeting on budget tab
   $("greet").textContent = active.name ? t("greetH")(active.name) : t("budgetH");
 }
+
+/* ================= MENU (⋯) ================= */
+var menuReturnFocus = null, eraseArmT = null;
+function menuOpen(){ return !$("menu-wrap").hidden; }
+function disarmErase(){
+  clearTimeout(eraseArmT);
+  $("menu-erase").classList.remove("armed");
+  $("menu-erase-label").textContent = t("setErase");
+}
+function openMenu(){
+  menuReturnFocus = document.activeElement;
+  clearBadge();
+  renderYou();
+  disarmErase();
+  var wrap = $("menu-wrap");
+  wrap.hidden = false;
+  document.body.classList.add("sheet-open");
+  setTimeout(function(){ wrap.className = "sheet-wrap on"; }, 10);
+  setTimeout(function(){ $("menu-people").focus(); }, 70);
+}
+function closeMenu(restoreFocus){
+  if (!menuOpen()) return;
+  disarmErase();
+  var wrap = $("menu-wrap");
+  wrap.className = "sheet-wrap";
+  document.body.classList.remove("sheet-open");
+  setTimeout(function(){ wrap.hidden = true; }, 220);
+  if (restoreFocus && menuReturnFocus && menuReturnFocus.focus) menuReturnFocus.focus();
+}
+$("menu-btn").addEventListener("click", openMenu);
+$("menu-scrim").addEventListener("click", function(){ closeMenu(true); });
+$("menu-wrap").addEventListener("keydown", function(e){
+  if (e.key !== "Tab") return;
+  var rows = $("menu-wrap").querySelectorAll(".add-row");
+  var first = rows[0], last = rows[rows.length-1];
+  if (e.shiftKey && document.activeElement === first){ e.preventDefault(); last.focus(); }
+  else if (!e.shiftKey && document.activeElement === last){ e.preventDefault(); first.focus(); }
+});
+$("menu-people").addEventListener("click", function(){ closeMenu(false); renderProfiles(); showTab("you"); showYou("you-profiles"); });
+$("menu-settings").addEventListener("click", function(){ closeMenu(false); showTab("you"); showYou("you-settings"); });
+$("menu-about").addEventListener("click", function(){ closeMenu(false); showTab("you"); showYou("you-about"); });
+$("menu-help").addEventListener("click", function(){
+  closeMenu(false);
+  showTab("learn");
+  var anchor = $("help-anchor");
+  if (anchor) setTimeout(function(){ anchor.scrollIntoView(); }, 50);
+});
+$("menu-restart").addEventListener("click", function(){
+  closeMenu(false);
+  openSheet({title:t("menuRestart"), message:t("restartQ"), okLabel:t("restartOk"), danger:true, onOk:function(){
+    delete prof.weeks[todayKey];
+    if (viewKey === todayKey) paintWeek(); else renderWeekBar();
+    renderGoals(); persist(true);
+    toast(t("restartDone"));
+  }});
+});
+$("menu-erase").addEventListener("click", function(){
+  if (this.classList.contains("armed")){ doErase(); return; }
+  this.classList.add("armed");
+  $("menu-erase-label").textContent = t("eraseArm");
+  eraseArmT = setTimeout(disarmErase, 4000);
+});
 function renderProfiles(){
   var html = "";
   for (var i=0;i<device.profiles.length;i++){
@@ -3182,7 +3360,7 @@ $("profile-list").addEventListener("click", function(e){
       prof = migrateProfile(lsGet(pkey(p.id)) || freshProfileData());
       viewKey = todayKey; /* a different person's timeline opens on today */
       persist(false);
-      profToFields(); setModeUI(getWeek().mode); applyLang();
+      profToFields(); setModeUI(prof.income.mode); applyLang();
       toast(t("profileSwitched")(profileName(p)));
     }
     renderProfiles(); renderYou();
@@ -3200,7 +3378,7 @@ $("profile-list").addEventListener("click", function(e){
         device.active = device.profiles[0].id;
         prof = migrateProfile(lsGet(pkey(device.active)) || freshProfileData());
         viewKey = todayKey;
-        profToFields(); setModeUI(getWeek().mode); applyLang();
+        profToFields(); setModeUI(prof.income.mode); applyLang();
       }
       persist(false); renderProfiles(); renderYou();
       toast(t("profileDeleted"));
@@ -3315,91 +3493,76 @@ fastTap($("tape-bar"), function(){
   $("tape-car").textContent = tapeOpen ? t("tapeClose") : t("tapeOpen");
 });
 $("scrim").addEventListener("click", closeTape);
-document.addEventListener("keydown", function(e){ if (e.key === "Escape"){ if (pickerOpen()) closePicker(); else if (addMenuOpen()) closeAddMenu(true); else if (sheetCfg) closeSheet(); else closeTape(); } });
+document.addEventListener("keydown", function(e){ if (e.key === "Escape"){ if (pickerOpen()) closePicker(); else if (menuOpen()) closeMenu(true); else if (addMenuOpen()) closeAddMenu(true); else if (sheetCfg) closeSheet(); else closeTape(); } });
 
-var feesCache = 0;
-function tapeVisible(){
-  if (activeTab === "budget") return true;
-  if (activeTab === "bills") return !!billsSummary() || availAmount() > 0;
-  if (activeTab === "goals"){
-    for (var i=0;i<prof.goals.length;i++) if (prof.goals[i].target > 0) return true;
-    return false;
-  }
-  return false;
-}
+function tapeVisible(){ return activeTab === "budget" || activeTab === "bills" || activeTab === "goals"; }
+/* ONE headline everywhere: the plan verdict; any shortfall reads SHORT $Z,
+   right-now shortfall winning over plan shortfall */
 function updateTape(){
   var vis = tapeVisible();
   $("tape").hidden = !vis;
   document.body.classList.toggle("tape-on", vis);
   if (!vis){ closeTape(); return; }
-  var income = planIncome(), total = essTotal(), left = income - total;
-  var lbl = "", amt = "", cls = "";
-  var bs = activeTab === "bills" ? billsSummary() : null;
-  var tg = activeTab === "goals" ? tapeGoal() : null;
-  if (activeTab === "learn" && feesCache > 0){
-    lbl = t("tapeFees"); amt = fmt(feesCache)+t("tapeFeesYr"); cls = "neg";
-  } else if (tg){
-    var left2 = Math.max(0, tg.target - tg.saved);
-    if (left2 <= 0){ lbl = t("tapeGoalMet"); amt = "✓"; cls = "pos"; }
-    else { lbl = tg.name.toUpperCase()+":"; amt = fmt(left2)+" "+t("tapeGoalTo"); cls = "pos"; }
-  } else if (activeTab === "bills"){
-    if (bs){ lbl = t("tapeBills")(bs.done, bs.pay, bs.waits); amt = ""; cls = ""; }
-    else { lbl = t("tapeYouHave"); amt = fmt(Math.max(0, availAmount() - paidSum())); cls = "pos"; }
-  } else if (budgetTouched()){
-    if (left >= 0){ lbl = t("tapeLeft"); amt = fmt(left); cls = "pos"; }
-    else { lbl = t("tapeShort"); amt = fmt(-left); cls = "neg"; }
+  var lbl, amt = "", cls = "";
+  if (!budgetTouched()){
+    lbl = t("tapeAdd");
   } else {
-    lbl = t("tapeAdd"); amt = ""; cls = "";
+    var D = planLeftOver(viewKey), F = leftAfterPaying();
+    var Z = F < 0 ? -F : (D < 0 ? -D : 0);
+    if (Z > 0){ lbl = t("tapeShort"); amt = fmt(Z); cls = "neg"; }
+    else { lbl = t("tapeLeft"); amt = fmt(D); cls = "pos"; }
   }
   $("tape-lbl").textContent = lbl;
   $("tape-amt").textContent = amt;
   $("tape-amt").className = "amt" + (cls ? " "+cls : "");
 }
+/* ONE RECEIPT, identical on every tab: THE PLAN, then RIGHT NOW, then goals progress */
 function renderReceipt(){
-  if (activeTab === "bills" && (billsSummary() || availAmount() > 0)) return renderBillsReceipt();
-  if (activeTab === "goals") return renderGoalsReceipt();
-  return renderBudgetReceipt();
-}
-function renderBillsReceipt(){
-  $("rcp-title").textContent = t("rcpPlanTitle");
-  $("rcp-inc-l").parentNode.style.display = "";
-  $("rcp-inc-l").textContent = t("rcpYouHave");
-  $("rcp-inc").textContent = fmt(availAmount());
-  var bills = L().bills, alloc = allocate(), html = "", wb = getWeek().bills;
-  function rcpMark(a){
-    return a.state === "done" ? t("stDone")(fmt(a.pay))
-      : a.state === "pay" ? t("stPaid")(fmt(a.pay))
-      : a.state === "part" ? t("stPart")(fmt(a.pay),fmt(a.owed))
-      : a.state === "waits" ? t("stWaits")
-      : t("stPaid")("").trim();
+  $("rcp-title").textContent = t("rcpTitle");
+  var A = effectiveIncome(viewKey), B = billsPlannedTotal(viewKey), C = goalWeeklyTotal(), D = A - B - C;
+  var wb = getWeek().bills, alloc = allocate(), custom = allocate.custom, bills = L().bills;
+  function line(lbl, amt, cls, sub){
+    return '<div class="line'+(sub ? ' sub' : '')+'"><span class="lbl">'+lbl+'</span><span class="amt'+(cls ? ' '+cls : '')+'">'+amt+'</span></div>';
   }
-  for (var i=0;i<alloc.length;i++){
-    var a = alloc[i];
-    if (!a) continue;
-    html += '<div class="line"><span class="lbl">'+esc(bills[i].b.toUpperCase())+'</span><span class="amt">'+rcpMark(a)+'</span></div>';
+  function money(nv){ return nv < 0 ? "−"+fmt(-nv) : fmt(nv); }
+  var h = '<div class="sect">'+t("rcpPlanH")+'</div>';
+  h += line(t("rcpInc"), fmt(A));
+  h += line(t("rcpBills"), "−"+fmt(B));
+  if (C > 0) h += line(t("rcpGoal"), "−"+fmt(C));
+  h += '<div class="line total"><span class="lbl">'+t("stampLeft")+'</span><span class="amt'+(D<0?' neg':'')+'">'+money(D)+'</span></div>';
+  h += '<div class="sect">'+t("rcpNowH")+'</div>';
+  h += line(t("rcpYouHave"), fmt(availAmount()));
+  var paying = [], waiting = [];
+  function bucket(name, a, owedNow){
+    if (!a) return;
+    if (a.state === "none"){ paying.push(line(esc(name.toUpperCase()), t("stPaid")("").trim())); return; }
+    if (a.state === "done"){ paying.push(line(esc(name.toUpperCase()), "✓ "+fmt(a.pay))); return; }
+    if (a.state === "pay") paying.push(line(esc(name.toUpperCase()), fmt(a.pay)));
+    else if (a.state === "part"){
+      paying.push(line(esc(name.toUpperCase()), t("stPart")(fmt(a.pay), fmt(a.owed))));
+      paying.push(line(t("stillOwedL"), "−"+fmt(a.owed - a.pay), "neg", true));
+    }
+    else if (a.state === "waits") waiting.push(line(esc(name.toUpperCase()), fmt(a.owed)));
   }
-  for (var c=0;c<wb.custom.length;c++){
-    var ca = allocate.custom[c];
-    if (!ca) continue;
-    html += '<div class="line"><span class="lbl">'+esc(wb.custom[c].name.toUpperCase())+'</span><span class="amt">'+rcpMark(ca)+'</span></div>';
+  for (var i=0;i<bills.length;i++) bucket(bills[i].b, alloc[i], billOwedAmt(i));
+  for (var c=0;c<wb.custom.length;c++) bucket(wb.custom[c].name, custom[c], parseAmt(wb.custom[c].owed));
+  if (paying.length) h += '<div class="line subh"><span class="lbl">'+t("rcpPayingH")+'</span><span class="amt"></span></div>' + paying.join("");
+  if (waiting.length) h += '<div class="line subh"><span class="lbl">'+t("rcpWaitH")+'</span><span class="amt"></span></div>' + waiting.join("");
+  var F = leftAfterPaying();
+  h += '<div class="line total"><span class="lbl">'+t("rcpLeftAfter")+'</span><span class="amt'+(F<0?' neg':'')+'">'+money(F)+'</span></div>';
+  $("rcp-body").innerHTML = h;
+  var stamp = $("rcp-stamp");
+  if (!budgetTouched()){
+    stamp.style.display = "none";
+    $("rcp-after").textContent = "";
+  } else {
+    stamp.style.display = "";
+    stamp.className = "stamp" + (D < 0 ? " neg" : "");
+    stamp.textContent = D >= 0 ? t("stampLeft")+" "+fmt(D) : t("stampShort")+" "+fmt(-D);
+    $("rcp-after").textContent = (waiting.length || F < 0) ? t("planAfter")
+      : (D > 0 ? t("afterPos") : (D === 0 ? t("afterEven") : ""));
   }
-  $("rcp-items").innerHTML = html;
-  $("rcp-tot-l").parentNode.style.display = "";
-  $("rcp-tot-l").textContent = t("rcpLeftAfter");
-  $("rcp-tot").textContent = fmt(allocate.remaining);
-  $("rcp-stamp").style.display = "none";
-  var bs = billsSummary();
-  $("rcp-after").textContent = bs && bs.waits > 0 ? t("planAfter") : "";
-  $("rcp-extra").innerHTML = "";
-}
-function renderGoalsReceipt(){
-  $("rcp-title").textContent = t("rcpGoalsTitle");
-  $("rcp-inc-l").parentNode.style.display = "none";
-  $("rcp-items").innerHTML = "";
-  $("rcp-tot-l").parentNode.style.display = "none";
-  $("rcp-stamp").style.display = "none";
-  $("rcp-after").textContent = "";
-  $("rcp-extra").innerHTML = goalsDept(true);
+  $("rcp-extra").innerHTML = goalsDept(false);
 }
 function goalsDept(standalone){
   var ex = "", started = false;
@@ -3414,79 +3577,46 @@ function goalsDept(standalone){
   }
   return ex;
 }
-function renderBudgetReceipt(){
-  $("rcp-title").textContent = t("rcpTitle");
-  $("rcp-inc-l").parentNode.style.display = "";
-  $("rcp-inc-l").textContent = t("rcpInc");
-  $("rcp-tot-l").parentNode.style.display = "";
-  $("rcp-tot-l").textContent = t("rcpTot");
-  var income = planIncome();
-  $("rcp-inc").textContent = fmt(income);
-  var html = "", total = 0;
-  for (var i=0;i<ESS.length;i++){
-    var v = num(ESS[i].id);
-    total += v;
-    if (v>0) html += '<div class="line"><span class="lbl">'+shortLabel(ESS[i].key).toUpperCase()
-      +'</span><span class="amt">−'+fmt(v)+'</span></div>';
-  }
-  $("rcp-items").innerHTML = html;
-  $("rcp-tot").textContent = "−"+fmt(total);
-  var left = income - total;
-  var stamp = $("rcp-stamp"), after = $("rcp-after");
-  if (!budgetTouched()){
-    stamp.style.display = "none"; after.textContent = "";
-  } else if (left >= 0){
-    stamp.style.display = ""; stamp.className = "stamp";
-    stamp.textContent = t("stampLeft")+" "+fmt(left);
-    after.textContent = left === 0 ? t("afterEven") : t("afterPos");
-  } else {
-    stamp.style.display = ""; stamp.className = "stamp neg";
-    stamp.textContent = t("stampShort")+" "+fmt(-left);
-    var covered = [], running = income;
-    for (var j=0;j<ESS.length;j++){
-      var w = num(ESS[j].id);
-      if (w<=0) continue;
-      if (running >= w){ covered.push(shortLabel(ESS[j].key).toLowerCase()); running -= w; }
-    }
-    after.textContent = t("afterShort")(fmt(-left), covered.join(", "), true);
-  }
-  /* budget receipt: the plan and where the leftover goes */
-  $("rcp-stamp").style.display = budgetTouched() ? "" : "none";
-  $("rcp-extra").innerHTML = goalsDept(false);
-}
 
 /* ================= HERO ================= */
-var ESS_TONE = {"ess-housing":"--acc-green","ess-food":"--acc-amber","ess-transport":"--acc-blue",
-  "ess-phone":"--acc-purple","ess-health":"--seg-3","ess-other":"--line-strong"};
+var TONE_VAR = {green:"--acc-green", amber:"--acc-amber", blue:"--acc-blue", purple:"--acc-purple"};
 function renderHero(){
-  var income = planIncome(), total = essTotal(), left = income - total;
+  var A = effectiveIncome(viewKey), B = billsPlannedTotal(viewKey), C = goalWeeklyTotal(), D = A - B - C;
   $("hero-in-l").textContent = t("heroInL");
   $("hero-out-l").textContent = t("heroOutL");
-  $("hero-in-fig").textContent = fmt(income);
-  $("hero-out-fig").textContent = fmt(total);
+  $("hero-in-fig").textContent = fmt(A);
+  $("hero-out-fig").textContent = fmt(B + C);
   var line = $("hero-line");
   if (!budgetTouched()){
     line.textContent = t("heroLineEmpty"); line.className = "hero-line zero";
-  } else if (left >= 0){
-    line.textContent = t("heroLineLeft")(fmt(left)); line.className = "hero-line";
+  } else if (D >= 0){
+    line.textContent = t("heroLineLeft")(fmt(D)); line.className = "hero-line";
   } else {
-    line.textContent = t("heroLineShort")(fmt(-left)); line.className = "hero-line neg";
+    line.textContent = t("heroLineShort")(fmt(-D)); line.className = "hero-line neg";
   }
-  var segs = "";
-  for (var i=0;i<ESS.length;i++){
-    var v = num(ESS[i].id);
-    if (v > 0 && income > 0){
-      var sw = Math.min(100, v/income*100);
-      segs += '<span style="width:'+sw+'%; background:var('+ESS_TONE[ESS[i].id]+')"></span>';
+  var segs = "", wb = getWeek().bills, i, v;
+  if (A > 0){
+    for (i=0;i<wb.checked.length;i++){
+      v = parseAmt(wb.owed[wb.checked[i]]);
+      if (v > 0){
+        var look = BILL_LOOK[wb.checked[i]] || {tone:"amber"};
+        segs += '<span style="width:'+Math.min(100, v/A*100)+'%; background:var('+TONE_VAR[look.tone]+')"></span>';
+      }
     }
+    for (i=0;i<wb.custom.length;i++){
+      v = parseAmt(wb.custom[i].owed);
+      if (v > 0) segs += '<span style="width:'+Math.min(100, v/A*100)+'%; background:var(--line-strong)"></span>';
+    }
+    if (C > 0) segs += '<span style="width:'+Math.min(100, C/A*100)+'%; background:var(--money)"></span>';
   }
   $("hero-segbar").innerHTML = segs;
 }
 
 /* ================= MASTER ================= */
 function calcAll(){
-  feesCache = feesTotal();
-  if (getWeek().mode === "varies") $("low-fig").textContent = fmt(planIncome());
+  feesTotal();
+  renderIncomeNote();
+  renderPlanSummary();
   renderHero();
   renderReceipt();
   updateTape();
@@ -3502,12 +3632,20 @@ function renderAll(){
 /* ================= WIRING ================= */
 /* each edit writes its own field at event time — a debounced save can never
    scrape the DOM after the user has moved to a different week */
-for (var wfi=0;wfi<WEEK_FIELDS.length;wfi++)(function(id){
-  $(id).addEventListener("input", function(){
-    W().f[id] = this.value;
-    calcAll(); queueSave();
-  });
-})(WEEK_FIELDS[wfi]);
+$("money-in").addEventListener("input", function(){
+  var wk = W();
+  wk.f["money-in"] = this.value;
+  wk.inSet = parseAmt(this.value) > 0; /* only THIS field and the + money add mint a real week */
+  calcAll(); queueSave();
+});
+$("inc-low").addEventListener("input", function(){
+  prof.income.low = this.value; /* profile setting: no week materializes */
+  calcAll(); queueSave();
+});
+$("inc-normal").addEventListener("input", function(){
+  prof.income.normal = this.value;
+  calcAll(); queueSave();
+});
 for (var ffi=0;ffi<FEE_FIELDS.length;ffi++)(function(id){
   $(id).addEventListener("input", function(){
     prof.fees[id] = this.value; /* Learn is not weekly: no week materializes */
@@ -3539,7 +3677,7 @@ $("btn-install").addEventListener("click", function(){
 loadDevice();
 lastSavedStr = snapshot();
 profToFields();
-setModeUI(getWeek().mode);
+setModeUI(prof.income.mode);
 applyLang();
 if (prof.lastTab && TABS.indexOf(prof.lastTab) !== -1 && prof.lastTab !== "budget") showTab(prof.lastTab);
 checkReminder();
