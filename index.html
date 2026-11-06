@@ -2601,6 +2601,7 @@ function applyLang(){
   for (var ai=0;ai<arias.length;ai++) arias[ai].setAttribute("aria-label", t(arias[ai].getAttribute("data-i18n-aria")));
   $("tape-foot").textContent = t("rcpFoot");
   $("tape").setAttribute("aria-label", t("tapeAria"));
+  $("tape-car").textContent = tapeOpen ? t("tapeClose") : t("tapeOpen"); /* the caret kept the old language after a switch */
   $("val-lang").textContent = t("langName");
   $("fab").setAttribute("aria-label", t("addSheetTitle"));
   $("pill-en").setAttribute("aria-pressed", device.lang === "en" ? "true" : "false");
