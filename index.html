@@ -2406,6 +2406,12 @@ function queueSave(){
   if (saveTimer) clearTimeout(saveTimer);
   saveTimer = setTimeout(function(){ persist(true); }, 600);
 }
+/* the debounce is for the flash, not for safety: anything pending writes NOW */
+function flushSave(){
+  if (!saveTimer) return;
+  clearTimeout(saveTimer); saveTimer = null;
+  persist(false);
+}
 function flashSaved(){
   var f = $("saved-flash");
   f.textContent = t("saved");
@@ -2658,7 +2664,11 @@ function refreshToday(){
   todayKey = nk;
   if (followed){ viewKey = todayKey; paintWeek(); } else renderWeekBar();
 }
-document.addEventListener("visibilitychange", function(){ if (!document.hidden) refreshToday(); });
+document.addEventListener("visibilitychange", function(){
+  if (document.visibilityState === "hidden"){ flushSave(); return; } /* backgrounded: never leave an edit in the 600ms window */
+  refreshToday();
+});
+window.addEventListener("pagehide", flushSave);
 fastTap($("wk-prev"), function(){ shiftWeek(-1); });
 fastTap($("wk-next"), function(){ shiftWeek(1); });
 fastTap($("wk-chip"), openPicker);
