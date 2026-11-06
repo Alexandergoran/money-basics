@@ -3719,6 +3719,16 @@ if ("serviceWorker" in navigator){
   window.addEventListener("load", function(){
     navigator.serviceWorker.register("./sw.js").catch(function(){});
   });
+  /* a new version used to show up only on the SECOND open after a push: the
+     page came from the old cache while the new worker installed behind it.
+     When the new worker takes over, save anything pending and reload once. */
+  var swReloaded = false, swHadController = !!navigator.serviceWorker.controller;
+  navigator.serviceWorker.addEventListener("controllerchange", function(){
+    if (swReloaded || !swHadController) return; /* first install: nothing to refresh */
+    swReloaded = true;
+    flushSave();
+    location.reload();
+  });
 }
 var deferredInstall = null;
 window.addEventListener("beforeinstallprompt", function(e){
