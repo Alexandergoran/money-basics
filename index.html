@@ -1736,7 +1736,7 @@ en:{
   foot1:"Built by Alexander G., student volunteer, for guests of the Hoboken Shelter.",
   foot2:"General money education, not financial advice.",
   btnPrint:"Print this receipt",
-  saved:"Saved ✓",
+  saved:"Saved ✓", saveFailed:"This phone didn't save your changes. Leave private browsing or free up space.",
   btnCancel:"Cancel", btnOk:"Save", btnAdd:"Add", btnDelete:"Delete", btnEraseOk:"Erase it all",
   nameL:"Name", amountL:"Amount", presetPH:"Normal week",
   goalNameL:"What are you saving for?", goalNamePH:"Work boots",
@@ -1963,7 +1963,7 @@ es:{
   foot1:"Hecho por Alexander G., estudiante voluntario, para los huéspedes del Hoboken Shelter.",
   foot2:"Educación general sobre el dinero, no asesoría financiera.",
   btnPrint:"Imprimir este recibo",
-  saved:"Guardado ✓",
+  saved:"Guardado ✓", saveFailed:"Este teléfono no guardó sus cambios. Salga del modo privado o libere espacio.",
   btnCancel:"Cancelar", btnOk:"Guardar", btnAdd:"Agregar", btnDelete:"Borrar", btnEraseOk:"Borrar todo",
   nameL:"Nombre", amountL:"Cantidad", presetPH:"Semana normal",
   goalNameL:"¿Para qué está ahorrando?", goalNamePH:"Botas de trabajo",
@@ -2212,7 +2212,15 @@ function planLeftOver(key){
 var DKEY = "mb2.device";
 function pkey(id){ return "mb2.p." + id; }
 function lsGet(k){ try { return JSON.parse(localStorage.getItem(k)); } catch(e){ return null; } }
-function lsSet(k,v){ try { localStorage.setItem(k, JSON.stringify(v)); return true; } catch(e){ return false; } }
+var storageWarned = false;
+function lsSet(k,v){
+  try { localStorage.setItem(k, JSON.stringify(v)); return true; }
+  catch(e){
+    /* private browsing or a full phone: say it once instead of losing a week silently */
+    if (!storageWarned && typeof toast === "function" && device){ storageWarned = true; toast(t("saveFailed")); }
+    return false;
+  }
+}
 
 function freshProfileData(){
   return { v:3, weeks:{}, fees:{},
