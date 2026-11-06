@@ -661,6 +661,12 @@ details .body li{margin-bottom:var(--sp-2); max-width:55ch;}
   overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
 }
 @media (max-width: 355px){ #tape-lbl{max-width:calc(50vw - 56px);} }
+/* the wordmark truncated to "money…" beside the EN/ES pill on a 375px phone:
+   stack it on two lines there instead of clipping */
+@media (max-width: 430px){
+  h1.wordmark{white-space:normal; line-height:1.05; font-size:1rem;}
+  h1.wordmark .wb{display:block;}
+}
 
 /* ============ MENU (⋯) ============ */
 .menu-btn{
