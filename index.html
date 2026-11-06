@@ -931,11 +931,11 @@ h1.wordmark{overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
   </div>
   <div class="head-right">
     <span class="saved-flash" id="saved-flash" aria-live="polite"></span>
-    <div class="lang-pill" role="group" aria-label="Language">
+    <div class="lang-pill" role="group" aria-label="Language" data-i18n-aria="ariaLang">
       <button type="button" id="pill-en" aria-pressed="true">EN</button>
       <button type="button" id="pill-es" aria-pressed="false">ES</button>
     </div>
-    <button type="button" class="menu-btn" id="menu-btn" aria-haspopup="dialog" aria-label="Menu">
+    <button type="button" class="menu-btn" id="menu-btn" aria-haspopup="dialog" aria-label="Menu" data-i18n-aria="ariaMenu">
       <span aria-hidden="true">⋯</span>
       <span class="badge" id="you-badge"></span>
     </button>
@@ -982,7 +982,7 @@ h1.wordmark{overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
 
   <div class="card">
     <p class="q" data-i18n="qPay">How do you get paid?</p>
-    <div class="seg" role="group" aria-label="Pay type">
+    <div class="seg" role="group" aria-label="Pay type" data-i18n-aria="ariaPayType">
       <button type="button" id="mode-steady" aria-pressed="true" data-i18n="modeSteady">Same most weeks</button>
       <button type="button" id="mode-varies" aria-pressed="false" data-i18n="modeVaries">It changes</button>
     </div>
@@ -1274,7 +1274,7 @@ h1.wordmark{overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
 
   <div id="you-profiles" hidden>
     <div class="subhead">
-      <button type="button" class="back" data-back aria-label="Back"><svg class="icon" aria-hidden="true"><use href="#i-chevron-left"/></svg></button>
+      <button type="button" class="back" data-back aria-label="Back" data-i18n-aria="ariaBack"><svg class="icon" aria-hidden="true"><use href="#i-chevron-left"/></svg></button>
       <h2 data-i18n="profilesH">Profiles</h2>
     </div>
     <p class="lede" data-i18n="profilesLede">For shared phones. Each profile keeps its own budget, goals, and bills. Profiles live on this phone only.</p>
@@ -1283,7 +1283,7 @@ h1.wordmark{overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
 
   <div id="you-settings" hidden>
     <div class="subhead">
-      <button type="button" class="back" data-back aria-label="Back"><svg class="icon" aria-hidden="true"><use href="#i-chevron-left"/></svg></button>
+      <button type="button" class="back" data-back aria-label="Back" data-i18n-aria="ariaBack"><svg class="icon" aria-hidden="true"><use href="#i-chevron-left"/></svg></button>
       <h2 data-i18n="settingsH">Settings</h2>
     </div>
 
@@ -1349,7 +1349,7 @@ h1.wordmark{overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
 
   <div id="you-about" hidden>
     <div class="subhead">
-      <button type="button" class="back" data-back aria-label="Back"><svg class="icon" aria-hidden="true"><use href="#i-chevron-left"/></svg></button>
+      <button type="button" class="back" data-back aria-label="Back" data-i18n-aria="ariaBack"><svg class="icon" aria-hidden="true"><use href="#i-chevron-left"/></svg></button>
       <h2 data-i18n="aboutH">About and privacy</h2>
     </div>
     <div class="card">
@@ -1416,7 +1416,7 @@ h1.wordmark{overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
   </div>
 </aside>
 
-<nav class="tabbar" aria-label="Sections" id="tabbar">
+<nav class="tabbar" aria-label="Sections" data-i18n-aria="ariaSections" id="tabbar">
   <button type="button" id="tab-budget" aria-current="page" data-controls="panel-budget">
     <svg class="icon" aria-hidden="true"><use href="#i-wallet"/></svg><span data-i18n="tabBudget">Budget</span>
   </button>
@@ -1771,7 +1771,8 @@ en:{
   dayLetters:["S","M","T","W","T","F","S"],
   days:["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],
   daysPl:["Sundays","Mondays","Tuesdays","Wednesdays","Thursdays","Fridays","Saturdays"],
-  defaultProfile:"Me"
+  defaultProfile:"Me",
+  ariaLang:"Language", ariaMenu:"Menu", ariaPayType:"Pay type", ariaSections:"Sections", ariaBack:"Back"
 },
 es:{
   tabBudget:"Presupuesto", tabBills:"Cuentas", tabGoals:"Metas", tabLearn:"Aprender",
@@ -1997,7 +1998,8 @@ es:{
   dayLetters:["D","L","M","M","J","V","S"],
   days:["domingo","lunes","martes","miércoles","jueves","viernes","sábado"],
   daysPl:["domingos","lunes","martes","miércoles","jueves","viernes","sábados"],
-  defaultProfile:"Yo"
+  defaultProfile:"Yo",
+  ariaLang:"Idioma", ariaMenu:"Menú", ariaPayType:"Tipo de pago", ariaSections:"Secciones", ariaBack:"Atrás"
 }
 };
 
@@ -2586,6 +2588,8 @@ function applyLang(){
     var k = nodes[i].getAttribute("data-i18n");
     if (typeof L()[k] === "string") nodes[i].textContent = L()[k];
   }
+  var arias = document.querySelectorAll("[data-i18n-aria]");
+  for (var ai=0;ai<arias.length;ai++) arias[ai].setAttribute("aria-label", t(arias[ai].getAttribute("data-i18n-aria")));
   $("tape-foot").textContent = t("rcpFoot");
   $("tape").setAttribute("aria-label", t("tapeAria"));
   $("val-lang").textContent = t("langName");
