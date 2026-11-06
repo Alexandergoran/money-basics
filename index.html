@@ -2048,25 +2048,40 @@ if (/[?&]debug=taps\b/.test(location.search)){
   })();
 }
 function fastTap(el, handler){
-  var lastFire = 0;
-  function fire(e){
-    var dup = Date.now() - lastFire < 650;
-    if (tapsDebug) tapsDebug(Math.round(performance.now()) + "ms  " + e.type + "  " + (el.id || el.className) + (dup ? "  (swallowed)" : "  (fired)"));
-    if (dup) return;
-    lastFire = Date.now();
+  /* one GESTURE fires once: the first of touchstart/pointerdown fires the handler,
+     later echoes of the same press are swallowed until the finger lifts, and the
+     click that trails a touch is swallowed once. A second deliberate tap right
+     after the first (two quick taps on "previous week") is a new gesture and
+     fires immediately — the old 650ms time window used to eat it. */
+  var down = false, clickDue = 0, release = null;
+  function fire(e, how){
+    if (tapsDebug) tapsDebug(Math.round(performance.now()) + "ms  " + e.type + "  " + (el.id || el.className) + "  (" + how + ")");
+  }
+  function start(e){
+    if (down){ fire(e, "swallowed"); return; }
+    down = true; clickDue = Date.now();
+    clearTimeout(release);
+    release = setTimeout(function(){ down = false; }, 650); /* safety: a cancelled touch never reports up */
+    fire(e, "fired");
     handler.call(el, e);
   }
-  el.addEventListener("touchstart", function(e){ fire(e); }, {passive:true});
+  function up(){ down = false; clearTimeout(release); }
+  el.addEventListener("touchstart", start, {passive:true});
   el.addEventListener("pointerdown", function(e){
     if (e.pointerType === "mouse" && e.button !== 0) return;
-    fire(e);
+    start(e);
   });
+  el.addEventListener("touchend", up, {passive:true});
+  el.addEventListener("touchcancel", up, {passive:true});
+  el.addEventListener("pointerup", up);
+  el.addEventListener("pointercancel", up);
   el.addEventListener("click", function(e){
-    if (Date.now() - lastFire < 650){
-      if (tapsDebug) tapsDebug(Math.round(performance.now()) + "ms  click  " + (el.id || el.className) + "  (swallowed)");
-      e.preventDefault(); e.stopPropagation(); return;
+    if (clickDue && Date.now() - clickDue < 650){
+      clickDue = 0;
+      fire(e, "swallowed"); e.preventDefault(); e.stopImmediatePropagation(); return;
     }
-    fire(e);
+    fire(e, "fired");
+    handler.call(el, e);
   });
 }
 
@@ -2738,7 +2753,6 @@ function renderPicker(){
   $("pick-cancel").textContent = t("btnCancel");
   $("pick-ok").textContent = t("pickOk");
 }
-$("wk-chip").addEventListener("click", openPicker);
 $("pick-grid").addEventListener("click", function(e){
   var b = e.target.closest("[data-day]");
   if (!b) return;
