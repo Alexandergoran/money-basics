@@ -1342,7 +1342,7 @@ h1.wordmark{overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
     </div>
 
     <div class="settings-foot">
-      <p>Money Basics v2 · <span data-i18n="ftDate">July 2026</span></p>
+      <p><span id="foot-version">Money Basics</span> · <span data-i18n="ftDate">November 2026</span></p>
       <p data-i18n="ftBy">Built by Alexander G., student volunteer</p>
     </div>
   </div>
@@ -1465,7 +1465,7 @@ h1.wordmark{overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
         <span id="menu-erase-label" data-i18n="setErase">Erase everything on this phone</span>
       </button>
     </div>
-    <p class="menu-version">Money Basics v3.4.0</p>
+    <p class="menu-version" id="menu-version">Money Basics</p>
   </div>
 </div>
 
@@ -1716,7 +1716,7 @@ en:{
   themeAuto:"Auto", themeLight:"Light", themeDark:"Dark",
   tsNormal:"Normal", tsLg:"Large", tsXl:"Extra large",
   langName:"English",
-  ftDate:"July 2026",
+  ftDate:"November 2026",
   ftBy:"Built by Alexander G., student volunteer",
   aboutH:"About and privacy",
   abWhatH:"What this is",
@@ -1943,7 +1943,7 @@ es:{
   themeAuto:"Automático", themeLight:"Claro", themeDark:"Oscuro",
   tsNormal:"Normal", tsLg:"Grande", tsXl:"Extra grande",
   langName:"Español",
-  ftDate:"julio 2026",
+  ftDate:"noviembre 2026",
   ftBy:"Hecho por Alexander G., estudiante voluntario",
   aboutH:"Acerca de y privacidad",
   abWhatH:"Qué es esto",
@@ -2004,6 +2004,7 @@ es:{
 };
 
 /* ================= HELPERS ================= */
+var APP_VERSION = "3.4.3"; /* keep in step with CACHE in sw.js — every push bumps both */
 function $(id){ return document.getElementById(id); }
 var device, prof; // device meta + active profile data
 function L(){ return STR[device.lang]; }
@@ -3725,6 +3726,8 @@ $("btn-install").addEventListener("click", function(){
 });
 
 /* ================= BOOT ================= */
+$("menu-version").textContent = "Money Basics v" + APP_VERSION;
+$("foot-version").textContent = "Money Basics v" + APP_VERSION;
 loadDevice();
 lastSavedStr = snapshot();
 profToFields();
